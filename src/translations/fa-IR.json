@@ -1,0 +1,124 @@
+{
+  "formats": {
+    "number": {
+      "currency": {
+        "style": "currency"
+      },
+      "percent": {
+        "style": "percent"
+      }
+    },
+    "date": {
+      "short": {
+        "month": "numeric",
+        "day": "numeric",
+        "year": "2-digit"
+      },
+      "medium": {
+        "month": "short",
+        "day": "numeric",
+        "year": "numeric"
+      },
+      "long": {
+        "month": "long",
+        "day": "numeric",
+        "year": "numeric"
+      },
+      "full": {
+        "weekday": "long",
+        "month": "long",
+        "day": "numeric",
+        "year": "numeric"
+      }
+    },
+    "time": {
+      "short": {
+        "hour": "numeric",
+        "minute": "numeric"
+      },
+      "medium": {
+        "hour": "numeric",
+        "minute": "numeric",
+        "second": "numeric"
+      },
+      "long": {
+        "hour": "numeric",
+        "minute": "numeric",
+        "second": "numeric",
+        "timeZoneName": "short"
+      },
+      "full": {
+        "hour": "numeric",
+        "minute": "numeric",
+        "second": "numeric",
+        "timeZoneName": "short"
+      }
+    },
+    "relative": {
+      "years": {
+        "units": "year"
+      },
+      "months": {
+        "units": "month"
+      },
+      "days": {
+        "units": "day"
+      },
+      "hours": {
+        "units": "hour"
+      },
+      "minutes": {
+        "units": "minute"
+      },
+      "seconds": {
+        "units": "second"
+      }
+    }
+  },
+  "messages": {
+    "core.euiSuperUpdateButton.refreshButtonLabel": "تازه‌سازی",
+    "core.euiSuperUpdateButton.updatingButtonLabel": "در حال به‌روزرسانی",
+    "core.euiSuperUpdateButton.clickToApplyTooltip": "برای اعمال کلیک کنید",
+    "core.globalSearch.icon.toolTip": "جستجو",
+    "core.ui.group.search.title": "جستجو",
+    "data.filter.filterBar.addFilterButtonLabel": "افزودن فیلتر",
+    "data.filter.options.addFiltersButtonLabel": "افزودن فیلترها",
+    "data.query.queryBar.searchInputPlaceholder": "جستجو",
+    "data.query.queryBar.searchInputAriaLabel": "برای جستجو و فیلتر صفحه {pageType} شروع به تایپ کنید",
+    "data.query.queryBar.comboboxAriaLabel": "جستجو و فیلتر صفحه {pageType}",
+    "data.query.queryBar.querySubmitButtonLabel": "اجرای جستجو",
+    "data.query.queryBar.luceneLanguageName": "Lucene",
+    "data.query.queryBar.dqlLanguageName": "DQL",
+    "data.search.aggs.metrics.countTitle": "تعداد",
+    "data.search.aggs.metrics.countLabel": "تعداد",
+    "data.search.aggs.buckets.terms.otherBucketLabel": "سایر",
+    "data.search.aggs.buckets.terms.missingBucketLabel": "ناموجود",
+    "visTypeTable.params.fieldColumns.metricsCountColumnLabel": "تعداد",
+    "visTypeVislib.tableVis.schema.metricLabel": "تعداد",
+    "visualize.topNavMenu.openInspectorButtonLabel": "بازرسی",
+    "visualize.topNavMenu.openInspectorButtonAriaLabel": "باز کردن بازرس برای تصویرسازی",
+    "visualize.topNavMenu.openInspectorTooltip": "بازرسی",
+    "visualize.topNavMenu.shareVisualizationButtonLabel": "اشتراک‌گذاری",
+    "visualize.topNavMenu.saveVisualizationButtonLabel": "ذخیره",
+    "visualize.topNavMenu.saveVisualizationAriaLabel": "ذخیره تصویرسازی",
+    "visualize.topNavMenu.shareVisualizationButtonAriaLabel": "اشتراک‌گذاری تصویرسازی",
+    "visualize.listing.createNew.title": "اولین تصویرسازی خود را بسازید",
+    "visualize.listing.createNew.description": "می‌توانید بر اساس داده‌های خود تصویرسازی‌های مختلف بسازید.",
+    "visualize.listing.createNew.createButtonLabel": "ایجاد تصویرسازی جدید",
+    "discover.localMenu.localMenu.newSearchTitle": "جدید",
+    "discover.localMenu.newSearchDescription": "جستجوی جدید",
+    "discover.localMenu.saveTitle": "ذخیره",
+    "discover.localMenu.saveSearchDescription": "ذخیره جستجو",
+    "discover.localMenu.openTitle": "باز کردن",
+    "discover.localMenu.openSavedSearchDescription": "باز کردن جستجوی ذخیره‌شده",
+    "discover.localMenu.shareTitle": "اشتراک‌گذاری",
+    "discover.localMenu.shareSearchDescription": "اشتراک‌گذاری جستجو",
+    "discover.localMenu.inspectTitle": "بازرسی",
+    "discover.localMenu.openInspectorForSearchDescription": "باز کردن بازرس برای جستجو",
+    "dashboard.topNav.saveButtonTooltip": "ذخیره",
+    "dashboard.topNav.saveButtonAriaLabel": "ذخیره داشبورد",
+    "dashboard.topNav.shareButtonTooltip": "اشتراک‌گذاری",
+    "dashboard.topNav.shareButtonAriaLabel": "اشتراک‌گذاری داشبورد",
+    "embeddablePanel.action.inspectPanel.displayName": "بازرسی"
+  }
+}

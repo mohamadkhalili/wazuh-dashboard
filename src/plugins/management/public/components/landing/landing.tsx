@@ -61,7 +61,7 @@ export const ManagementLandingPage = ({ setBreadcrumbs }: ManagementLandingPageP
           <EuiText size="s">
             <FormattedMessage
               id="management.landing.subhead"
-              defaultMessage="Manage your index patterns, saved objects, Wazuh dashboard settings, and more."
+              defaultMessage="Manage your index patterns, saved objects, Ayyza dashboard settings, and more."
             />
           </EuiText>
         </div>

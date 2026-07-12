@@ -1,0 +1,1292 @@
+(function wazuhFarsiBootstrap(){
+'use strict';
+const ROOT_CLASS = 'wazuh-rtl';
+const WAZUH_APP_SELECTOR = '.wz-app, [data-wz-rtl-app], .application, [data-test-subj="wazuhApp"]';
+
+const TECHNICAL_VALUE_SELECTOR = [
+  'code',
+  'pre',
+  '.euiCode',
+  '.wz-technical',
+  '[data-wz-ltr]',
+].join(',');
+
+const CHART_SELECTOR = [
+  '.wazuh-visualization-layout',
+  '.wazuh-visualization-chart',
+  '.echChart',
+  '.visChart',
+  '.visualization',
+  '[data-wz-rtl-chart]',
+].join(',');
+
+const MENU_POPOVER_SELECTOR = '.wz-menu-popover';
+const NAVIGATION_FLYOUT_SELECTOR = [
+  '.context-nav-wrapper.euiFlyout',
+  '.context-nav-wrapper.ouiFlyout',
+  "[data-test-subj='collapsibleNav'].euiFlyout",
+  "[data-test-subj='collapsibleNav'].ouiFlyout",
+  '.wz-rtl-navigation-flyout',
+].join(',');
+const THEME_CLASS_PREFIX = 'wz-rtl-theme-';
+
+const PERSIAN_TEXT_MAP = new Map(
+  Object.entries({
+    'Loading ...': 'در حال بارگذاری ...',
+    'Loading...': 'در حال بارگذاری...',
+    'Loading…': 'در حال بارگذاری…',
+    Loading: 'در حال بارگذاری',
+    'Loding...': 'در حال بارگذاری...',
+    Wazuh: 'Ayyza',
+    'Wazuh dashboard': 'Ayyza dashboard',
+    'Wazuh Dashboard': 'Ayyza Dashboard',
+    'Wazuh API': 'Ayyza API',
+    'Wazuh server': 'Ayyza server',
+    'Wazuh manager': 'Ayyza manager',
+    'Health check': 'بررسی سلامت',
+    'Health Check': 'بررسی سلامت',
+    'Report created': 'گزارش ساخته شد',
+    'Open report': 'باز کردن گزارش',
+    'See the reports on': 'گزارش‌ها را ببینید در',
+    'Generate report': 'ساخت گزارش',
+    Reports: 'گزارش‌ها',
+    Inspect: 'بازرسی',
+    'Open Inspector for visualization': 'باز کردن بازرس برای تصویرسازی',
+    Share: 'اشتراک‌گذاری',
+    Open: 'باز کردن',
+    Save: 'ذخیره',
+    New: 'جدید',
+    'View roles and identities': 'مشاهده نقش‌ها و هویت‌ها',
+    'Reset password': 'بازنشانی رمز عبور',
+    'Log out': 'خروج',
+    'Recently viewed': 'اخیراً مشاهده‌شده',
+    'No recently viewed items': 'مورد اخیراً مشاهده‌شده‌ای وجود ندارد',
+    'View all': 'مشاهده همه',
+    Home: 'خانه',
+    Overview: 'نمای کلی',
+    Explore: 'کاوش',
+    Discover: 'کشف',
+    Dashboard: 'داشبورد',
+    Dashboards: 'داشبوردها',
+    Visualize: 'تصویرسازی',
+    Reporting: 'گزارش‌گیری',
+    Alerting: 'هشداردهی',
+    'Anomaly Detection': 'تشخیص ناهنجاری',
+    Maps: 'نقشه‌ها',
+    Notifications: 'اعلان‌ها',
+    Inventory: 'موجودی',
+    Events: 'رخدادها',
+    'Endpoint security': 'امنیت Endpoint',
+    'Endpoint امنیت': 'امنیت Endpoint',
+    'Threat intelligence': 'اطلاعات تهدید',
+    'Security operations': 'عملیات امنیتی',
+    'Cloud security': 'امنیت ابری',
+    'Agents management': 'مدیریت Agentها',
+    'System inventory': 'موجودی سیستم',
+    'Server management': 'مدیریت سرور',
+    'Indexer management': 'مدیریت ایندکسر',
+    'مدیریت Indexer': 'مدیریت ایندکسر',
+    'Index Management': 'مدیریت ایندکس‌ها',
+    'Snapshot Management': 'مدیریت اسنپ‌شات‌ها',
+    'Dashboard management': 'مدیریت داشبورد',
+    'Dashboard Management': 'مدیریت داشبورد',
+    'Dashboards Management': 'مدیریت داشبوردها',
+    'Dock navigation': 'ثابت کردن منو',
+    'Configuration Assessment': 'ارزیابی پیکربندی',
+    'Malware Detection': 'تشخیص بدافزار',
+    'File Integrity Monitoring': 'پایش یکپارچگی فایل',
+    'Threat Hunting': 'جستجوی تهدید',
+    'IT Hygiene': 'بهداشت فناوری اطلاعات',
+    Docker: 'داکر',
+    'Amazon Web Services': 'سرویس‌های وب آمازون',
+    'Google Cloud': 'ابر گوگل',
+    GitHub: 'گیت‌هاب',
+    'Office 365': 'آفیس ۳۶۵',
+    'Microsoft Graph API': 'API گراف مایکروسافت',
+    Cluster: 'کلاستر',
+    Statistics: 'آمار',
+    Security: 'امنیت',
+    'Ruleset test': 'آزمون مجموعه قواعد',
+    'Ruleset Test': 'آزمون مجموعه قواعد',
+    'RuleSet Test': 'آزمون مجموعه قواعد',
+    'RuleSet test': 'آزمون مجموعه قواعد',
+    'آزمایش Ruleset': 'آزمون مجموعه قواعد',
+    'Test your logs': 'آزمایش Logها',
+    'API console': 'کنسول API',
+    Refresh: 'تازه‌سازی',
+    'Show dates': 'نمایش تاریخ‌ها',
+    Today: 'امروز',
+    'This week': 'این هفته',
+    'Last 15 minutes': '۱۵ دقیقه گذشته',
+    'Last 30 minutes': '۳۰ دقیقه گذشته',
+    'Last 1 hour': '۱ ساعت گذشته',
+    'Last 24 hours': '۲۴ ساعت گذشته',
+    'Last 7 days': '۷ روز گذشته',
+    'Last 30 days': '۳۰ روز گذشته',
+    'Last 90 days': '۹۰ روز گذشته',
+    Search: 'جستجو',
+    'Search...': 'جستجو…',
+    'Search…': 'جستجو…',
+    '...Search': 'جستجو…',
+    '…Search': 'جستجو…',
+    '... Search': 'جستجو…',
+    '… Search': 'جستجو…',
+    Create: 'ایجاد',
+    Generate: 'تولید',
+    State: 'وضعیت',
+    Type: 'نوع',
+    Source: 'منبع',
+    Ignored: 'نادیده‌گرفته‌شده',
+    Errors: 'خطاها',
+    Acknowledged: 'تأییدشده',
+    Acknowledge: 'تأیید',
+    'View alert details': 'مشاهده جزئیات هشدار',
+    'All states': 'همه وضعیت‌ها',
+    'All alerts': 'همه هشدارها',
+    'All severity levels': 'همه سطوح شدت',
+    Destinations: 'مقصدها',
+    Destination: 'مقصد',
+    Monitors: 'پایشگرها',
+    Monitor: 'پایشگر',
+    Channels: 'کانال‌ها',
+    Channel: 'کانال',
+    'Email senders': 'فرستنده‌های ایمیل',
+    'Email recipient groups': 'گروه‌های گیرنده ایمیل',
+    Detectors: 'آشکارسازها',
+    Detector: 'آشکارساز',
+    'Learn more': 'بیشتر بدانید',
+    Info: 'اطلاعات',
+    documentation: 'مستندات',
+    Documentation: 'مستندات',
+    'No results match your search criteria':
+      'هیچ نتیجه‌ای با معیارهای جستجوی شما مطابقت ندارد',
+    'No results match your search criteria.':
+      'هیچ نتیجه‌ای با معیارهای جستجوی شما مطابقت ندارد.',
+    'No results match for this search criteria.':
+      'هیچ نتیجه‌ای با معیار جستجوی شما مطابقت ندارد.',
+    'TOP 5 GROUPS': '۵ گروه برتر',
+    'TOP 5 OS': '۵ سیستم‌عامل برتر',
+    'AGENTS BY STATUS': 'Agentها بر اساس وضعیت',
+    Pending: 'در انتظار',
+    'Never connected': 'هرگز متصل نشده',
+    active: 'فعال',
+    More: 'بیشتر',
+    'More...': 'بیشتر...',
+    'Export formatted': 'خروجی قالب‌بندی‌شده',
+    'Deploy new agent': 'استقرار Agent جدید',
+    'Select the package to download and install on your system':
+      'بسته مناسب را برای دانلود و نصب روی سیستم انتخاب کنید',
+    'Select the package to download and install on your system:':
+      'بسته مناسب را برای دانلود و نصب روی سیستم انتخاب کنید:',
+    'For additional systems and architectures, please check our documentation':
+      'برای سیستم‌ها و معماری‌های دیگر، مستندات را ببینید',
+    'For additional systems and architectures, please check our documentation.':
+      'برای سیستم‌ها و معماری‌های دیگر، مستندات را ببینید.',
+    'Server address': 'آدرس سرور',
+    'Server address:': 'آدرس سرور:',
+    'Assign a server address': 'تعیین آدرس سرور',
+    'Learn about': 'درباره',
+    'Remember server address': 'به‌خاطر سپردن آدرس سرور',
+    'Error saving server address configuration':
+      'خطا در ذخیره پیکربندی آدرس سرور',
+    'This is the address the agent uses to communicate with the server. Enter an IP address or a fully qualified domain name (FQDN).':
+      'این آدرسی است که Agent برای ارتباط با سرور استفاده می‌کند. یک آدرس IP یا نام دامنه کامل (FQDN) وارد کنید.',
+    'Optional settings': 'تنظیمات اختیاری',
+    'Optional settings:': 'تنظیمات اختیاری:',
+    'By default, the deployment uses the hostname as the agent name. Optionally, you can use a different agent name in the field below':
+      'به‌صورت پیش‌فرض، نام میزبان به‌عنوان نام Agent استفاده می‌شود. در صورت نیاز می‌توانید در فیلد زیر نام دیگری برای Agent وارد کنید',
+    'By default, the deployment uses the hostname as the agent name. Optionally, you can use a different agent name in the field below.':
+      'به‌صورت پیش‌فرض، نام میزبان به‌عنوان نام Agent استفاده می‌شود. در صورت نیاز می‌توانید در فیلد زیر نام دیگری برای Agent وارد کنید.',
+    'Assign an agent name': 'تعیین نام Agent',
+    'Agent نام': 'نام Agent',
+    'The agent name must be unique. It can’t be changed once the agent has been enrolled':
+      'نام Agent باید یکتا باشد و پس از ثبت Agent قابل تغییر نیست',
+    'The agent name must be unique. It can’t be changed once the agent has been enrolled.':
+      'نام Agent باید یکتا باشد و پس از ثبت Agent قابل تغییر نیست.',
+    "The agent name must be unique. It can't be changed once the agent has been enrolled":
+      'نام Agent باید یکتا باشد و پس از ثبت Agent قابل تغییر نیست',
+    "The agent name must be unique. It can't be changed once the agent has been enrolled.":
+      'نام Agent باید یکتا باشد و پس از ثبت Agent قابل تغییر نیست.',
+    'Select one or more existing groups': 'یک یا چند گروه موجود را انتخاب کنید',
+    Password: 'رمز عبور',
+    'The password is required but wasn\'t defined. Please check our':
+      'رمز عبور الزامی است اما تعریف نشده است. لطفاً مستندات را بررسی کنید',
+    "The password is required but wasn't defined. Please check our":
+      'رمز عبور الزامی است اما تعریف نشده است. لطفاً مستندات را بررسی کنید',
+    'Run the following commands to download and install the agent':
+      'دستورهای زیر را برای دانلود و نصب Agent اجرا کنید',
+    'Run the following commands to download and install the agent:':
+      'دستورهای زیر را برای دانلود و نصب Agent اجرا کنید:',
+    'Please select the operating system and server address':
+      'لطفاً سیستم‌عامل و آدرس سرور را انتخاب کنید',
+    'Please select the operating system and server address.':
+      'لطفاً سیستم‌عامل و آدرس سرور را انتخاب کنید.',
+    'Start the agent': 'راه‌اندازی Agent',
+    'Start the agent:': 'راه‌اندازی Agent:',
+    'Go to endpoints to verify the agent connection':
+      'برای بررسی اتصال Agent به Endpointها بروید',
+    'Go to endpoints to verify the agent connection:':
+      'برای بررسی اتصال Agent به Endpointها بروید:',
+    'Back to agent list': 'بازگشت به فهرست Agentها',
+    'Add new group': 'افزودن گروه جدید',
+    'Add new rules file': 'افزودن فایل قواعد',
+    'Manage rules files': 'مدیریت فایل‌های قواعد',
+    'Add new decoders file': 'افزودن فایل دیکودرها',
+    'Manage decoders files': 'مدیریت فایل‌های دیکودرها',
+    'Add new lists file': 'افزودن فایل فهرست',
+    'Import files': 'وارد کردن فایل‌ها',
+    'Save new group': 'ذخیره گروه جدید',
+    'Custom rules': 'قواعد سفارشی',
+    'Custom decoders': 'دیکودرهای سفارشی',
+    'Custom lists': 'لیست‌های سفارشی',
+    Agents: 'Agentها',
+    Endpoints: 'Endpointها',
+    Summary: 'خلاصه',
+    Files: 'فایل‌ها',
+    Groups: 'گروه‌ها',
+    Rules: 'قواعد',
+    Rule: 'قاعده',
+    'Ruleها': 'قواعد',
+    'Ruleهای': 'قواعد',
+    Decoders: 'دیکودرها',
+    Decoder: 'دیکودر',
+    'Decoderها': 'دیکودرها',
+    'Decoderهای': 'دیکودرهای',
+    'CDB Lists': 'فهرست‌های CDB',
+    'لیست‌های CDB': 'فهرست‌های CDB',
+    'From here you can list and check your groups, its agents and files.':
+      'از اینجا می‌توانید گروه‌ها، Agentها و فایل‌های آن‌ها را فهرست و بررسی کنید.',
+    'From here you can manage your rules':
+      'از اینجا می‌توانید قواعد خود را مدیریت کنید',
+    'From here you can manage your rules.':
+      'از اینجا می‌توانید قواعد خود را مدیریت کنید.',
+    'From here you can manage your rules files.':
+      'از اینجا می‌توانید فایل‌های قواعد خود را مدیریت کنید.',
+    'From here you can manage your decoders':
+      'از اینجا می‌توانید دیکودرهای خود را مدیریت کنید',
+    'From here you can manage your decoders.':
+      'از اینجا می‌توانید دیکودرهای خود را مدیریت کنید.',
+    'From here you can manage your decoders files.':
+      'از اینجا می‌توانید فایل‌های دیکودرهای خود را مدیریت کنید.',
+    'From here you can manage your lists':
+      'از اینجا می‌توانید لیست‌های خود را مدیریت کنید',
+    'From here you can manage your lists.':
+      'از اینجا می‌توانید لیست‌های خود را مدیریت کنید.',
+    'From here you can check all your reports.':
+      'از اینجا می‌توانید همه گزارش‌های خود را بررسی کنید.',
+    'From here you can list and manage your agents':
+      'از اینجا می‌توانید Agentهای خود را فهرست و مدیریت کنید.',
+    'From here you can list and see your group files, also, you can edit the group configuration':
+      'از اینجا می‌توانید فایل‌های گروه را فهرست و مشاهده کنید و پیکربندی گروه را ویرایش کنید.',
+    'From here you can manage and configure the API entries. You can also check their connection and status.':
+      'از اینجا می‌توانید ورودی‌های API را مدیریت و پیکربندی کنید و اتصال و وضعیت آن‌ها را بررسی کنید.',
+    'From here you can see daemon statistics.':
+      'از اینجا می‌توانید آمار daemon را ببینید.',
+    Name: 'نام',
+    'IP address': 'آدرس IP',
+    'Group(s)': 'گروه‌ها',
+    'Cluster node': 'گره Cluster',
+    Version: 'نسخه',
+    Status: 'وضعیت',
+    Actions: 'عملیات',
+    'Configuration checksum': 'Checksum پیکربندی',
+    'Regulatory compliance': 'انطباق مقرراتی',
+    'Creation time': 'زمان ایجاد',
+    'Last Updated': 'آخرین به‌روزرسانی',
+    'Last updated': 'آخرین به‌روزرسانی',
+    'Schedule details': 'جزئیات زمان‌بندی',
+    File: 'فایل',
+    'Program name': 'نام برنامه',
+    Order: 'ترتیب',
+    ID: 'شناسه',
+    'Add filter': 'افزودن فیلتر',
+    'Check API connection': 'بررسی اتصال API',
+    'API connection': 'اتصال API',
+    'Check API version': 'بررسی نسخه API',
+    'API version': 'نسخه API',
+    'Check alerts index pattern': 'بررسی index pattern هشدارها',
+    'Alerts index pattern': 'index pattern هشدارها',
+    'Check monitoring index pattern': 'بررسی index pattern مانیتورینگ',
+    'Monitoring index pattern': 'index pattern مانیتورینگ',
+    'Check statistics index pattern': 'بررسی index pattern آمار',
+    'Statistics index pattern': 'index pattern آمار',
+    'Browse through your security alerts, identifying issues and threats in your environment.':
+      'هشدارهای امنیتی را مرور کنید و رخدادها و تهدیدهای محیط خود را شناسایی کنید.',
+    'Alerts related to file changes, including permissions, content, ownership and attributes.':
+      'هشدارهای مربوط به تغییرات فایل، از جمله مجوزها، محتوا، مالکیت و ویژگی‌ها.',
+    'Check indicators of compromise triggered by malware infections or cyberattacks.':
+      'شاخص‌های نفوذ ناشی از آلودگی بدافزاری یا حملات سایبری را بررسی کنید.',
+    'Discover what applications in your environment are affected by well-known vulnerabilities.':
+      'برنامه‌هایی را که در محیط شما تحت تأثیر آسیب‌پذیری‌های شناخته‌شده هستند شناسایی کنید.',
+    'Scan your assets as part of a configuration assessment audit.':
+      'دارایی‌های خود را به عنوان بخشی از ممیزی ارزیابی پیکربندی اسکن کنید.',
+    'Configuration assessment and automation of compliance monitoring using SCAP checks.':
+      'ارزیابی پیکربندی و خودکارسازی پایش انطباق با استفاده از بررسی‌های SCAP.',
+    'Audit users behavior, monitoring command execution and alerting on access to critical files.':
+      'رفتار کاربران، اجرای دستورها و دسترسی به فایل‌های حساس را ممیزی و پایش کنید.',
+    'Global security standard for entities that process, store or transmit payment cardholder data.':
+      'استاندارد امنیتی جهانی برای سازمان‌هایی که داده‌های کارت پرداخت را پردازش، ذخیره یا منتقل می‌کنند.',
+    'Global security standard for entities that process, store, or transmit payment cardholder data.':
+      'استاندارد امنیتی جهانی برای سازمان‌هایی که داده‌های کارت پرداخت را پردازش، ذخیره یا منتقل می‌کنند.',
+    'Global security standard for entities that process, store or transmit payment cardholder data':
+      'استاندارد امنیتی جهانی برای سازمان‌هایی که داده‌های کارت پرداخت را پردازش، ذخیره یا منتقل می‌کنند',
+    'Global security standard for entities that process, store, or transmit payment cardholder data':
+      'استاندارد امنیتی جهانی برای سازمان‌هایی که داده‌های کارت پرداخت را پردازش، ذخیره یا منتقل می‌کنند',
+    'Security events related to your Amazon AWS services, collected directly via AWS API.':
+      'رخدادهای امنیتی سرویس‌های Amazon AWS که مستقیم از طریق AWS API جمع‌آوری می‌شوند.',
+    'Security events related to your Amazon AWS services, collected directly via AWS API':
+      'رخدادهای امنیتی سرویس‌های Amazon AWS که مستقیم از طریق AWS API جمع‌آوری می‌شوند',
+    'Monitor and collect the activity from Docker containers such as creation, running, starting, stopping or pausing events.':
+      'فعالیت containerهای Docker مانند ایجاد، اجرا، شروع، توقف یا pause را پایش و جمع‌آوری کنید.',
+    'Monitor and collect the activity from Docker containers such as creation, running, starting, stopping or pausing events':
+      'فعالیت containerهای Docker مانند ایجاد، اجرا، شروع، توقف یا pause را پایش و جمع‌آوری کنید',
+    'Assess system, software, processes, and network layers to detect misconfigurations, unauthorized changes, and anomalies.':
+      'سیستم، نرم‌افزار، فرایندها و لایه‌های شبکه را برای کشف پیکربندی نادرست، تغییرات غیرمجاز و ناهنجاری‌ها ارزیابی کنید.',
+    'Assess system, software, processes, and network layers to detect misconfigurations, unauthorized changes, and anomalies':
+      'سیستم، نرم‌افزار، فرایندها و لایه‌های شبکه را برای کشف پیکربندی نادرست، تغییرات غیرمجاز و ناهنجاری‌ها ارزیابی کنید',
+    'Monitoring events from audit logs of your GitHub organizations.':
+      'رخدادهای audit log سازمان‌های GitHub خود را پایش کنید.',
+    'Monitoring events from audit logs of your GitHub organizations':
+      'رخدادهای audit log سازمان‌های GitHub خود را پایش کنید',
+    'Security events related to your Google Cloud Platform services, collected directly via GCP API.':
+      'رخدادهای امنیتی سرویس‌های Google Cloud Platform که مستقیم از طریق GCP API جمع‌آوری می‌شوند.',
+    'Security events related to your Google Cloud Platform services, collected directly via GCP API':
+      'رخدادهای امنیتی سرویس‌های Google Cloud Platform که مستقیم از طریق GCP API جمع‌آوری می‌شوند',
+    'Security events related to your Microsoft Graph services, collected directly via Microsoft Graph API.':
+      'رخدادهای امنیتی سرویس‌های Microsoft Graph که مستقیم از طریق Microsoft Graph API جمع‌آوری می‌شوند.',
+    'Security events related to your Microsoft Graph services, collected directly via Microsoft Graph API':
+      'رخدادهای امنیتی سرویس‌های Microsoft Graph که مستقیم از طریق Microsoft Graph API جمع‌آوری می‌شوند',
+    'Security events related to your Office 365 services.':
+      'رخدادهای امنیتی مربوط به سرویس‌های Office 365.',
+    'Security events related to your Office 365 services':
+      'رخدادهای امنیتی مربوط به سرویس‌های Office 365',
+    'Health Insurance Portability and Accountability Act of 1996 (HIPAA) provides data privacy and security provisions for safeguarding medical information.':
+      'قانون HIPAA چارچوب حریم خصوصی و امنیت داده‌ها را برای حفاظت از اطلاعات پزشکی فراهم می‌کند.',
+    'Health Insurance Portability and Accountability Act of 1996 (HIPAA) provides data privacy and security provisions for safeguarding medical information':
+      'قانون HIPAA چارچوب حریم خصوصی و امنیت داده‌ها را برای حفاظت از اطلاعات پزشکی فراهم می‌کند',
+    'Trust Services Criteria for Security, Availability, Processing Integrity, Confidentiality, and Privacy':
+      'معیارهای خدمات اعتماد برای امنیت، دسترس‌پذیری، یکپارچگی پردازش، محرمانگی و حریم خصوصی',
+    'General Data Protection Regulation (GDPR) sets guidelines for processing of personal data.':
+      'مقررات عمومی حفاظت از داده‌ها که چارچوب پردازش داده‌های شخصی را مشخص می‌کند.',
+    'National Institute of Standards and Technology Special Publication 800-53 (NIST 800-53) sets guidelines for federal information systems.':
+      'راهنمای NIST برای کنترل‌های امنیتی سامانه‌های اطلاعاتی.',
+    'Explore security alerts mapped to adversary tactics and techniques for better threat understanding.':
+      'هشدارهای امنیتی نگاشت‌شده به تاکتیک‌ها و تکنیک‌های مهاجمان را برای درک بهتر تهدید بررسی کنید.',
+    INFO: 'اطلاع',
+    ACTION: 'اقدام',
+    WARNING: 'هشدار',
+    ERROR: 'خطا',
+    'Alerts evolution over time': 'روند هشدارها در طول زمان',
+    'Top tactics': 'تاکتیک‌های برتر',
+    'Rule level by attack': 'سطح قاعده بر اساس حمله',
+    'MITRE attacks by tactic': 'حمله‌های MITRE بر اساس تاکتیک',
+    'Rule level by tactic': 'سطح قاعده بر اساس تاکتیک',
+    'rule.mitre.tactic: Descending': 'rule.mitre.tactic: نزولی',
+    'Password Guessing': 'حدس رمز عبور',
+    'Brute Force': 'حمله Brute Force',
+    SSH: 'SSH',
+    'Stored Data Manipulat': 'دستکاری داده ذخیره‌شده',
+    'Stored Data Manipulation': 'دستکاری داده ذخیره‌شده',
+    'Valid Accounts': 'حساب‌های معتبر',
+    'Credential Access': 'دسترسی به اعتبارنامه',
+    'Lateral Movement': 'حرکت جانبی',
+    Impact: 'اثرگذاری',
+    'Defense Evasion': 'دور زدن دفاع',
+    'Privilege Escalation': 'ارتقای دسترسی',
+    'Initial Access': 'دسترسی اولیه',
+    Persistence: 'ماندگاری',
+    'Operating system families': 'خانواده‌های سیستم‌عامل',
+    'Operating system': 'سیستم‌عامل',
+    'Package types': 'نوع پکیج‌ها',
+    'Top 5 endpoints by memory usage': '۵ Endpoint برتر بر اساس مصرف حافظه',
+    'Total memory': 'حافظه کل',
+    Usage: 'مصرف',
+    'Top 5 installed packages': '۵ پکیج نصب‌شده برتر',
+    'Top 5 running processes': '۵ فرایند در حال اجرا برتر',
+    'Top 5 operating systems': '۵ سیستم‌عامل برتر',
+    'Top 5 host CPUs': '۵ پردازنده میزبان برتر',
+    'Top 5 destination ports': '۵ پورت مقصد برتر',
+    'Top 5 source ports': '۵ پورت مبدا برتر',
+    'Processes start time': 'زمان شروع فرایندها',
+    'Top 5 rules': '۵ قاعده برتر',
+    'Top 5 requirements': '۵ الزام برتر',
+    'Top 10 requirements': '۱۰ الزام برتر',
+    'Top 5 PCI DSS requirements': '۵ الزام برتر PCI DSS',
+    'PCI DSS requirements': 'الزامات PCI DSS',
+    'PCI DSS Requirements': 'الزامات PCI DSS',
+    'GDPR requirements': 'الزامات GDPR',
+    'GDPR Requirements': 'الزامات GDPR',
+    'HIPAA requirements': 'الزامات HIPAA',
+    'HIPAA Requirements': 'الزامات HIPAA',
+    'NIST 800-53 requirements': 'الزامات NIST 800-53',
+    'NIST 800-53 Requirements': 'الزامات NIST 800-53',
+    'TSC requirements': 'الزامات TSC',
+    'TSC Requirements': 'الزامات TSC',
+    'Top 5 TSC requirements': '۵ الزام برتر TSC',
+    'Requirements over time': 'روند الزامات در زمان',
+    'Requirements evolution over time': 'روند تغییرات الزامات در زمان',
+    'Requirements distributed by level': 'توزیع الزامات بر اساس سطح',
+    'Requirements distribution by level': 'توزیع الزامات بر اساس سطح',
+    'Rule level distribution': 'توزیع سطح قاعده',
+    'Most common alerts': 'رایج‌ترین هشدارها',
+    'Total alerts': 'کل هشدارها',
+    'Max rule level': 'بیشترین سطح قاعده',
+    'Max rule level detected': 'بیشترین سطح قاعده شناسایی‌شده',
+    Requirement: 'الزام',
+    'Requirement(s)': 'الزام‌ها',
+    Requirements: 'الزامات',
+    'Hide requirements with no alerts': 'الزام‌های بدون هشدار را پنهان کن',
+    'Filter requirements': 'فیلتر الزامات',
+    'There are no results.': 'نتیجه‌ای وجود ندارد.',
+    'No reports to display': 'گزارشی برای نمایش وجود ندارد',
+    'No report definitions to display': 'تعریف گزارشی برای نمایش وجود ندارد',
+    'Report definitions': 'تعریف‌های گزارش',
+    'Create report definition': 'ایجاد تعریف گزارش',
+    'Create a report definition, or share/download a report from a dashboard, saved search or visualization':
+      'یک تعریف گزارش بسازید، یا از داشبورد، جستجوی ذخیره‌شده یا تصویرسازی، گزارش را اشتراک‌گذاری یا دانلود کنید',
+    'Create a report definition, or share/download a report from a dashboard, saved search or visualization.':
+      'یک تعریف گزارش بسازید، یا از داشبورد، جستجوی ذخیره‌شده یا تصویرسازی، گزارش را اشتراک‌گذاری یا دانلود کنید.',
+    'Create a new report definition to get started':
+      'برای شروع، یک تعریف گزارش جدید بسازید',
+    'To learn more, see': 'برای اطلاعات بیشتر ببینید',
+    'Get started with OpenSearch Dashboards reporting':
+      'شروع کار با گزارش‌گیری OpenSearch Dashboards',
+    'Alerts by triggers': 'هشدارها بر اساس محرک‌ها',
+    'Monitor name': 'نام پایشگر',
+    Severity: 'شدت',
+    'Trigger last updated': 'آخرین به‌روزرسانی محرک',
+    'Trigger start time': 'زمان شروع محرک',
+    'Trigger name': 'نام محرک',
+    'Create monitor': 'ایجاد پایشگر',
+    'There are no existing alerts. Create a monitor to add triggers and actions. Once an alarm is triggered, the state will show in this table':
+      'هشدار موجودی وجود ندارد. برای افزودن محرک‌ها و عملیات، یک پایشگر بسازید. پس از فعال‌شدن هشدار، وضعیت آن در این جدول نمایش داده می‌شود',
+    'There are no existing alerts. Create a monitor to add triggers and actions. Once an alarm is triggered, the state will show in this table.':
+      'هشدار موجودی وجود ندارد. برای افزودن محرک‌ها و عملیات، یک پایشگر بسازید. پس از فعال‌شدن هشدار، وضعیت آن در این جدول نمایش داده می‌شود.',
+    '... with composite monitors': '... با پایشگرهای ترکیبی',
+    '...with composite monitors': '... با پایشگرهای ترکیبی',
+    '… with composite monitors': '… با پایشگرهای ترکیبی',
+    '…with composite monitors': '… با پایشگرهای ترکیبی',
+    '... with composite monitors': '… با پایشگرهای ترکیبی',
+    'Last notification time': 'زمان آخرین اعلان',
+    'Latest alert': 'آخرین هشدار',
+    'There are no existing monitors. Create a monitor to add triggers and actions':
+      'پایشگر موجودی وجود ندارد. برای افزودن محرک‌ها و عملیات، یک پایشگر بسازید',
+    'There are no existing monitors. Create a monitor to add triggers and actions.':
+      'پایشگر موجودی وجود ندارد. برای افزودن محرک‌ها و عملیات، یک پایشگر بسازید.',
+    '.There are no existing monitors. Create a monitor to add triggers and actions':
+      'پایشگر موجودی وجود ندارد. برای افزودن محرک‌ها و عملیات، یک پایشگر بسازید.',
+    '.There are no existing monitors. Create a monitor to add triggers and actions.':
+      'پایشگر موجودی وجود ندارد. برای افزودن محرک‌ها و عملیات، یک پایشگر بسازید.',
+    'Destinations have become channels in Notifications':
+      'مقصدها در اعلان‌ها به کانال تبدیل شده‌اند',
+    'Your destinations have been migrated as channels in Notifications, a new centralized place to manage your notification channels. Destinations will be deprecated going forward.':
+      'مقصدهای شما به‌عنوان کانال به بخش اعلان‌ها منتقل شده‌اند؛ این بخش محل متمرکز جدید برای مدیریت کانال‌های اعلان است. مقصدها در نسخه‌های بعدی کنار گذاشته می‌شوند.',
+    'View in Notifications': 'مشاهده در اعلان‌ها',
+    'Create channel': 'ایجاد کانال',
+    'No channels to display': 'کانالی برای نمایش وجود ندارد',
+    'To send or receive notifications, you will need to create a notification channel':
+      'برای ارسال یا دریافت اعلان‌ها باید یک کانال اعلان بسازید',
+    'To send or receive notifications, you will need to create a notification channel.':
+      'برای ارسال یا دریافت اعلان‌ها باید یک کانال اعلان بسازید.',
+    'To send or receive notifications, you will need to create a notification" ".channel':
+      'برای ارسال یا دریافت اعلان‌ها باید یک کانال اعلان بسازید.',
+    'To send or receive notifications, you will need to create a notification".channel':
+      'برای ارسال یا دریافت اعلان‌ها باید یک کانال اعلان بسازید.',
+    'To send or receive notifications, you will need to create a notification channel".':
+      'برای ارسال یا دریافت اعلان‌ها باید یک کانال اعلان بسازید.',
+    'Notification status': 'وضعیت اعلان',
+    'Create detector': 'ایجاد آشکارساز',
+    'Anomaly detection': 'تشخیص ناهنجاری',
+    'Get started': 'شروع کار',
+    'Create your first visualization': 'اولین تصویرسازی خود را بسازید',
+    'You can create different visualizations based on your data':
+      'می‌توانید بر اساس داده‌های خود تصویرسازی‌های مختلف بسازید',
+    'You can create different visualizations based on your data.':
+      'می‌توانید بر اساس داده‌های خود تصویرسازی‌های مختلف بسازید.',
+    '.You can create different visualizations based on your data':
+      'می‌توانید بر اساس داده‌های خود تصویرسازی‌های مختلف بسازید.',
+    '.You can create different visualizations based on your data.':
+      'می‌توانید بر اساس داده‌های خود تصویرسازی‌های مختلف بسازید.',
+    'Create new visualization': 'ایجاد تصویرسازی جدید',
+    'The anomaly detection plugin automatically detects anomalies in your data in near real-time using the Random Cut Forest (RCF) algorithm.':
+      'پلاگین تشخیص ناهنجاری با الگوریتم Random Cut Forest یا RCF، ناهنجاری‌های داده را تقریباً به‌صورت بی‌درنگ شناسایی می‌کند.',
+    'How it works': 'نحوه کار',
+    'Define your detector': 'تعریف آشکارساز',
+    'Configure your detector': 'پیکربندی آشکارساز',
+    'Preview your detector': 'پیش‌نمایش آشکارساز',
+    'View results': 'مشاهده نتایج',
+    'Select a data source, set the detector interval, and specify a window delay.':
+      'یک منبع داده انتخاب کنید، بازه اجرای آشکارساز را تنظیم کنید و تأخیر پنجره را مشخص کنید.',
+    'Choose the fields in your index that you want to check for anomalies. You may also set a category field to see a granular view of anomalies within each entity.':
+      'فیلدهای ایندکس را که می‌خواهید برای ناهنجاری بررسی شوند انتخاب کنید. همچنین می‌توانید یک فیلد دسته‌بندی تعیین کنید تا نمای جزئی‌تری از ناهنجاری‌ها برای هر موجودیت ببینید.',
+    'After configuring your model, preview your results with sample data to fine-tune your settings.':
+      'پس از پیکربندی مدل، نتایج را با داده نمونه پیش‌نمایش کنید تا تنظیمات را دقیق‌تر کنید.',
+    'Run your detector to observe results in real-time. You can also enable historical analysis to view anomalies in your data history.':
+      'آشکارساز را اجرا کنید تا نتایج را به‌صورت بی‌درنگ ببینید. همچنین می‌توانید تحلیل تاریخی را فعال کنید تا ناهنجاری‌های گذشته داده‌ها را مشاهده کنید.',
+    'Start with a sample detector to learn about anomaly detection':
+      'برای آشنایی با تشخیص ناهنجاری، با یک آشکارساز نمونه شروع کنید',
+    'New to anomaly detection? Get a better understanding of how it works by creating a detector with one of the sample datasets':
+      'با تشخیص ناهنجاری آشنا نیستید؟ با ساخت یک آشکارساز بر پایه یکی از مجموعه‌داده‌های نمونه، بهتر با نحوه کار آن آشنا شوید',
+    'New to anomaly detection? Get a better understanding of how it works by creating a detector with one of the sample datasets.':
+      'با تشخیص ناهنجاری آشنا نیستید؟ با ساخت یک آشکارساز بر پایه یکی از مجموعه‌داده‌های نمونه، بهتر با نحوه کار آن آشنا شوید.',
+    '.New to anomaly detection? Get a better understanding of how it works by creating a detector with one of the sample datasets':
+      'با تشخیص ناهنجاری آشنا نیستید؟ با ساخت یک آشکارساز بر پایه یکی از مجموعه‌داده‌های نمونه، بهتر با نحوه کار آن آشنا شوید.',
+    '.New to anomaly detection? Get a better understanding of how it works by creating a detector with one of the sample datasets.':
+      'با تشخیص ناهنجاری آشنا نیستید؟ با ساخت یک آشکارساز بر پایه یکی از مجموعه‌داده‌های نمونه، بهتر با نحوه کار آن آشنا شوید.',
+    'Monitor host health': 'پایش سلامت میزبان',
+    'Monitor eCommerce orders': 'پایش سفارش‌های فروشگاه آنلاین',
+    'Monitor HTTP responses': 'پایش پاسخ‌های HTTP',
+    'Detect increases in CPU and memory utilization in an index containing various health metrics from a host':
+      'افزایش مصرف CPU و حافظه را در ایندکسی شامل معیارهای مختلف سلامت میزبان شناسایی کنید',
+    'Detect increases in CPU and memory utilization in an index containing various health metrics from a host.':
+      'افزایش مصرف CPU و حافظه را در ایندکسی شامل معیارهای مختلف سلامت میزبان شناسایی کنید.',
+    '.Detect increases in CPU and memory utilization in an index containing various health metrics from a host':
+      'افزایش مصرف CPU و حافظه را در ایندکسی شامل معیارهای مختلف سلامت میزبان شناسایی کنید.',
+    '.Detect increases in CPU and memory utilization in an index containing various health metrics from a host.':
+      'افزایش مصرف CPU و حافظه را در ایندکسی شامل معیارهای مختلف سلامت میزبان شناسایی کنید.',
+    'Detect any unusual increase or decrease of orders in an index containing online order data':
+      'افزایش یا کاهش غیرعادی سفارش‌ها را در ایندکسی شامل داده سفارش‌های آنلاین شناسایی کنید',
+    'Detect any unusual increase or decrease of orders in an index containing online order data.':
+      'افزایش یا کاهش غیرعادی سفارش‌ها را در ایندکسی شامل داده سفارش‌های آنلاین شناسایی کنید.',
+    '.Detect any unusual increase or decrease of orders in an index containing online order data':
+      'افزایش یا کاهش غیرعادی سفارش‌ها را در ایندکسی شامل داده سفارش‌های آنلاین شناسایی کنید.',
+    '.Detect any unusual increase or decrease of orders in an index containing online order data.':
+      'افزایش یا کاهش غیرعادی سفارش‌ها را در ایندکسی شامل داده سفارش‌های آنلاین شناسایی کنید.',
+    'Detect high numbers of error response codes in an index containing HTTP response data':
+      'تعداد بالای کدهای پاسخ خطا را در ایندکسی شامل داده پاسخ‌های HTTP شناسایی کنید',
+    'Detect high numbers of error response codes in an index containing HTTP response data.':
+      'تعداد بالای کدهای پاسخ خطا را در ایندکسی شامل داده پاسخ‌های HTTP شناسایی کنید.',
+    '.Detect high numbers of error response codes in an index containing HTTP response data':
+      'تعداد بالای کدهای پاسخ خطا را در ایندکسی شامل داده پاسخ‌های HTTP شناسایی کنید.',
+    '.Detect high numbers of error response codes in an index containing HTTP response data.':
+      'تعداد بالای کدهای پاسخ خطا را در ایندکسی شامل داده پاسخ‌های HTTP شناسایی کنید.',
+    'Create health monitor detector': 'ایجاد آشکارساز سلامت میزبان',
+    'Create eCommerce orders detector': 'ایجاد آشکارساز سفارش‌های فروشگاه آنلاین',
+    'Create HTTP response detector': 'ایجاد آشکارساز پاسخ HTTP',
+    'Create map': 'ایجاد نقشه',
+    'Create your first map': 'اولین نقشه خود را بسازید',
+    "There is no map to display, let's create your first map":
+      'نقشه‌ای برای نمایش وجود ندارد؛ اولین نقشه را بسازید',
+    "There is no map to display, let's create your first map.":
+      'نقشه‌ای برای نمایش وجود ندارد؛ اولین نقشه را بسازید.',
+    Description: 'توضیح',
+    Level: 'سطح',
+    'Rule ID': 'شناسه قاعده',
+    Agent: 'Agent',
+    'Agent name': 'نام Agent',
+    Timestamp: 'زمان',
+    Timestampt: 'زمان',
+    'Last 1 year': '۱ سال گذشته',
+    'Go to Settings': 'رفتن به تنظیمات',
+    Continue: 'ادامه',
+    'sshd: Attempt to login': 'sshd: تلاش برای ورود',
+    'Listened ports status': 'وضعیت پورت‌های شنود شده',
+    'PAM: User login failed.': 'PAM: ورود کاربر ناموفق بود.',
+    'Most common vulnerability score': 'رایج‌ترین امتیاز آسیب‌پذیری',
+    'Vulnerability base score': 'امتیاز پایه آسیب‌پذیری',
+    'Most vulnerable OS families': 'آسیب‌پذیرترین خانواده‌های سیستم‌عامل',
+    'Host OS type': 'نوع سیستم‌عامل میزبان',
+    'Vulnerabilities by year of publication':
+      'آسیب‌پذیری‌ها بر اساس سال انتشار',
+    'Year published': 'سال انتشار',
+    'System inventory': 'موجودی سیستم',
+    'Serial number': 'شماره سریال',
+    'Host name': 'نام میزبان',
+    CPU: 'پردازنده',
+    Memory: 'حافظه',
+    Cores: 'هسته‌ها',
+    Compliance: 'انطباق',
+    'Top Tactics': 'تاکتیک‌های برتر',
+    'Events count evolution': 'روند تعداد رخدادها',
+    'Dashboard of Events count evolution': 'داشبورد روند تعداد رخدادها',
+    'Security Configuration Assessment': 'ارزیابی پیکربندی امنیتی',
+    'Open SCA Scans': 'باز کردن اسکن‌های SCA',
+    Policy: 'سیاست',
+    'End scan': 'پایان اسکن',
+    Passed: 'موفق',
+    Failed: 'ناموفق',
+    'not applicable': 'نامرتبط',
+    'Not applicable': 'نامرتبط',
+    Score: 'امتیاز',
+    'Vulnerability Detection': 'تشخیص آسیب‌پذیری',
+    'Open Vulnerability Detection': 'باز کردن تشخیص آسیب‌پذیری',
+    'Top 5 Packages': '۵ پکیج برتر',
+    Package: 'پکیج',
+    Critical: 'بحرانی',
+    High: 'بالا',
+    Medium: 'متوسط',
+    Low: 'پایین',
+    'FIM: Recent events': 'FIM: رخدادهای اخیر',
+    'Open FIM': 'باز کردن FIM',
+    Time: 'زمان',
+    Path: 'مسیر',
+    Action: 'عملیات',
+    'Rule description': 'توضیح قاعده',
+    'Rule Level': 'سطح قاعده',
+    'Rule Id': 'شناسه قاعده',
+    'Rule level': 'سطح قاعده',
+    'No recent events': 'رخداد اخیری وجود ندارد',
+    'Integrity checksum changed': 'Checksum یکپارچگی تغییر کرد',
+    '.Integrity checksum changed': 'Checksum یکپارچگی تغییر کرد',
+    modified: 'تغییر یافته',
+    Count: 'تعداد',
+    Other: 'سایر',
+    Missing: 'ناموجود',
+    'timestamp per week': 'زمان بر اساس هفته',
+    'Top 10 Alert groups evolution': 'روند ۱۰ گروه هشدار برتر',
+    'Top 10 Alert level evolution': 'روند ۱۰ سطح هشدار برتر',
+    'Top 5 agents': '۵ Agent برتر',
+    'Top 10 MITRE ATT&CKS': '۱۰ مورد برتر MITRE ATT&CK',
+    'Alerts evolution - Top 5 agents': 'روند هشدارها - ۵ Agent برتر',
+    Alerts: 'هشدارها',
+    'Top 5 alerts': '۵ هشدار برتر',
+    'Top 5 rule groups': '۵ گروه قاعده برتر',
+    'Top 5 PCI DSS Requirements': '۵ الزام برتر PCI DSS',
+    'Last 24 hours alerts': 'هشدارهای ۲۴ ساعت گذشته',
+    'LAST 24 HOURS ALERTS': 'هشدارهای ۲۴ ساعت گذشته',
+    'Agents summary': 'خلاصه Agentها',
+    'AGENTS SUMMARY': 'خلاصه Agentها',
+    'Low severity': 'شدت پایین',
+    'Medium severity': 'شدت متوسط',
+    'High severity': 'شدت بالا',
+    'Critical severity': 'شدت بحرانی',
+    'Rule level 0 to 6': 'سطح قاعده از ۰ تا ۶',
+    'Rule level 7 to 11': 'سطح قاعده از ۷ تا ۱۱',
+    'Rule level 12 to 14': 'سطح قاعده از ۱۲ تا ۱۴',
+    'Rule level 15 or higher': 'سطح قاعده ۱۵ یا بالاتر',
+    Active: 'فعال',
+    Disconnected: 'قطع اتصال',
+    'Go to all agents': 'رفتن به همه Agentها',
+    'Deploy new agent': 'استقرار Agent جدید',
+    'No agents were added to the manager': 'هیچ Agentی به Manager اضافه نشده است',
+    'No agents were added to this manager.':
+      'هیچ Agentی به این Manager اضافه نشده است.',
+    'Add agents to fleet to start monitoring':
+      'برای شروع مانیتورینگ، Agentها را به مجموعه اضافه کنید',
+    'This instance has no agents registered.':
+      'در این instance هیچ Agentی ثبت نشده است.',
+    'Please deploy agents to begin monitoring your endpoints.':
+      'برای شروع مانیتورینگ Endpointها، Agentها را مستقر کنید.',
+    Back: 'بازگشت',
+    Settings: 'تنظیمات',
+    'Dev Tools': 'ابزارهای توسعه',
+    'Ruleset Test': 'آزمون مجموعه قواعد',
+    'Sample Data': 'داده نمونه',
+    'Server APIs': 'APIهای سرور',
+    'App Settings': 'تنظیمات برنامه',
+    About: 'درباره',
+    Logs: 'لاگ‌ها',
+    'List and filter logs.': 'لاگ‌ها را فهرست و فیلتر کنید.',
+    Stats: 'آمار',
+    Configuration: 'پیکربندی',
+    'No results': 'نتیجه‌ای یافت نشد',
+    'No MITRE ATT&CK results were found in the selected time range.':
+      'در بازه زمانی انتخاب‌شده نتیجه‌ای برای MITRE ATT&CK یافت نشد.',
+    'No SCA scans in this agent': 'برای این Agent اسکن SCA وجود ندارد',
+    "You don't have SCA scans in this agent.":
+      'برای این Agent اسکن SCA وجود ندارد.',
+    'Check your agent settings to generate scans.':
+      'برای تولید اسکن‌ها تنظیمات Agent را بررسی کنید.',
+    'Not enough hardware or operating system information':
+      'اطلاعات سخت‌افزار یا سیستم‌عامل کافی نیست',
+  }),
+);
+
+const PERSIAN_SEVERITY_PREFIXES = new Map([
+  ['Critical', 'بحرانی'],
+  ['High', 'بالا'],
+  ['Medium', 'متوسط'],
+  ['Low', 'پایین'],
+]);
+
+const PERSIAN_STATUS_PREFIXES = new Map([
+  ['Active', 'فعال'],
+  ['Disconnected', 'قطع اتصال'],
+  ['Pending', 'در انتظار'],
+  ['Never connected', 'هرگز متصل نشده'],
+  ['active', 'فعال'],
+]);
+
+const HEALTH_LOG_TYPE_LABELS = {
+  INFO: 'اطلاع',
+  ACTION: 'اقدام',
+  WARNING: 'هشدار',
+  ERROR: 'خطا',
+};
+
+const REGISTER_AGENT_FIELD_LABELS = new Map([
+  ['operating system', 'سیستم‌عامل'],
+  ['server address', 'آدرس سرور'],
+  ['agent name', 'نام Agent'],
+  ['one or more existing groups', 'یک یا چند گروه موجود'],
+  ['password', 'رمز عبور'],
+]);
+
+const PERSIAN_DIGITS = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+
+const ENGLISH_MONTH_INDEX = {
+  Jan: 0,
+  January: 0,
+  Feb: 1,
+  February: 1,
+  Mar: 2,
+  March: 2,
+  Apr: 3,
+  April: 3,
+  May: 4,
+  Jun: 5,
+  June: 5,
+  Jul: 6,
+  July: 6,
+  Aug: 7,
+  August: 7,
+  Sep: 8,
+  Sept: 8,
+  September: 8,
+  Oct: 9,
+  October: 9,
+  Nov: 10,
+  November: 10,
+  Dec: 11,
+  December: 11,
+};
+
+const PERSIAN_DATE_FORMATTER =
+  typeof Intl !== 'undefined'
+    ? new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        timeZone: 'UTC',
+      })
+    : null;
+
+function toPersianDigits(value) {
+  return String(value).replace(/\d/g, digit => PERSIAN_DIGITS[Number(digit)]);
+}
+
+function formatPersianDate(date) {
+  if (!PERSIAN_DATE_FORMATTER) {
+    return toPersianDigits(date.toISOString().slice(0, 10));
+  }
+
+  return PERSIAN_DATE_FORMATTER.format(date);
+}
+
+function createUtcDate(year, monthIndex, day) {
+  const date = new Date(Date.UTC(year, monthIndex, day));
+
+  if (
+    date.getUTCFullYear() !== year ||
+    date.getUTCMonth() !== monthIndex ||
+    date.getUTCDate() !== day
+  ) {
+    return null;
+  }
+
+  return date;
+}
+
+function translateDisplayDate(value) {
+  const isoDate = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (isoDate) {
+    const date = createUtcDate(
+      Number(isoDate[1]),
+      Number(isoDate[2]) - 1,
+      Number(isoDate[3]),
+    );
+
+    return date ? formatPersianDate(date) : value;
+  }
+
+  const slashDate = value.match(/^(\d{4})\/(\d{2})\/(\d{2})$/);
+  if (slashDate) {
+    const date = createUtcDate(
+      Number(slashDate[1]),
+      Number(slashDate[2]) - 1,
+      Number(slashDate[3]),
+    );
+
+    return date ? formatPersianDate(date) : value;
+  }
+
+  const monthDate = value.match(
+    /^(Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|Aug|August|Sep|Sept|September|Oct|October|Nov|November|Dec|December)\s+(\d{1,2}),\s+(\d{4})(?:\s+@\s+(\d{2}:\d{2}(?::\d{2})?(?:\.\d+)?))?$/,
+  );
+  if (monthDate) {
+    const date = createUtcDate(
+      Number(monthDate[3]),
+      ENGLISH_MONTH_INDEX[monthDate[1]],
+      Number(monthDate[2]),
+    );
+
+    if (!date) {
+      return value;
+    }
+
+    const persianDate = formatPersianDate(date);
+    return monthDate[4]
+      ? `${persianDate} ساعت ${toPersianDigits(monthDate[4])}`
+      : persianDate;
+  }
+
+  const isoDateTime = value.match(
+    /^(\d{4})-(\d{2})-(\d{2})(?:[T\s])(\d{2}:\d{2}(?::\d{2})?(?:\.\d+)?)(?:Z)?$/,
+  );
+  if (isoDateTime) {
+    const date = createUtcDate(
+      Number(isoDateTime[1]),
+      Number(isoDateTime[2]) - 1,
+      Number(isoDateTime[3]),
+    );
+
+    return date
+      ? `${formatPersianDate(date)} ساعت ${toPersianDigits(isoDateTime[4])}`
+      : value;
+  }
+
+  return value;
+}
+
+function translateYesNo(value) {
+  if (value === 'yes') {
+    return 'بله';
+  }
+
+  if (value === 'no') {
+    return 'خیر';
+  }
+
+  return value;
+}
+
+const HEALTH_LOG_TRANSLATORS = [
+  [/^Current API id \[(.+)\]$/, id => `شناسه API فعلی [${id}]`],
+  [/^Checking current API id \[(.+)\]\.\.\.$/, id => `در حال بررسی شناسه API فعلی [${id}]...`],
+  [/^Set cluster info in cookie$/, () => 'اطلاعات cluster در cookie تنظیم شد'],
+  [/^Current API in cookie: \[(.+)\]$/, id => `API فعلی در cookie: [${id}]`],
+  [/^Getting API version data\.\.\.$/, () => 'در حال دریافت داده نسخه API...'],
+  [/^API version: \[(.+)\]$/, version => `نسخه API: [${version}]`],
+  [/^Getting the app version\.\.\.$/, () => 'در حال دریافت نسخه برنامه...'],
+  [/^App version: \[(.+)\]$/, version => `نسخه برنامه: [${version}]`],
+  [/^Index pattern id in cookie: yes \[(.+)\]$/, id => `شناسه index pattern در cookie: بله [${id}]`],
+  [/^Index pattern id in cookie: no$/, () => 'شناسه index pattern در cookie: خیر'],
+  [/^Index pattern id in cookie: \[(.+)\]$/, id => `شناسه index pattern در cookie: [${id}]`],
+  [/^Getting list of valid index patterns\.\.\.$/, () => 'در حال دریافت فهرست index patternهای معتبر...'],
+  [/^Valid index patterns found: (.+)$/, count => `index patternهای معتبر یافت‌شده: ${count}`],
+  [/^Found default index pattern with title \[(.+)\]: (yes|no)$/, (title, status) => `index pattern پیش‌فرض با عنوان [${title}] یافت شد: ${translateYesNo(status)}`],
+  [/^Checking the app default pattern exists: id \[(.+)\]\.\.\.$/, id => `در حال بررسی وجود pattern پیش‌فرض برنامه: شناسه [${id}]...`],
+  [/^Default pattern with id \[(.+)\] exists: (yes|no)$/, (id, status) => `pattern پیش‌فرض با شناسه [${id}] وجود دارد: ${translateYesNo(status)}`],
+  [/^Default pattern id \[(.+)\] set as default index pattern$/, id => `شناسه pattern پیش‌فرض [${id}] به عنوان index pattern پیش‌فرض تنظیم شد`],
+  [/^Checking the index pattern id \[(.+)\] exists\.\.\.$/, id => `در حال بررسی وجود شناسه index pattern [${id}]...`],
+  [/^Checking index pattern id \[(.+)\] exists\.\.\.$/, id => `در حال بررسی وجود شناسه index pattern [${id}]...`],
+  [/^Index pattern id exists \[(.+)\]: (yes|no)$/, (id, status) => `شناسه index pattern [${id}] وجود دارد: ${translateYesNo(status)}`],
+  [/^Exist index pattern id \[(.+)\]: (yes|no)$/, (id, status) => `شناسه index pattern [${id}] وجود دارد: ${translateYesNo(status)}`],
+  [/^Checking if the index pattern id \[(.+)\] exists\.\.\.$/, id => `در حال بررسی وجود شناسه index pattern [${id}]...`],
+  [/^Index pattern id \[(.+)\] found: (yes|no) title \[(.+)\]$/, (id, status, title) => `شناسه index pattern [${id}] یافت شد: ${translateYesNo(status)} عنوان [${title}]`],
+  [/^Checking if exists a template compatible with the index pattern title \[(.+)\]$/, title => `در حال بررسی وجود template سازگار با عنوان index pattern [${title}]`],
+  [/^Template found for the selected index-pattern title \[(.+)\]: (yes|no)$/, (title, status) => `template برای عنوان index-pattern انتخاب‌شده [${title}] یافت شد: ${translateYesNo(status)}`],
+  [/^Getting index pattern data \[(.+)\]\.\.\.$/, id => `در حال دریافت داده index pattern [${id}]...`],
+  [/^Index pattern data found: \[(yes|no)\]$/, status => `داده index pattern یافت شد: [${translateYesNo(status)}]`],
+  [/^Refreshing index pattern fields: title \[(.+)\], id \[(.+)\]\.\.\.$/, (title, id) => `در حال تازه‌سازی فیلدهای index pattern: عنوان [${title}]، شناسه [${id}]...`],
+  [/^Refreshed index pattern fields: title \[(.+)\], id \[(.+)\]$/, (title, id) => `فیلدهای index pattern تازه‌سازی شد: عنوان [${title}]، شناسه [${id}]`],
+  [/^Getting settings\.\.\.$/, () => 'در حال دریافت تنظیمات...'],
+  [/^Check (.+) setting \[(.+)\]: (.+)$/, (source, setting, value) => `بررسی تنظیم ${source} [${setting}]: ${value}`],
+  [/^App setting \[(.+)\]: (.+)$/, (setting, value) => `تنظیم برنامه [${setting}]: ${value}`],
+  [/^Settings mismatch \[(.+)\]: (yes|no)$/, (setting, status) => `ناهماهنگی تنظیمات [${setting}]: ${translateYesNo(status)}`],
+];
+
+function translateHealthCheckLogMessage(message) {
+  for (const [pattern, translator] of HEALTH_LOG_TRANSLATORS) {
+    const match = message.match(pattern);
+
+    if (match) {
+      return translator(...match.slice(1));
+    }
+  }
+
+  return message;
+}
+
+function translateRegisterAgentFieldList(value) {
+  return value
+    .split(/\s+and\s+/)
+    .map(part => REGISTER_AGENT_FIELD_LABELS.get(part.trim()) || part.trim())
+    .join(' و ');
+}
+
+const DO_NOT_TRANSLATE_PARENT_SELECTOR = [
+  'code',
+  'pre',
+  'textarea',
+  'input',
+  '.euiCode',
+  '[data-wz-ltr]',
+].join(',');
+
+const TRANSLATABLE_ATTRIBUTE_SELECTOR = '[aria-label], [title], [placeholder]';
+
+function translateKnownText(value) {
+  const trimmed = value.trim();
+  const normalized = trimmed.replace(/\s+/g, ' ');
+  const translated =
+    PERSIAN_TEXT_MAP.get(trimmed) ||
+    (normalized !== trimmed ? PERSIAN_TEXT_MAP.get(normalized) : undefined);
+
+  if (translated) {
+    return value.replace(trimmed, translated);
+  }
+
+  const leadingDot = normalized.match(/^\.(.+)$/);
+  if (leadingDot) {
+    const body = leadingDot[1].trim();
+    const bodyTranslation = PERSIAN_TEXT_MAP.get(body);
+    if (bodyTranslation) {
+      return value.replace(trimmed, `${bodyTranslation}.`);
+    }
+  }
+
+  const severityWithCount = normalized.match(/^(Critical|High|Medium|Low)\s+(\d[\d,]*)$/);
+  if (severityWithCount) {
+    return value.replace(
+      trimmed,
+      `${PERSIAN_SEVERITY_PREFIXES.get(severityWithCount[1])} ${severityWithCount[2]}`,
+    );
+  }
+
+  const statusWithCount = normalized.match(/^(Active|Disconnected|Pending|Never connected|active)\s+\((\d[\d,]*)\)$/);
+  if (statusWithCount) {
+    return value.replace(
+      trimmed,
+      `${PERSIAN_STATUS_PREFIXES.get(statusWithCount[1])} (${statusWithCount[2]})`,
+    );
+  }
+
+  const anomalyStepWithNumber = normalized.match(
+    /^(Define your detector|Configure your detector|Preview your detector|View results)\s*\.?\s*(\d+)$/,
+  );
+  if (anomalyStepWithNumber) {
+    return value.replace(
+      trimmed,
+      `${PERSIAN_TEXT_MAP.get(anomalyStepWithNumber[1])} ${toPersianDigits(anomalyStepWithNumber[2])}`,
+    );
+  }
+
+  const ruleLevelRange = normalized.match(/^Rule level (\d+) to (\d+)$/);
+  if (ruleLevelRange) {
+    return value.replace(
+      trimmed,
+      `سطح قاعده از ${ruleLevelRange[1]} تا ${ruleLevelRange[2]}`,
+    );
+  }
+
+  const ruleLevelOrHigher = normalized.match(/^Rule level (\d+) or higher$/);
+  if (ruleLevelOrHigher) {
+    return value.replace(
+      trimmed,
+      `سطح قاعده ${ruleLevelOrHigher[1]} یا بالاتر`,
+    );
+  }
+
+  const rowsPerPage = normalized.match(/^Rows per page:\s*(\d+)$/);
+  if (rowsPerPage) {
+    return value.replace(trimmed, `ردیف در هر صفحه: ${rowsPerPage[1]}`);
+  }
+
+  const pleaseSelect = normalized.match(/^Please select the (.+)\.$/);
+  if (pleaseSelect) {
+    return value.replace(
+      trimmed,
+      `لطفاً ${translateRegisterAgentFieldList(pleaseSelect[1])} را انتخاب کنید.`,
+    );
+  }
+
+  const fieldsWithErrors = normalized.match(
+    /^There are fields with errors\. Please verify them: (.+)\.$/,
+  );
+  if (fieldsWithErrors) {
+    return value.replace(
+      trimmed,
+      `برخی فیلدها خطا دارند. لطفاً بررسی کنید: ${translateRegisterAgentFieldList(fieldsWithErrors[1])}.`,
+    );
+  }
+
+  const entityWithCount = normalized.match(/^(Agents|Groups|Rules|Decoders|CDB Lists|Reports|Report definitions|Channels|Monitors|Alerts|Detectors)\s+\(([\d,]+)\)$/);
+  if (entityWithCount) {
+    const labels = {
+      Agents: 'Agentها',
+      Groups: 'گروه‌ها',
+      Rules: 'قواعد',
+      Decoders: 'دیکودرها',
+      'CDB Lists': 'فهرست‌های CDB',
+      Reports: 'گزارش‌ها',
+      'Report definitions': 'تعریف‌های گزارش',
+      Channels: 'کانال‌ها',
+      Monitors: 'پایشگرها',
+      Alerts: 'هشدارها',
+      Detectors: 'آشکارسازها',
+    };
+
+    return value.replace(
+      trimmed,
+      `${labels[entityWithCount[1]]} (${entityWithCount[2]})`,
+    );
+  }
+
+  const leadingCountEntity = normalized.match(/^\(([\d,]+)\)\s+(Report definitions|Channels|Monitors|Alerts|Detectors|Reports)$/);
+  if (leadingCountEntity) {
+    const labels = {
+      'Report definitions': 'تعریف‌های گزارش',
+      Channels: 'کانال‌ها',
+      Monitors: 'پایشگرها',
+      Alerts: 'هشدارها',
+      Detectors: 'آشکارسازها',
+      Reports: 'گزارش‌ها',
+    };
+
+    return value.replace(
+      trimmed,
+      `${labels[leadingCountEntity[2]]} (${leadingCountEntity[1]})`,
+    );
+  }
+
+  const topGroups = normalized.match(/^TOP\s+(\d+)\s+GROUPS$/);
+  if (topGroups) {
+    return value.replace(trimmed, `${topGroups[1]} گروه برتر`);
+  }
+
+  const topOs = normalized.match(/^TOP\s+(\d+)\s+OS$/);
+  if (topOs) {
+    return value.replace(trimmed, `${topOs[1]} سیستم‌عامل برتر`);
+  }
+
+  const requirementWithCode = normalized.match(/^Requirement ([A-Za-z0-9_.-]+)$/);
+  if (requirementWithCode) {
+    return value.replace(trimmed, `الزام ${requirementWithCode[1]}`);
+  }
+
+  const healthLog = normalized.match(/^(INFO|ACTION|WARNING|ERROR):\s*(.+)$/);
+  if (healthLog) {
+    return value.replace(
+      trimmed,
+      `${HEALTH_LOG_TYPE_LABELS[healthLog[1]]}: ${translateHealthCheckLogMessage(healthLog[2])}`,
+    );
+  }
+
+  const translatedHealthMessage = translateHealthCheckLogMessage(normalized);
+  if (translatedHealthMessage !== normalized) {
+    return value.replace(trimmed, translatedHealthMessage);
+  }
+
+  const translatedDate = translateDisplayDate(normalized);
+  if (translatedDate !== normalized) {
+    return value.replace(trimmed, translatedDate);
+  }
+
+  return value;
+}
+
+function queryAllIncludingRoot(root, selector) {
+  const nodes = [];
+
+  if (root instanceof Element && root.matches(selector)) {
+    nodes.push(root);
+  }
+
+  root.querySelectorAll(selector).forEach(node => nodes.push(node));
+
+  return nodes;
+}
+
+function shouldSkipTextNode(node) {
+  const parent = node.parentElement;
+  if (parent?.closest('.health-check')) {
+    return false;
+  }
+
+  return !parent || Boolean(parent.closest(DO_NOT_TRANSLATE_PARENT_SELECTOR));
+}
+
+function translateElementAttributes(root) {
+  queryAllIncludingRoot(root, TRANSLATABLE_ATTRIBUTE_SELECTOR).forEach(node => {
+    ['aria-label', 'title', 'placeholder'].forEach(attribute => {
+      const value = node.getAttribute(attribute);
+
+      if (!value) {
+        return;
+      }
+
+      const translated = translateKnownText(value);
+      if (translated !== value) {
+        node.setAttribute(attribute, translated);
+      }
+    });
+  });
+}
+
+function translateVisibleTexts(root = document) {
+  const walker = document.createTreeWalker(
+    root,
+    NodeFilter.SHOW_TEXT,
+    {
+      acceptNode(node) {
+        if (!node.nodeValue?.trim() || shouldSkipTextNode(node)) {
+          return NodeFilter.FILTER_REJECT;
+        }
+
+        return NodeFilter.FILTER_ACCEPT;
+      },
+    },
+  );
+
+  const nodes = [];
+  while (walker.nextNode()) {
+    nodes.push(walker.currentNode);
+  }
+
+  nodes.forEach(node => {
+    const translated = translateKnownText(node.nodeValue);
+    if (translated !== node.nodeValue) {
+      node.nodeValue = translated;
+    }
+  });
+
+  translateElementAttributes(root);
+}
+
+function markTechnicalValues(root = document) {
+  queryAllIncludingRoot(root, TECHNICAL_VALUE_SELECTOR).forEach(node => {
+    node.setAttribute('dir', 'ltr');
+    node.classList.add('wz-ltr-isolate');
+  });
+}
+
+function markCharts(root = document) {
+  queryAllIncludingRoot(root, CHART_SELECTOR).forEach(node => {
+    node.setAttribute('dir', 'ltr');
+    node.classList.add('wz-ltr-isolate');
+    node.setAttribute('data-wz-rtl-chart', 'true');
+  });
+}
+
+function markMenuPopovers(root = document) {
+  const isMobile =
+    typeof window !== 'undefined' &&
+    window.matchMedia?.('(max-width: 767px)').matches;
+
+  queryAllIncludingRoot(root, MENU_POPOVER_SELECTOR).forEach(node => {
+    node.setAttribute('dir', 'rtl');
+    node.classList.add('wz-rtl-menu-popover');
+    node.style.setProperty('left', 'auto', 'important');
+    node.style.setProperty(
+      'right',
+      isMobile ? '-1px' : 'var(--wz-rtl-menu-anchor-offset)',
+      'important',
+    );
+  });
+}
+
+function markNavigationFlyouts(root = document) {
+  queryAllIncludingRoot(root, NAVIGATION_FLYOUT_SELECTOR).forEach(node => {
+    node.setAttribute('dir', 'rtl');
+    node.classList.add('wz-rtl-navigation-flyout');
+    node.setAttribute('data-wz-rtl-navigation-flyout', 'true');
+    node.style.setProperty('left', 'auto', 'important');
+    node.style.setProperty('right', '0', 'important');
+
+    node.querySelectorAll('.searchBarIcon').forEach(child => {
+      child.style.setProperty('left', 'auto', 'important');
+      child.style.setProperty('right', '0', 'important');
+    });
+
+    node
+      .querySelectorAll(
+        '.euiFlyout__closeButton--outside, .ouiFlyout__closeButton--outside',
+      )
+      .forEach(child => {
+        child.style.setProperty('left', '0', 'important');
+        child.style.setProperty('right', 'auto', 'important');
+        child.style.setProperty(
+          'transform',
+          'translateX(calc(-100% - 24px))',
+          'important',
+        );
+      });
+  });
+}
+
+function markWazuhApps(root = document) {
+  queryAllIncludingRoot(root, WAZUH_APP_SELECTOR).forEach(node => {
+    node.setAttribute('dir', 'rtl');
+    node.classList.add(ROOT_CLASS);
+    node.setAttribute('data-wz-rtl-app', 'true');
+    markTechnicalValues(node);
+    markCharts(node);
+    markMenuPopovers(node);
+    markNavigationFlyouts(node);
+    translateVisibleTexts(node);
+  });
+}
+
+function scanWazuhRtl(root = document) {
+  markWazuhApps(root);
+  markTechnicalValues(root);
+  markCharts(root);
+  markMenuPopovers(root);
+  markNavigationFlyouts(root);
+  translateVisibleTexts(root);
+}
+
+function applyDocumentRtl() {
+  const themeClass =
+    typeof window !== 'undefined' && window.__osdThemeTag__?.endsWith('dark')
+      ? `${THEME_CLASS_PREFIX}dark`
+      : `${THEME_CLASS_PREFIX}light`;
+
+  document.documentElement.setAttribute('dir', 'rtl');
+  document.documentElement.classList.add(ROOT_CLASS);
+  document.documentElement.classList.remove(
+    `${THEME_CLASS_PREFIX}dark`,
+    `${THEME_CLASS_PREFIX}light`,
+  );
+  document.documentElement.classList.add(themeClass);
+  document.body && document.body.classList.add(ROOT_CLASS);
+}
+
+function clearDocumentRtl() {
+  document.documentElement.classList.remove(ROOT_CLASS);
+  document.documentElement.classList.remove(
+    `${THEME_CLASS_PREFIX}dark`,
+    `${THEME_CLASS_PREFIX}light`,
+  );
+  document.body && document.body.classList.remove(ROOT_CLASS);
+}
+
+
+let __wazuhFarsiObserver;
+function __wazuhFarsiEnable() {
+  applyDocumentRtl();
+  document.documentElement.setAttribute('lang', 'fa-IR');
+  scanWazuhRtl(document);
+  if (!__wazuhFarsiObserver && 'MutationObserver' in window) {
+    __wazuhFarsiObserver = new MutationObserver(mutations => {
+      for (const mutation of mutations) {
+        for (const node of mutation.addedNodes) {
+          if (node instanceof HTMLElement) {
+            scanWazuhRtl(node);
+          }
+        }
+      }
+    });
+    const target = document.body || document.documentElement;
+    __wazuhFarsiObserver.observe(target, { childList: true, subtree: true });
+  }
+}
+window.WazuhFarsiBootstrap = { scan: scanWazuhRtl, enable: __wazuhFarsiEnable };
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', __wazuhFarsiEnable, { once: true });
+} else {
+  __wazuhFarsiEnable();
+}
+
+})();

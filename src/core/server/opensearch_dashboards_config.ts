@@ -80,7 +80,7 @@ export const config = {
         defaultValue: '/',
       }),
       applicationTitle: schema.string({
-        defaultValue: 'Wazuh',
+        defaultValue: 'Ayyza',
       }),
       useExpandedHeader: schema.boolean({
         defaultValue: false,

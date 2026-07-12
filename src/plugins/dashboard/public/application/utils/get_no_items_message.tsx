@@ -8,7 +8,7 @@ import { FormattedMessage } from '@osd/i18n/react';
 import { EuiSmallButton, EuiEmptyPrompt, EuiLink, EuiText } from '@elastic/eui';
 import { ApplicationStart } from 'opensearch-dashboards/public';
 
-const appName = 'Wazuh dashboard';
+const appName = 'Ayyza dashboard';
 export const getNoItemsMessage = (
   hideWriteControls: boolean,
   createItem: () => void,

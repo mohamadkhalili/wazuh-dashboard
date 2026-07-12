@@ -54,10 +54,11 @@ export const Template: FunctionComponent<Props> = ({
   const logos = getLogos(injectedMetadata.branding, injectedMetadata.serverBasePath);
 
   const favicon = injectedMetadata.branding.faviconUrl;
-  const applicationTitle = injectedMetadata.branding.applicationTitle || 'OpenSearch Dashboards';
+  injectedMetadata.branding.applicationTitle = 'Ayyza';
+  const applicationTitle = 'Ayyza';
 
   return (
-    <html lang={locale}>
+    <html lang="fa-IR" dir="rtl" className="wazuh-rtl">
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -80,6 +81,11 @@ export const Template: FunctionComponent<Props> = ({
          * If user inputs an invalid URL, original Opensearch Dashboards favicon will be used.
          */}
 
+        <link
+          rel="icon"
+          type="image/svg+xml"
+          href={favicon ?? `${uiPublicUrl}/favicons/favicon.svg`}
+        />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
@@ -115,6 +121,7 @@ export const Template: FunctionComponent<Props> = ({
 
         <meta name="theme-color" content="#ffffff" />
         <Styles darkMode={darkMode} theme={themeVersion} />
+        <script src={`${uiPublicUrl}/farsi-runtime-bootstrap.js?v=20260707-2045`} defer />
 
         {/* Inject stylesheets into the <head> before scripts so that KP plugins with bundled styles will override them */}
         <meta name="add-styles-here" />
@@ -154,9 +161,7 @@ export const Template: FunctionComponent<Props> = ({
               })}
             >
               {i18n('core.ui.welcomeMessage', {
-                // Wazuh: change the default message to avoid
-                // showing the "Loading Wazuh" message twice.
-                defaultMessage: 'Loading ...',
+                defaultMessage: 'در حال بارگذاری ...',
               })}
             </div>
             {/* Show a progress bar if a static custom branded logo is used */}

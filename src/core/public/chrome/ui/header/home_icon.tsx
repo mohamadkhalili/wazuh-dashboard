@@ -18,11 +18,14 @@ interface Props {
  */
 export const HomeIcon = ({ branding, logos }: Props) => {
   // Removed prop unnecessary useExpandedHeader Wazuh dashboard
-  const { applicationTitle = 'Wazuh dashboard', useExpandedHeader } = branding;
+  const { applicationTitle = 'Ayyza dashboard', useExpandedHeader } = branding;
 
-  const { url: markURL, type: markType } = logos.Mark;
+  const compactHeaderLogo = useExpandedHeader === false;
+  const { url: markURL, type: markType } = compactHeaderLogo
+    ? logos.Application
+    : logos.Mark;
 
-  let testSubj = `${markType}Mark`;
+  let testSubj = `${markType}${compactHeaderLogo ? 'Logo' : 'Mark'}`;
   // Marks look better at the large size
   let markIconSize: IconSize = 'l';
 
