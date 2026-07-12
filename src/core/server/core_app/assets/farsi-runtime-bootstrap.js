@@ -37,6 +37,183 @@ const PERSIAN_TEXT_MAP = new Map(
     'Loading…': 'در حال بارگذاری…',
     Loading: 'در حال بارگذاری',
     'Loding...': 'در حال بارگذاری...',
+    'Go to home page': 'رفتن به صفحهٔ خانه',
+    'Help menu': 'منوی راهنما',
+    'Open selectors': 'باز کردن انتخاب‌گرها',
+    'Toggle primary navigation': 'باز و بسته کردن منوی اصلی',
+    'All actions': 'همه عملیات',
+    'Agents by Status': 'Agentها بر اساس وضعیت',
+    'Top 5 groups': '۵ گروه برتر',
+    'Top 5 OS': '۵ سیستم‌عامل برتر',
+    'Next page': 'صفحه بعد',
+    'Previous page': 'صفحه قبل',
+    'View agent details': 'مشاهده جزئیات Agent',
+    'No agent is selected': 'هیچ Agentی انتخاب نشده است',
+    'Select agent': 'انتخاب Agent',
+    'You need to select an agent to see Security Configuration Assessment inventory.':
+      'برای مشاهده موجودی ارزیابی پیکربندی امنیتی باید یک Agent انتخاب کنید.',
+    'Agent ID': 'شناسه Agent',
+    'Change all filters': 'تغییر همه فیلترها',
+    'Date quick select': 'انتخاب سریع تاریخ',
+    'See saved queries': 'مشاهده جستجوهای ذخیره‌شده',
+    'Toggle legend': 'نمایش یا پنهان کردن راهنما',
+    'Search bar button filters': 'فیلترهای نوار جستجو',
+    'This container is too small to render the visualization':
+      'فضای این بخش برای نمایش نمودار کافی نیست',
+    'Integrity checksum changed.': 'مقدار بررسی یکپارچگی تغییر کرده است.',
+    'Alerts by action over time': 'هشدارها بر اساس عملیات در طول زمان',
+    'Events summary': 'خلاصه رخدادها',
+    'Rule distribution': 'توزیع قواعد',
+    'Top 5 users': '۵ کاربر برتر',
+    'Top user': 'کاربر برتر',
+    '- Authentication failure -': '- احراز هویت ناموفق -',
+    '- Authentication success -': '- احراز هویت موفق -',
+    '- Level 12 or above alerts -': '- هشدارهای سطح ۱۲ یا بالاتر -',
+    '- Total -': '- مجموع -',
+    'Attacks by technique': 'حملات بر اساس تکنیک',
+    'Mitre techniques by agent': 'تکنیک‌های MITRE بر اساس Agent',
+    'Top tactics by agent': 'تاکتیک‌های برتر بر اساس Agent',
+    'Restart manager': 'راه‌اندازی مجدد Manager',
+    'Total agents': 'مجموع Agentها',
+    'Agents coverage': 'پوشش Agentها',
+    'Manager information': 'اطلاعات Manager',
+    'Installation path': 'مسیر نصب',
+    'Installation type': 'نوع نصب',
+    'Last registered agent': 'آخرین Agent ثبت‌شده',
+    'Date added': 'تاریخ افزودن',
+    'Last keep alive': 'آخرین ارتباط',
+    'Edit configuration': 'ویرایش پیکربندی',
+    'Main configurations': 'پیکربندی‌های اصلی',
+    'Global Configuration': 'پیکربندی سراسری',
+    'Global and remote settings': 'تنظیمات سراسری و راه دور',
+    'Master node configuration': 'پیکربندی گره اصلی',
+    'Registration Service': 'سرویس ثبت‌نام',
+    'Automatic agent registration service': 'سرویس ثبت‌نام خودکار Agent',
+    'Alerts and output management': 'مدیریت هشدارها و خروجی',
+    'Settings related to the alerts and their format': 'تنظیمات هشدارها و قالب آن‌ها',
+    Integrations: 'یکپارچه‌سازی‌ها',
+    'Slack, VirusTotal and PagerDuty integrations with external APIs':
+      'یکپارچه‌سازی Slack، VirusTotal و PagerDuty با APIهای خارجی',
+    'Auditing and policy monitoring': 'ممیزی و پایش سیاست‌ها',
+    'Policy monitoring': 'پایش سیاست‌ها',
+    'Configuration to ensure compliance with security policies, standards and hardening guides':
+      'پیکربندی برای اطمینان از انطباق با سیاست‌های امنیتی، استانداردها و راهنماهای سخت‌سازی',
+    'Configuration assessment and automation of compliance monitoring using SCAP checks':
+      'ارزیابی پیکربندی و خودکارسازی پایش انطباق با بررسی‌های SCAP',
+    'Configuration assessment using CIS scanner and SCAP checks':
+      'ارزیابی پیکربندی با اسکنر CIS و بررسی‌های SCAP',
+    'System threats and incident response': 'تهدیدهای سیستم و پاسخ‌گویی به رخداد',
+    Vulnerabilities: 'آسیب‌پذیری‌ها',
+    'Discover what applications are affected by well-known vulnerabilities':
+      'شناسایی برنامه‌های تحت تأثیر آسیب‌پذیری‌های شناخته‌شده',
+    'Expose an operating system as a high-performance relational database':
+      'ارائه سیستم‌عامل به شکل یک پایگاه‌داده رابطه‌ای پربازده',
+    'Inventory data': 'داده‌های موجودی',
+    'Gather relevant information about system operating system, hardware, networking and packages':
+      'گردآوری اطلاعات سیستم‌عامل، سخت‌افزار، شبکه و پکیج‌های سیستم',
+    'Active response': 'پاسخ فعال',
+    'Active threat addressing by immediate response': 'مقابله فعال با تهدید از طریق پاسخ فوری',
+    Commands: 'فرمان‌ها',
+    'Configuration options of the Command wodle': 'گزینه‌های پیکربندی ماژول Command',
+    'Docker listener': 'شنونده Docker',
+    'Log data analysis': 'تحلیل داده‌های Log',
+    'Log collection': 'گردآوری Log',
+    'Log analysis from text files, Windows events or syslog outputs':
+      'تحلیل Log فایل‌های متنی، رخدادهای Windows یا خروجی‌های syslog',
+    'Integrity monitoring': 'پایش یکپارچگی',
+    'Identify changes in content, permissions, ownership, and attributes of files':
+      'شناسایی تغییرات محتوا، مجوزها، مالکیت و ویژگی‌های فایل‌ها',
+    Agentless: 'بدون Agent',
+    'Run integrity checks on devices such as routers, firewalls and switches':
+      'اجرای بررسی یکپارچگی روی تجهیزاتی مانند روترها، فایروال‌ها و سوئیچ‌ها',
+    'Cloud security monitoring': 'پایش امنیت ابری',
+    'Security events related to Amazon AWS services, collected directly via AWS API':
+      'رخدادهای امنیتی سرویس‌های Amazon AWS که مستقیم از طریق AWS API گردآوری می‌شوند',
+    'Azure Logs': 'Logهای Azure',
+    'Configuration options of the Azure Logs wodle': 'گزینه‌های پیکربندی ماژول Azure Logs',
+    'Configuration options of the Google Cloud Pub/Sub module':
+      'گزینه‌های پیکربندی ماژول Google Cloud Pub/Sub',
+    'Detect threats targeting GitHub organizations':
+      'شناسایی تهدیدهای هدف‌گیرنده سازمان‌های GitHub',
+    'Configuration options of the Office 365 module':
+      'گزینه‌های پیکربندی ماژول Office 365',
+    'Application Not Found': 'برنامه پیدا نشد',
+    'Loading application': 'در حال بارگذاری برنامه',
+    'No application was found at this URL. Try going back or choosing an app from the menu.':
+      'در این نشانی برنامه‌ای پیدا نشد. به صفحه قبل برگردید یا برنامه‌ای از منو انتخاب کنید.',
+    '(opens in a new tab or window)': '(در زبانه یا پنجره جدید باز می‌شود)',
+    'Open in new window': 'باز کردن در پنجره جدید',
+    'Get Started': 'شروع',
+    'Get started with access control': 'شروع کنترل دسترسی',
+    Authentication: 'احراز هویت',
+    'Authentication and authorization': 'احراز هویت و مجوزدهی',
+    'Review authentication and authorization': 'بررسی احراز هویت و مجوزدهی',
+    'Backend configuration': 'پیکربندی Backend',
+    'Backend type': 'نوع Backend',
+    'Domain name': 'نام دامنه',
+    'Execution order': 'ترتیب اجرا',
+    'HTTP challenge': 'چالش HTTP',
+    'HTTP configuration': 'پیکربندی HTTP',
+    'HTTP type': 'نوع HTTP',
+    'Manage via config.yml': 'مدیریت از طریق config.yml',
+    Enabled: 'فعال',
+    Disabled: 'غیرفعال',
+    True: 'درست',
+    False: 'نادرست',
+    Roles: 'نقش‌ها',
+    Role: 'نقش',
+    'Create role': 'ایجاد نقش',
+    'Create new role': 'ایجاد نقش جدید',
+    'Create roles': 'ایجاد نقش‌ها',
+    'Explore existing roles': 'بررسی نقش‌های موجود',
+    'Backend roles': 'نقش‌های Backend',
+    'Cluster permissions': 'مجوزهای کلاستر',
+    'Index permissions': 'مجوزهای ایندکس',
+    Reserved: 'رزروشده',
+    Customization: 'سفارشی‌سازی',
+    'Internal users': 'کاربران داخلی',
+    'Create internal user': 'ایجاد کاربر داخلی',
+    Username: 'نام کاربری',
+    Attributes: 'ویژگی‌ها',
+    Current: 'فعلی',
+    Permissions: 'مجوزها',
+    'All permissions': 'همه مجوزها',
+    'All types': 'همه انواع',
+    'Action group': 'گروه عملیات',
+    'Cluster permission': 'مجوز کلاستر',
+    'Index permission': 'مجوز ایندکس',
+    'Create action group': 'ایجاد گروه عملیات',
+    Expand: 'گسترش',
+    Tenants: 'Tenantها',
+    'Configure Multi-tenancy': 'پیکربندی چندمستاجری',
+    'Manage Multi-tenancy': 'مدیریت چندمستاجری',
+    'Optional: Multi-tenancy': 'اختیاری: چندمستاجری',
+    'Map users': 'نگاشت کاربران',
+    'Map users to a role': 'نگاشت کاربران به یک نقش',
+    'Add backends': 'افزودن Backendها',
+    'Audit logs': 'Logهای ممیزی',
+    'Audit logging': 'ثبت Log ممیزی',
+    'Enable audit logging': 'فعال‌سازی ثبت Log ممیزی',
+    'Review Audit Log Configuration': 'بررسی پیکربندی Log ممیزی',
+    'Optional: Configure audit logs': 'اختیاری: پیکربندی Logهای ممیزی',
+    'Optional: Purge cache': 'اختیاری: پاک‌سازی Cache',
+    'Purge cache': 'پاک‌سازی Cache',
+    'General settings': 'تنظیمات عمومی',
+    'Compliance settings': 'تنظیمات انطباق',
+    'Compliance mode': 'حالت انطباق',
+    'Attribute settings': 'تنظیمات ویژگی‌ها',
+    'Ignore settings': 'تنظیمات نادیده‌گیری',
+    'Layer settings': 'تنظیمات لایه',
+    'Storage location': 'محل ذخیره‌سازی',
+    Configure: 'پیکربندی',
+    Read: 'خواندن',
+    Write: 'نوشتن',
+    'Step 1': 'مرحله ۱',
+    'Step 2': 'مرحله ۲',
+    'Step 3': 'مرحله ۳',
+    'View expression': 'مشاهده عبارت',
+    'This is a search bar. After typing your query, hit enter to filter the results lower in the page.':
+      'این نوار جستجو است. پس از نوشتن عبارت، Enter را بزنید تا نتایج پایین صفحه فیلتر شوند.',
     Wazuh: 'Ayyza',
     'Wazuh dashboard': 'Ayyza dashboard',
     'Wazuh Dashboard': 'Ayyza Dashboard',
@@ -921,7 +1098,6 @@ const DO_NOT_TRANSLATE_PARENT_SELECTOR = [
   'textarea',
   'input',
   '.euiCode',
-  '[data-wz-ltr]',
 ].join(',');
 
 const TRANSLATABLE_ATTRIBUTE_SELECTOR = '[aria-label], [title], [placeholder]';
@@ -991,6 +1167,52 @@ function translateKnownText(value) {
   const rowsPerPage = normalized.match(/^Rows per page:\s*(\d+)$/);
   if (rowsPerPage) {
     return value.replace(trimmed, `ردیف در هر صفحه: ${rowsPerPage[1]}`);
+  }
+
+  const nextPage = normalized.match(/^Next page(?:,\s*(\d+))?$/);
+  if (nextPage) {
+    return value.replace(
+      trimmed,
+      nextPage[1] ? `صفحه بعد، ${toPersianDigits(nextPage[1])}` : 'صفحه بعد',
+    );
+  }
+
+  const tableSummary = normalized.match(
+    /^This table contains ([\d,]+) rows out of ([\d,]+) rows; Page ([\d,]+) of ([\d,]+)\.$/,
+  );
+  if (tableSummary) {
+    return value.replace(
+      trimmed,
+      `این جدول ${toPersianDigits(tableSummary[1])} ردیف از ${toPersianDigits(tableSummary[2])} ردیف را نشان می‌دهد؛ صفحه ${toPersianDigits(tableSummary[3])} از ${toPersianDigits(tableSummary[4])}.`,
+    );
+  }
+
+  const dashboardPanel = normalized.match(/^Dashboard panel(?::\s*(.+))?$/);
+  if (dashboardPanel) {
+    const title = dashboardPanel[1]
+      ? translateKnownText(dashboardPanel[1])
+      : '';
+    return value.replace(
+      trimmed,
+      title ? `پنل داشبورد: ${title}` : 'پنل داشبورد',
+    );
+  }
+
+  const panelOptions = normalized.match(/^Panel options(?: for (.+))?$/);
+  if (panelOptions) {
+    const title = panelOptions[1] ? translateKnownText(panelOptions[1]) : '';
+    return value.replace(
+      trimmed,
+      title ? `گزینه‌های پنل ${title}` : 'گزینه‌های پنل',
+    );
+  }
+
+  const chartCell = normalized.match(/^Row:\s*(\d+),\s*Column:\s*(\d+):$/);
+  if (chartCell) {
+    return value.replace(
+      trimmed,
+      `ردیف ${toPersianDigits(chartCell[1])}، ستون ${toPersianDigits(chartCell[2])}:`,
+    );
   }
 
   const pleaseSelect = normalized.match(/^Please select the (.+)\.$/);
@@ -1271,15 +1493,26 @@ function __wazuhFarsiEnable() {
   if (!__wazuhFarsiObserver && 'MutationObserver' in window) {
     __wazuhFarsiObserver = new MutationObserver(mutations => {
       for (const mutation of mutations) {
+        if (mutation.type === 'characterData' && mutation.target.parentElement) {
+          scanWazuhRtl(mutation.target.parentElement);
+          continue;
+        }
+
         for (const node of mutation.addedNodes) {
           if (node instanceof HTMLElement) {
             scanWazuhRtl(node);
+          } else if (node instanceof Text && node.parentElement) {
+            scanWazuhRtl(node.parentElement);
           }
         }
       }
     });
     const target = document.body || document.documentElement;
-    __wazuhFarsiObserver.observe(target, { childList: true, subtree: true });
+    __wazuhFarsiObserver.observe(target, {
+      childList: true,
+      characterData: true,
+      subtree: true,
+    });
   }
 }
 window.WazuhFarsiBootstrap = { scan: scanWazuhRtl, enable: __wazuhFarsiEnable };

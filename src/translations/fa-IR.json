@@ -119,6 +119,8 @@
     "dashboard.topNav.saveButtonAriaLabel": "ذخیره داشبورد",
     "dashboard.topNav.shareButtonTooltip": "اشتراک‌گذاری",
     "dashboard.topNav.shareButtonAriaLabel": "اشتراک‌گذاری داشبورد",
-    "embeddablePanel.action.inspectPanel.displayName": "بازرسی"
+    "embeddablePanel.action.inspectPanel.displayName": "بازرسی",
+    "core.euiTablePagination.rowsPerPage": "ردیف در هر صفحه",
+    "core.euiTablePagination.rowsPerPageOption": "{rowsPerPage} ردیف"
   }
 }
