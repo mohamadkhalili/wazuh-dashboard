@@ -845,6 +845,66 @@ const PERSIAN_TEXT_MAP = new Map(
     'To send or receive notifications, you will need to create a notification channel".':
       'برای ارسال یا دریافت اعلان‌ها باید یک کانال اعلان بسازید.',
     'Notification status': 'وضعیت اعلان',
+    Now: 'اکنون',
+    Relative: 'نسبی',
+    Absolute: 'مطلق',
+    'Minutes ago': 'دقیقه پیش',
+    'Round to the minute': 'گرد کردن به دقیقه',
+    'Start date': 'تاریخ شروع',
+    'Real-time dashboard': 'داشبورد بی‌درنگ',
+    'You have no detectors': 'هیچ آشکارسازی ندارید',
+    'Create detector first to detect anomalies in your data.':
+      'برای تشخیص ناهنجاری‌ها در داده‌های خود، ابتدا یک آشکارساز ایجاد کنید.',
+    'Dashboard will generate insights on the anomalies across all of your detectors.':
+      'داشبورد دربارهٔ ناهنجاری‌های همهٔ آشکارسازهای شما بینش ایجاد می‌کند.',
+    'Read about': 'دربارهٔ این موضوع بخوانید',
+    'Get started with Anomaly detection': 'شروع کار با تشخیص ناهنجاری',
+    'Try a sample detector': 'یک آشکارساز نمونه را امتحان کنید',
+    'All indices': 'همهٔ ایندکس‌ها',
+    'All detector states': 'همهٔ وضعیت‌های آشکارساز',
+    'Last started': 'آخرین شروع',
+    'Last real-time occurrence': 'آخرین رخداد بی‌درنگ',
+    'Anomalies last 24 hours': 'ناهنجاری‌های ۲۴ ساعت گذشته',
+    'Historical analysis': 'تحلیل تاریخی',
+    'Real-time state': 'وضعیت بی‌درنگ',
+    'A detector is an individual anomaly detection task. You can create multiple detectors, and all the detectors can run simultaneously, with each analyzing data from different sources. Create an anomaly detector to get started.':
+      'آشکارساز یک وظیفهٔ مستقل تشخیص ناهنجاری است. می‌توانید چندین آشکارساز ایجاد کنید و همهٔ آن‌ها را هم‌زمان اجرا کنید؛ هرکدام داده‌های منابع متفاوتی را تحلیل می‌کنند. برای شروع یک آشکارساز ناهنجاری ایجاد کنید.',
+    'Name and description': 'نام و توضیحات',
+    'Enter channel name': 'نام کانال را وارد کنید',
+    'Description - optional': 'توضیحات — اختیاری',
+    'Description -': 'توضیحات —',
+    optional: 'اختیاری',
+    'What is the purpose of this channel?': 'هدف این کانال چیست؟',
+    Configurations: 'پیکربندی‌ها',
+    'Channel type': 'نوع کانال',
+    'Channel type cannot be changed after the channel is created.':
+      'پس از ایجاد کانال، نوع آن قابل تغییر نیست.',
+    'Slack webhook URL': 'نشانی Webhook اسلک',
+    'Send test message': 'ارسال پیام آزمایشی',
+    'Notification channels': 'کانال‌های اعلان',
+    'Explore agent': 'بررسی Agent',
+    Group: 'گروه',
+    'No items found': 'موردی یافت نشد',
+    'You need to select an agent to see Integrity Monitoring inventory.':
+      'برای مشاهدهٔ موجودی پایش یکپارچگی، باید یک Agent انتخاب کنید.',
+    'Checking data source': 'در حال بررسی منبع داده',
+    'Under evaluation': 'در حال ارزیابی',
+    Evaluated: 'ارزیابی‌شده',
+    Framework: 'چارچوب',
+    Intelligence: 'هوشمندی',
+    'Hide techniques with no alerts': 'تکنیک‌های بدون هشدار پنهان شوند',
+    Services: 'سرویس‌ها',
+    Identity: 'هویت',
+    Network: 'شبکه',
+    Processes: 'فرایندها',
+    Software: 'نرم‌افزار',
+    System: 'سیستم',
+    'Advanced filters': 'فیلترهای پیشرفته',
+    'Top 10 PCI DSS requirements': '۱۰ الزام برتر PCI DSS',
+    'Top 10 agents by alerts count': '۱۰ Agent برتر بر اساس تعداد هشدار',
+    'timestamp per 30 minutes': 'زمان ثبت در هر ۳۰ دقیقه',
+    'Last alerts': 'آخرین هشدارها',
+    'Requirements by agent': 'الزامات به تفکیک Agent',
     'Create detector': 'ایجاد آشکارساز',
     'Anomaly detection': 'تشخیص ناهنجاری',
     'Get started': 'شروع کار',
@@ -1400,6 +1460,14 @@ function translateKnownText(value) {
     return value.replace(
       trimmed,
       `${PERSIAN_STATUS_PREFIXES.get(statusWithCount[1])} (${statusWithCount[2]})`,
+    );
+  }
+
+  const exploreAgentWithCount = normalized.match(/^Explore agent\s*\((\d[\d,]*)\)$/i);
+  if (exploreAgentWithCount) {
+    return value.replace(
+      trimmed,
+      `بررسی Agent (${toPersianDigits(exploreAgentWithCount[1])})`,
     );
   }
 
