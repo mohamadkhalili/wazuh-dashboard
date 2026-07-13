@@ -918,6 +918,44 @@ const PERSIAN_TEXT_MAP = new Map(
     'Create HTTP response detector': 'ایجاد آشکارساز پاسخ HTTP',
     'Create map': 'ایجاد نقشه',
     'Create your first map': 'اولین نقشه خود را بسازید',
+    Map: 'نقشه',
+    Maps: 'نقشه‌ها',
+    Layers: 'لایه‌ها',
+    'All layers': 'همهٔ لایه‌ها',
+    'Default map': 'نقشهٔ پیش‌فرض',
+    'OpenSearch map': 'نقشهٔ OpenSearch',
+    'Custom map': 'نقشهٔ سفارشی',
+    'New layer': 'لایهٔ جدید',
+    'Add layer': 'افزودن لایه',
+    'Data layer': 'لایهٔ داده',
+    'Base layer': 'لایهٔ پایه',
+    'Select a layer': 'انتخاب لایه',
+    'Select a layer type': 'انتخاب نوع لایه',
+    'Layer name': 'نام لایه',
+    'Layer style': 'سبک لایه',
+    'Layer is hidden': 'لایه پنهان است',
+    'Hide layer': 'پنهان کردن لایه',
+    'Show layer': 'نمایش لایه',
+    'Hide or show layer': 'پنهان یا نمایش دادن لایه',
+    'Delete layer': 'حذف لایه',
+    'Hide layer control': 'پنهان کردن کنترل لایه‌ها',
+    'Show layer control': 'نمایش کنترل لایه‌ها',
+    'Collapse layers panel': 'بستن پنل لایه‌ها',
+    'Expand layers panel': 'باز کردن پنل لایه‌ها',
+    'Drag Handle': 'دستگیرهٔ جابه‌جایی',
+    'Move layer up or down': 'جابه‌جایی لایه به بالا یا پایین',
+    'layer in the map layers list': 'لایه در فهرست لایه‌های نقشه',
+    'Import Vector Map': 'وارد کردن نقشهٔ برداری',
+    'Choose custom map type.': 'نوع نقشهٔ سفارشی را انتخاب کنید.',
+    'Start creating your map by selecting a layer type.':
+      'برای ساخت نقشه، ابتدا یک نوع لایه انتخاب کنید.',
+    'Only request data around map extent':
+      'فقط داده‌های محدودهٔ قابل‌مشاهدهٔ نقشه دریافت شوند',
+    'Use default OpenSearch basemaps.':
+      'از نقشه‌های پایهٔ پیش‌فرض OpenSearch استفاده شود.',
+    'View points, lines, and polygons on the map.':
+      'نقاط، خطوط و چندضلعی‌ها را روی نقشه مشاهده کنید.',
+    'Save your map': 'ذخیرهٔ نقشه',
     "There is no map to display, let's create your first map":
       'نقشه‌ای برای نمایش وجود ندارد؛ اولین نقشه را بسازید',
     "There is no map to display, let's create your first map.":
@@ -1372,6 +1410,41 @@ function translateKnownText(value) {
       trimmed,
       `${PERSIAN_TEXT_MAP.get(anomalyStepWithNumber[1])} ${toPersianDigits(anomalyStepWithNumber[2])}`,
     );
+  }
+
+  const mapLayerOutsideZoom = normalized.match(
+    /^Layer is hidden outside of zoom range (.+?)[–-](.+)$/,
+  );
+  if (mapLayerOutsideZoom) {
+    return value.replace(
+      trimmed,
+      `لایه خارج از محدودهٔ بزرگ‌نمایی ${toPersianDigits(
+        mapLayerOutsideZoom[1],
+      )} تا ${toPersianDigits(mapLayerOutsideZoom[2])} پنهان است`,
+    );
+  }
+
+  const mapMaximumLayers = normalized.match(
+    /^You've added the maximum number of layers \((\d+)\)\.$/,
+  );
+  if (mapMaximumLayers) {
+    return value.replace(
+      trimmed,
+      `حداکثر تعداد لایه‌ها (${toPersianDigits(mapMaximumLayers[1])}) افزوده شده است.`,
+    );
+  }
+
+  const numberedNewMapLayer = normalized.match(/^New layer\s+(\d+)$/);
+  if (numberedNewMapLayer) {
+    return value.replace(
+      trimmed,
+      `لایهٔ جدید ${toPersianDigits(numberedNewMapLayer[1])}`,
+    );
+  }
+
+  const deleteMapLayer = normalized.match(/^Do you want to delete layer\s+(.+?)\?$/);
+  if (deleteMapLayer) {
+    return value.replace(trimmed, `آیا می‌خواهید لایهٔ ${deleteMapLayer[1]} را حذف کنید؟`);
   }
 
   const ruleLevelRange = normalized.match(/^Rule level (\d+) to (\d+)$/);
