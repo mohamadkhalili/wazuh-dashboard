@@ -28,6 +28,12 @@ const NAVIGATION_FLYOUT_SELECTOR = [
   "[data-test-subj='collapsibleNav'].ouiFlyout",
   '.wz-rtl-navigation-flyout',
 ].join(',');
+const ANOMALY_OVERVIEW_TITLE_SELECTOR = "[data-test-subj='overviewTitle']";
+const ANOMALY_SAMPLE_BUTTON_SELECTOR = [
+  "[data-test-subj='createHttpSampleDetectorButton']",
+  "[data-test-subj='createECommerceSampleDetectorButton']",
+  "[data-test-subj='createHostHealthSampleDetectorButton']",
+].join(',');
 const THEME_CLASS_PREFIX = 'wz-rtl-theme-';
 const GLOBAL_FONT_STYLE_ID = 'wazuh-farsi-global-font';
 const GLOBAL_FONT_STYLESHEET_ID = 'wazuh-farsi-font-faces';
@@ -853,7 +859,11 @@ const PERSIAN_TEXT_MAP = new Map(
     'Create new visualization': 'ایجاد تصویرسازی جدید',
     'The anomaly detection plugin automatically detects anomalies in your data in near real-time using the Random Cut Forest (RCF) algorithm.':
       'پلاگین تشخیص ناهنجاری با الگوریتم Random Cut Forest یا RCF، ناهنجاری‌های داده را تقریباً به‌صورت بی‌درنگ شناسایی می‌کند.',
-    'How it works': 'نحوه کار',
+    'How it works': 'نحوهٔ کار',
+    '1. Define your detector': 'مرحله ۱: تعریف آشکارساز',
+    '2. Configure your detector': 'مرحله ۲: پیکربندی آشکارساز',
+    '3. Preview your detector': 'مرحله ۳: پیش‌نمایش آشکارساز',
+    '4. View results': 'مرحله ۴: مشاهده نتایج',
     'Define your detector': 'تعریف آشکارساز',
     'Configure your detector': 'پیکربندی آشکارساز',
     'Preview your detector': 'پیش‌نمایش آشکارساز',
@@ -1542,6 +1552,22 @@ function queryAllIncludingRoot(root, selector) {
   return nodes;
 }
 
+function findClosestPanelByText(root, texts) {
+  const textSet = new Set(texts);
+  const candidates = queryAllIncludingRoot(
+    root,
+    '.euiPanel .euiText, .euiPanel .ouiText, .ouiPanel .euiText, .ouiPanel .ouiText',
+  );
+
+  for (const candidate of candidates) {
+    if (textSet.has(candidate.textContent.trim())) {
+      return candidate.closest('.euiPanel, .ouiPanel');
+    }
+  }
+
+  return null;
+}
+
 function shouldSkipTextNode(node) {
   const parent = node.parentElement;
   if (parent?.closest('.health-check')) {
@@ -1659,6 +1685,44 @@ function markNavigationFlyouts(root = document) {
   });
 }
 
+function markAnomalyDetectionOverview(root = document) {
+  queryAllIncludingRoot(root, ANOMALY_OVERVIEW_TITLE_SELECTOR).forEach(title => {
+    title.classList.add('wz-ad-overview-title');
+
+    const header = title.closest('.euiPageHeader, .ouiPageHeader');
+    if (!header) {
+      return;
+    }
+
+    header.classList.add('wz-ad-overview-header');
+    const row = title.closest('.euiFlexGroup, .ouiFlexGroup');
+    row?.classList.add('wz-ad-overview-header-row');
+    header
+      .querySelector("[data-test-subj='add_detector']")
+      ?.classList.add('wz-ad-overview-create-button');
+
+    const description = header.nextElementSibling;
+    if (description?.matches('.euiText, .ouiText')) {
+      description.classList.add('wz-ad-overview-description');
+    }
+  });
+
+  const workflowPanel = findClosestPanelByText(root, [
+    'How it works',
+    'نحوه کار',
+    'نحوهٔ کار',
+  ]);
+  workflowPanel?.classList.add('wz-ad-workflow-panel');
+
+  queryAllIncludingRoot(root, ANOMALY_SAMPLE_BUTTON_SELECTOR).forEach(button => {
+    const card = button.closest('.euiCard, .ouiCard');
+    card?.classList.add('wz-ad-sample-card');
+    card
+      ?.closest('.euiPanel, .ouiPanel')
+      ?.classList.add('wz-ad-sample-panel');
+  });
+}
+
 function markWazuhApps(root = document) {
   queryAllIncludingRoot(root, WAZUH_APP_SELECTOR).forEach(node => {
     node.setAttribute('dir', 'rtl');
@@ -1668,6 +1732,7 @@ function markWazuhApps(root = document) {
     markCharts(node);
     markMenuPopovers(node);
     markNavigationFlyouts(node);
+    markAnomalyDetectionOverview(node);
     translateVisibleTexts(node);
   });
 }
@@ -1678,6 +1743,7 @@ function scanWazuhRtl(root = document) {
   markCharts(root);
   markMenuPopovers(root);
   markNavigationFlyouts(root);
+  markAnomalyDetectionOverview(root);
   translateVisibleTexts(root);
 }
 
