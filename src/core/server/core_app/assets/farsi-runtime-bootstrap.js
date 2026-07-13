@@ -30,6 +30,7 @@ const NAVIGATION_FLYOUT_SELECTOR = [
 ].join(',');
 const THEME_CLASS_PREFIX = 'wz-rtl-theme-';
 const GLOBAL_FONT_STYLE_ID = 'wazuh-farsi-global-font';
+const GLOBAL_FONT_STYLESHEET_ID = 'wazuh-farsi-font-faces';
 const GLOBAL_FONT_FAMILY = '"IRANSansEn", Tahoma, Arial, sans-serif';
 
 const PERSIAN_TEXT_MAP = new Map(
@@ -1129,6 +1130,22 @@ const TRANSLATABLE_ATTRIBUTE_SELECTOR = '[aria-label], [title], [placeholder]';
 function ensureGlobalFont() {
   document.documentElement.style.setProperty('--font-text', GLOBAL_FONT_FAMILY);
   document.documentElement.style.setProperty('--oui-font-family', GLOBAL_FONT_FAMILY);
+
+  let stylesheet = document.getElementById(GLOBAL_FONT_STYLESHEET_ID);
+  if (!stylesheet) {
+    const bootstrapScript = Array.from(document.scripts).find(script =>
+      script.src.includes('/farsi-runtime-bootstrap.js'),
+    );
+    const uiPublicUrl = bootstrapScript
+      ? bootstrapScript.src.replace(/\/farsi-runtime-bootstrap\.js(?:\?.*)?$/, '')
+      : `${window.location.origin}/ui`;
+
+    stylesheet = document.createElement('link');
+    stylesheet.id = GLOBAL_FONT_STYLESHEET_ID;
+    stylesheet.rel = 'stylesheet';
+    stylesheet.href = `${uiPublicUrl}/fonts/iransans_en/index.css?v=20260713-0700`;
+    document.head.appendChild(stylesheet);
+  }
 
   let style = document.getElementById(GLOBAL_FONT_STYLE_ID);
   if (!style) {
