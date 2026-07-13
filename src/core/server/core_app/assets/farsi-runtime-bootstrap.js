@@ -350,6 +350,10 @@ const PERSIAN_TEXT_MAP = new Map(
     Destination: 'مقصد',
     Monitors: 'پایشگرها',
     Monitor: 'پایشگر',
+    monitor: 'پایشگر',
+    Triggers: 'محرک‌ها',
+    Trigger: 'محرک',
+    trigger: 'محرک',
     Channels: 'کانال‌ها',
     Channel: 'کانال',
     'Email senders': 'فرستنده‌های ایمیل',
@@ -360,6 +364,143 @@ const PERSIAN_TEXT_MAP = new Map(
     Info: 'اطلاعات',
     documentation: 'مستندات',
     Documentation: 'مستندات',
+    'For additional systems and architectures, please check our':
+      'برای سیستم‌ها و معماری‌های بیشتر، لطفاً',
+    'Alerts related to file changes, including permissions, content, ownership and attributes':
+      'هشدارهای مرتبط با تغییرات فایل، از جمله مجوزها، محتوا، مالکیت و ویژگی‌ها',
+    'Alerts related to file changes, including permissions, content, ownership, and attributes':
+      'هشدارهای مرتبط با تغییرات فایل، از جمله مجوزها، محتوا، مالکیت و ویژگی‌ها',
+    'Alerts related to file changes, including permissions, content, ownership, and attributes.':
+      'هشدارهای مرتبط با تغییرات فایل، از جمله مجوزها، محتوا، مالکیت و ویژگی‌ها.',
+    'Trust Services Criteria for Security, Availability, Processing Integrity, Confidentiality, and Privacy.':
+      'معیارهای خدمات اعتماد برای امنیت، دسترس‌پذیری، یکپارچگی پردازش، محرمانگی و حریم خصوصی.',
+    'Create your first dashboard': 'اولین داشبورد خود را ایجاد کنید',
+    'You can combine data views from any Wazuh dashboard app into one dashboard and see everything in one place.':
+      'می‌توانید نماهای دادهٔ برنامه‌های داشبورد Wazuh را در یک داشبورد ترکیب کنید و همه‌چیز را یکجا ببینید.',
+    'You can combine data views from any Ayyza dashboard app into one dashboard and see everything in one place.':
+      'می‌توانید نماهای دادهٔ برنامه‌های داشبورد Ayyza را در یک داشبورد ترکیب کنید و همه‌چیز را یکجا ببینید.',
+    'New to Wazuh dashboard?': 'اگر تازه با داشبورد Wazuh آشنا شده‌اید،',
+    'New to Ayyza dashboard?': 'اگر تازه با داشبورد Ayyza آشنا شده‌اید،',
+    'Install some sample data': 'چند دادهٔ نمونه نصب کنید',
+    'to take a test drive': 'و داشبورد را آزمایش کنید',
+    'to take a test drive.': 'و داشبورد را آزمایش کنید.',
+    'Create new dashboard': 'ایجاد داشبورد جدید',
+    'New Visualization': 'تصویرسازی جدید',
+    Area: 'نمودار سطحی',
+    'Emphasize the quantity beneath a line chart':
+      'مقدار زیر نمودار خطی را برجسته می‌کند',
+    Filter: 'فیلتر',
+    'Data Table': 'جدول داده',
+    'Coordinate Map': 'نقشهٔ مختصات',
+    Controls: 'کنترل‌ها',
+    'Heat Map': 'نقشهٔ حرارتی',
+    Goal: 'هدف',
+    Gauge: 'سنجه',
+    'Gantt Chart': 'نمودار گانت',
+    Markdown: 'متن Markdown',
+    Line: 'نمودار خطی',
+    'Horizontal Bar': 'نمودار میله‌ای افقی',
+    TSVB: 'سازندهٔ سری زمانی TSVB',
+    'Region Map': 'نقشهٔ ناحیه‌ای',
+    Pie: 'نمودار دایره‌ای',
+    Metric: 'شاخص عددی',
+    'Vertical Bar': 'نمودار میله‌ای عمودی',
+    Vega: 'تصویرسازی Vega',
+    Timeline: 'خط زمان',
+    'Tag Cloud': 'ابر برچسب',
+    'New Data Table / Choose a source': 'جدول دادهٔ جدید / انتخاب منبع',
+    Types: 'نوع‌ها',
+    Sort: 'مرتب‌سازی',
+    Ascending: 'صعودی',
+    Descending: 'نزولی',
+    'This visualization is experimental and is not subject to the support SLA of official GA features.':
+      'این تصویرسازی آزمایشی است و مشمول SLA پشتیبانی قابلیت‌های رسمی GA نیست.',
+    'This visualization is experimental and is not subject to the support SLA of official GA features. For feedback, please create an issue in':
+      'این تصویرسازی آزمایشی است و مشمول SLA پشتیبانی قابلیت‌های رسمی GA نیست. برای ارسال بازخورد، لطفاً یک issue در',
+    'For feedback, please create an issue in':
+      'برای ارسال بازخورد، لطفاً یک issue در',
+    Options: 'گزینه‌ها',
+    Add: 'افزودن',
+    'Options list': 'فهرست گزینه‌ها',
+    'Report settings': 'تنظیمات گزارش',
+    'Report name (e.g Log Traffic Daily Report)':
+      'نام گزارش (برای نمونه: گزارش روزانهٔ ترافیک Log)',
+    'Valid characters are a-z, A-Z, 0-9, (), [], _ (underscore), - (hyphen) and . (space).':
+      'نویسه‌های مجاز شامل a-z، A-Z، 0-9، پرانتز، کروشه، زیرخط، خط تیره و فاصله هستند.',
+    'Valid characters are a-z, A-Z, 0-9, (), [], _ (underscore), - (hyphen) and (space).':
+      'نویسه‌های مجاز شامل a-z، A-Z، 0-9، پرانتز، کروشه، زیرخط، خط تیره و فاصله هستند.',
+    'Description (optional)': 'توضیحات (اختیاری)',
+    'Describe this report (e.g Morning daily reports for log traffic)':
+      'این گزارش را توضیح دهید (برای نمونه: گزارش روزانهٔ صبحگاهی ترافیک Log)',
+    'Report source': 'منبع گزارش',
+    Visualization: 'تصویرسازی',
+    'Saved search': 'جستجوی ذخیره‌شده',
+    Notebook: 'دفترچه',
+    'Select dashboard': 'انتخاب داشبورد',
+    'Select a dashboard': 'یک داشبورد انتخاب کنید',
+    'Time range': 'بازهٔ زمانی',
+    'Time range is relative to the report creation date on the report trigger.':
+      'بازهٔ زمانی نسبت به تاریخ ایجاد گزارش در زمان فعال‌شدن گزارش محاسبه می‌شود.',
+    'File format': 'قالب فایل',
+    'Report header and footer': 'سربرگ و پابرگ گزارش',
+    'Add header': 'افزودن سربرگ',
+    'Add footer': 'افزودن پابرگ',
+    'Report trigger': 'اجرای گزارش',
+    'On demand': 'درخواستی',
+    Schedule: 'زمان‌بندی',
+    Cancel: 'انصراف',
+    'Monitor details': 'جزئیات پایشگر',
+    'Monitor type': 'نوع پایشگر',
+    'Composite monitor': 'پایشگر ترکیبی',
+    'Composite monitors chain the outputs of different monitor types and focus trigger conditions to reduce alert noise and generate finer results.':
+      'پایشگرهای ترکیبی خروجی انواع مختلف پایشگر را زنجیره می‌کنند و با تمرکز شرایط محرک، نویز هشدار را کاهش می‌دهند و نتایج دقیق‌تری تولید می‌کنند.',
+    'Per document monitor': 'پایشگر به‌ازای هر سند',
+    'Per document monitors run queries that return individual documents matching the trigger conditions.':
+      'پایشگرهای سندی کوئری‌هایی را اجرا می‌کنند که اسناد منطبق با شرایط محرک را برمی‌گردانند.',
+    'Per cluster metrics monitor': 'پایشگر معیارهای Cluster',
+    'Per cluster metrics monitors run API requests to monitor the cluster’s health.':
+      'پایشگرهای معیارهای Cluster برای بررسی سلامت Cluster درخواست‌های API را اجرا می‌کنند.',
+    'Per bucket monitor': 'پایشگر به‌ازای هر Bucket',
+    'Per bucket monitors run a query that evaluates trigger criteria based on aggregated values in the dataset.':
+      'پایشگرهای Bucket کوئری‌ای اجرا می‌کنند که معیارهای محرک را بر اساس مقادیر تجمیع‌شدهٔ مجموعه‌داده ارزیابی می‌کند.',
+    'Per query monitor': 'پایشگر به‌ازای هر کوئری',
+    'Per query monitors run a query and generate alerts based on trigger criteria that match query results.':
+      'پایشگرهای کوئری، کوئری را اجرا می‌کنند و بر اساس معیارهای محرک منطبق با نتایج، هشدار می‌سازند.',
+    'Monitor defining method': 'روش تعریف پایشگر',
+    'Specify the way you want to define your query and triggers':
+      'روش تعریف کوئری و محرک‌ها را مشخص کنید',
+    'Specify the way you want to define your query and triggers.':
+      'روش تعریف کوئری و محرک‌ها را مشخص کنید.',
+    'Anomaly detector': 'آشکارساز ناهنجاری',
+    'Extraction query editor': 'ویرایشگر کوئری استخراج',
+    'Visual editor': 'ویرایشگر دیداری',
+    Frequency: 'تناوب',
+    'By interval': 'بر اساس فاصلهٔ زمانی',
+    'Run every': 'اجرا در هر',
+    'Minute(s)': 'دقیقه',
+    'Select data': 'انتخاب داده',
+    'Select clusters': 'انتخاب Clusterها',
+    'Select a local cluster or remote clusters from cross-cluster connections':
+      'یک Cluster محلی یا Clusterهای راه‌دور را از اتصال‌های بین‌Cluster انتخاب کنید',
+    'Select a local cluster or remote clusters from cross-cluster connections.':
+      'یک Cluster محلی یا Clusterهای راه‌دور را از اتصال‌های بین‌Cluster انتخاب کنید.',
+    Indices: 'ایندکس‌ها',
+    'Select one or more indexes or wildcard patterns':
+      'یک یا چند ایندکس یا الگوی wildcard انتخاب کنید',
+    'You can use * as a wildcard or date math index resolution in your index pattern.':
+      'در الگوی ایندکس می‌توانید از * به‌عنوان wildcard یا از محاسبات تاریخ برای تفکیک ایندکس استفاده کنید.',
+    'Time field': 'فیلد زمان',
+    'Select a time field': 'یک فیلد زمان انتخاب کنید',
+    'Choose the time field you want to use for your x-axis':
+      'فیلد زمانی مورد استفاده برای محور x را انتخاب کنید',
+    Query: 'کوئری',
+    'You must specify an index.': 'باید یک ایندکس مشخص کنید.',
+    'No triggers': 'هیچ محرکی وجود ندارد',
+    'Add a trigger to define conditions and actions':
+      'برای تعریف شرایط و عملیات، یک محرک اضافه کنید',
+    'Add a trigger to define conditions and actions.':
+      'برای تعریف شرایط و عملیات، یک محرک اضافه کنید.',
+    'Add trigger': 'افزودن محرک',
     'No results match your search criteria':
       'هیچ نتیجه‌ای با معیارهای جستجوی شما مطابقت ندارد',
     'No results match your search criteria.':
@@ -1313,7 +1454,7 @@ function translateKnownText(value) {
     );
   }
 
-  const entityWithCount = normalized.match(/^(Agents|Groups|Rules|Decoders|CDB Lists|Reports|Report definitions|Channels|Monitors|Alerts|Detectors)\s+\(([\d,]+)\)$/);
+  const entityWithCount = normalized.match(/^(Agents|Groups|Rules|Decoders|CDB Lists|Reports|Report definitions|Channels|Monitors|Alerts|Detectors|Triggers)\s+\(([\d,]+)\)$/);
   if (entityWithCount) {
     const labels = {
       Agents: 'Agentها',
@@ -1327,6 +1468,7 @@ function translateKnownText(value) {
       Monitors: 'پایشگرها',
       Alerts: 'هشدارها',
       Detectors: 'آشکارسازها',
+      Triggers: 'محرک‌ها',
     };
 
     return value.replace(
