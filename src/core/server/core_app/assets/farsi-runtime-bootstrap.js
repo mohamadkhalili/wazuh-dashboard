@@ -29,6 +29,8 @@ const NAVIGATION_FLYOUT_SELECTOR = [
   '.wz-rtl-navigation-flyout',
 ].join(',');
 const THEME_CLASS_PREFIX = 'wz-rtl-theme-';
+const GLOBAL_FONT_STYLE_ID = 'wazuh-farsi-global-font';
+const GLOBAL_FONT_FAMILY = '"IRANSansEn", Tahoma, Arial, sans-serif';
 
 const PERSIAN_TEXT_MAP = new Map(
   Object.entries({
@@ -74,6 +76,10 @@ const PERSIAN_TEXT_MAP = new Map(
     'Mitre techniques by agent': 'تکنیک‌های MITRE بر اساس Agent',
     'Top tactics by agent': 'تاکتیک‌های برتر بر اساس Agent',
     'Restart manager': 'راه‌اندازی مجدد Manager',
+    'Restart cluster': 'راه‌اندازی مجدد کلاستر',
+    'Cluster will be restarted': 'کلاستر راه‌اندازی مجدد خواهد شد',
+    'Manager will be restarted': 'Manager راه‌اندازی مجدد خواهد شد',
+    'Select node': 'انتخاب گره',
     'Total agents': 'مجموع Agentها',
     'Agents coverage': 'پوشش Agentها',
     'Manager information': 'اطلاعات Manager',
@@ -83,12 +89,26 @@ const PERSIAN_TEXT_MAP = new Map(
     'Date added': 'تاریخ افزودن',
     'Last keep alive': 'آخرین ارتباط',
     'Edit configuration': 'ویرایش پیکربندی',
+    'Server administration': 'مدیریت سرور',
+    Capabilities: 'قابلیت‌ها',
+    'Local configuration reference': 'مرجع پیکربندی محلی',
+    'Cluster configuration': 'پیکربندی کلاستر',
+    'Manager configuration': 'پیکربندی Manager',
     'Main configurations': 'پیکربندی‌های اصلی',
     'Global Configuration': 'پیکربندی سراسری',
     'Global and remote settings': 'تنظیمات سراسری و راه دور',
     'Master node configuration': 'پیکربندی گره اصلی',
     'Registration Service': 'سرویس ثبت‌نام',
     'Automatic agent registration service': 'سرویس ثبت‌نام خودکار Agent',
+    'Logging settings that apply to the agent': 'تنظیمات ثبت Log مربوط به Agent',
+    Communication: 'ارتباطات',
+    'Settings related to the connection with the manager': 'تنظیمات ارتباط با Manager',
+    'Anti-flooding settings': 'تنظیمات جلوگیری از سرریز',
+    'Agent bucket parameters to avoid event flooding':
+      'پارامترهای صف Agent برای جلوگیری از سرریز رخدادها',
+    Labels: 'برچسب‌ها',
+    'User-defined information about the agent included in alerts':
+      'اطلاعات تعریف‌شده توسط کاربر درباره Agent که در هشدارها درج می‌شود',
     'Alerts and output management': 'مدیریت هشدارها و خروجی',
     'Settings related to the alerts and their format': 'تنظیمات هشدارها و قالب آن‌ها',
     Integrations: 'یکپارچه‌سازی‌ها',
@@ -143,6 +163,7 @@ const PERSIAN_TEXT_MAP = new Map(
       'در این نشانی برنامه‌ای پیدا نشد. به صفحه قبل برگردید یا برنامه‌ای از منو انتخاب کنید.',
     '(opens in a new tab or window)': '(در زبانه یا پنجره جدید باز می‌شود)',
     'Open in new window': 'باز کردن در پنجره جدید',
+    'Data access and users': 'دسترسی به داده و کاربران',
     'Get Started': 'شروع',
     'Get started with access control': 'شروع کنترل دسترسی',
     Authentication: 'احراز هویت',
@@ -185,6 +206,7 @@ const PERSIAN_TEXT_MAP = new Map(
     'Create action group': 'ایجاد گروه عملیات',
     Expand: 'گسترش',
     Tenants: 'Tenantها',
+    'Dashboard multi-tenancy': 'چندمستاجری داشبورد',
     'Configure Multi-tenancy': 'پیکربندی چندمستاجری',
     'Manage Multi-tenancy': 'مدیریت چندمستاجری',
     'Optional: Multi-tenancy': 'اختیاری: چندمستاجری',
@@ -212,6 +234,8 @@ const PERSIAN_TEXT_MAP = new Map(
     'Step 2': 'مرحله ۲',
     'Step 3': 'مرحله ۳',
     'View expression': 'مشاهده عبارت',
+    'Config.yml documentation': 'مستندات config.yml',
+    Config: 'پیکربندی',
     'This is a search bar. After typing your query, hit enter to filter the results lower in the page.':
       'این نوار جستجو است. پس از نوشتن عبارت، Enter را بزنید تا نتایج پایین صفحه فیلتر شوند.',
     Wazuh: 'Ayyza',
@@ -1102,6 +1126,40 @@ const DO_NOT_TRANSLATE_PARENT_SELECTOR = [
 
 const TRANSLATABLE_ATTRIBUTE_SELECTOR = '[aria-label], [title], [placeholder]';
 
+function ensureGlobalFont() {
+  document.documentElement.style.setProperty('--font-text', GLOBAL_FONT_FAMILY);
+  document.documentElement.style.setProperty('--oui-font-family', GLOBAL_FONT_FAMILY);
+
+  let style = document.getElementById(GLOBAL_FONT_STYLE_ID);
+  if (!style) {
+    style = document.createElement('style');
+    style.id = GLOBAL_FONT_STYLE_ID;
+    document.head.appendChild(style);
+  }
+
+  style.textContent = `
+    :root {
+      --font-text: ${GLOBAL_FONT_FAMILY} !important;
+      --oui-font-family: ${GLOBAL_FONT_FAMILY} !important;
+    }
+    html,
+    body,
+    body *:not(.fa):not(.fas):not(.far):not(.fab),
+    input,
+    textarea,
+    select,
+    option,
+    button:not(.fa):not(.fas):not(.far):not(.fab),
+    code,
+    pre,
+    kbd,
+    samp,
+    svg text {
+      font-family: ${GLOBAL_FONT_FAMILY} !important;
+    }
+  `;
+}
+
 function translateKnownText(value) {
   const trimmed = value.trim();
   const normalized = trimmed.replace(/\s+/g, ' ');
@@ -1162,6 +1220,11 @@ function translateKnownText(value) {
       trimmed,
       `سطح قاعده ${ruleLevelOrHigher[1]} یا بالاتر`,
     );
+  }
+
+  const selectedNodeInformation = normalized.match(/^([A-Za-z0-9_.-]+) information$/);
+  if (selectedNodeInformation) {
+    return value.replace(trimmed, `اطلاعات ${selectedNodeInformation[1]}`);
   }
 
   const rowsPerPage = normalized.match(/^Rows per page:\s*(\d+)$/);
@@ -1466,6 +1529,7 @@ function applyDocumentRtl() {
       : `${THEME_CLASS_PREFIX}light`;
 
   document.documentElement.setAttribute('dir', 'rtl');
+  ensureGlobalFont();
   document.documentElement.classList.add(ROOT_CLASS);
   document.documentElement.classList.remove(
     `${THEME_CLASS_PREFIX}dark`,
