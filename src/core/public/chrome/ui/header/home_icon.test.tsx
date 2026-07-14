@@ -17,7 +17,7 @@ describe('Home icon,', () => {
       logos: getLogosMock.default,
     });
 
-    it('uses the home icon by default', () => {
+    it('uses the application logo by default', () => {
       const props = {
         ...mockProps(),
         branding: {
@@ -26,13 +26,13 @@ describe('Home icon,', () => {
       };
       const component = shallow(<HomeIcon {...props} />);
       const icon = component.find('EuiIcon');
-      expect(icon.prop('data-test-subj')).toEqual('homeIcon');
-      expect(icon.prop('type')).toEqual(props.logos.Mark.url);
-      expect(icon.prop('size')).toEqual('m');
+      expect(icon.prop('data-test-subj')).toEqual('defaultLogo');
+      expect(icon.prop('type')).toEqual(props.logos.Application.url);
+      expect(icon.prop('size')).toEqual('l');
       expect(icon.prop('title')).toEqual('Ayyza dashboard home');
     });
 
-    it('uses the home icon when header is expanded', () => {
+    it('uses the application logo when header is expanded', () => {
       const props = {
         ...mockProps(),
         branding: {
@@ -41,15 +41,15 @@ describe('Home icon,', () => {
       };
       const component = shallow(<HomeIcon {...props} />);
       const icon = component.find('EuiIcon');
-      expect(icon.prop('data-test-subj')).toEqual('homeIcon');
-      expect(icon.prop('type')).toEqual(props.logos.Mark.url);
-      expect(icon.prop('size')).toEqual('m');
+      expect(icon.prop('data-test-subj')).toEqual('defaultLogo');
+      expect(icon.prop('type')).toEqual(props.logos.Application.url);
+      expect(icon.prop('size')).toEqual('l');
       expect(icon.prop('title')).toEqual('Ayyza dashboard home');
 
       expect(component).toMatchSnapshot();
     });
 
-    it('uses the mark logo when header is not expanded', () => {
+    it('uses the application logo when header is not expanded', () => {
       const props = {
         ...mockProps(),
         branding: {
@@ -79,8 +79,8 @@ describe('Home icon,', () => {
       const props = mockProps();
       const component = shallow(<HomeIcon {...props} />);
       const icon = component.find('EuiIcon');
-      expect(icon.prop('data-test-subj')).toEqual('customMark');
-      expect(icon.prop('type')).toEqual(props.logos.Mark.url);
+      expect(icon.prop('data-test-subj')).toEqual('customLogo');
+      expect(icon.prop('type')).toEqual(props.logos.Application.url);
       expect(icon.prop('size')).toEqual('l');
       expect(icon.prop('title')).toEqual(`${mockTitle} home`);
     });
@@ -92,8 +92,8 @@ describe('Home icon,', () => {
 
       const component = shallow(<HomeIcon {...props} />);
       const icon = component.find('EuiIcon');
-      expect(icon.prop('data-test-subj')).toEqual('customMark');
-      expect(icon.prop('type')).toEqual(props.logos.Mark.url);
+      expect(icon.prop('data-test-subj')).toEqual('customLogo');
+      expect(icon.prop('type')).toEqual(props.logos.Application.url);
       expect(icon.prop('size')).toEqual('l');
       expect(icon.prop('title')).toEqual(`${mockTitle} home`);
 

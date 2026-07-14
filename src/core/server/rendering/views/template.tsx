@@ -133,7 +133,7 @@ export const Template: FunctionComponent<Props> = ({
 
         <meta name="theme-color" content="#ffffff" />
         <Styles darkMode={darkMode} theme={themeVersion} />
-        <script src={`${uiPublicUrl}/farsi-runtime-bootstrap.js?v=20260714-0636`} defer />
+        <script src={`${uiPublicUrl}/farsi-runtime-bootstrap.js?v=20260714-0652`} defer />
 
         {/* Inject stylesheets into the <head> before scripts so that KP plugins with bundled styles will override them */}
         <meta name="add-styles-here" />

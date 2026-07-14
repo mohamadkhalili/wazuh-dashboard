@@ -1447,7 +1447,7 @@ function ensureGlobalFont() {
       min-width: 152px !important;
     }
     .header__homeLoaderNavButton .homeIconContainer {
-      width: 144px !important;
+      width: 124px !important;
       height: 40px !important;
       display: flex !important;
       align-items: center !important;
@@ -1457,9 +1457,30 @@ function ensureGlobalFont() {
       width: 140px !important;
       height: 40px !important;
       max-width: 140px !important;
+      flex: 0 0 140px !important;
       object-fit: contain !important;
     }
   `;
+}
+
+function ensureHomeLogo(root = document) {
+  queryAllIncludingRoot(
+    root,
+    '.header__homeLoaderNavButton .homeIconContainer .logoImage',
+  ).forEach(logo => {
+    if (!(logo instanceof HTMLImageElement) || !logo.src.includes('/ui/logos/')) return;
+
+    const logoUrl = new URL(logo.src, window.location.href);
+    const logoDirectory = logoUrl.pathname.slice(0, logoUrl.pathname.indexOf('/ui/logos/') + 10);
+    const fileName = logoUrl.pathname.endsWith('_on_dark.svg')
+      ? 'wazuh_dashboards_on_dark.svg'
+      : 'wazuh_dashboards_on_light.svg';
+    logoUrl.pathname = `${logoDirectory}${fileName}`;
+
+    const targetUrl = logoUrl.toString();
+    if (logo.src !== targetUrl) logo.src = targetUrl;
+    logo.setAttribute('data-test-image-url', targetUrl);
+  });
 }
 
 function ensureFavicon() {
@@ -1972,6 +1993,7 @@ function markWazuhApps(root = document) {
 }
 
 function scanWazuhRtl(root = document) {
+  ensureHomeLogo(root);
   markWazuhApps(root);
   markTechnicalValues(root);
   markCharts(root);

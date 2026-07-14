@@ -13,7 +13,7 @@
   }
 
   & .homeIconContainer {
-    width: 144px;
+    width: 124px;
     height: 40px;
     display: flex;
     align-items: center;
@@ -24,6 +24,7 @@
     width: 140px;
     height: 40px;
     max-width: 140px;
+    flex: 0 0 140px;
     object-fit: contain;
   }
 }
