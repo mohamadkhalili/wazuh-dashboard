@@ -1424,6 +1424,23 @@ function ensureGlobalFont() {
     svg text {
       font-family: ${GLOBAL_FONT_FAMILY} !important;
     }
+    html[dir='rtl'] .euiAccordion__iconWrapper .euiAccordion__icon,
+    body.wazuh-rtl .euiAccordion__iconWrapper .euiAccordion__icon,
+    .wazuh-rtl .euiAccordion__iconWrapper .euiAccordion__icon,
+    html[dir='rtl'] .ouiAccordion__iconWrapper .ouiAccordion__icon,
+    body.wazuh-rtl .ouiAccordion__iconWrapper .ouiAccordion__icon,
+    .wazuh-rtl .ouiAccordion__iconWrapper .ouiAccordion__icon {
+      transform: rotate(180deg) !important;
+      transform-origin: center;
+    }
+    html[dir='rtl'] .euiAccordion__iconWrapper .euiAccordion__icon-isOpen,
+    body.wazuh-rtl .euiAccordion__iconWrapper .euiAccordion__icon-isOpen,
+    .wazuh-rtl .euiAccordion__iconWrapper .euiAccordion__icon-isOpen,
+    html[dir='rtl'] .ouiAccordion__iconWrapper .ouiAccordion__icon-isOpen,
+    body.wazuh-rtl .ouiAccordion__iconWrapper .ouiAccordion__icon-isOpen,
+    .wazuh-rtl .ouiAccordion__iconWrapper .ouiAccordion__icon-isOpen {
+      transform: rotate(90deg) !important;
+    }
   `;
 }
 
