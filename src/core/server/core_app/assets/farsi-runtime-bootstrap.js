@@ -1441,6 +1441,23 @@ function ensureGlobalFont() {
     .wazuh-rtl .ouiAccordion__iconWrapper .ouiAccordion__icon-isOpen {
       transform: rotate(90deg) !important;
     }
+    .header__homeLoaderNavButton .euiHeaderSectionItemButton__content,
+    .header__homeLoaderNavButton .ouiHeaderSectionItemButton__content {
+      min-width: 152px !important;
+    }
+    .header__homeLoaderNavButton .homeIconContainer {
+      width: 144px !important;
+      height: 40px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .header__homeLoaderNavButton .homeIconContainer .logoImage {
+      width: 140px !important;
+      height: 40px !important;
+      max-width: 140px !important;
+      object-fit: contain !important;
+    }
   `;
 }
 
