@@ -38,6 +38,7 @@ const THEME_CLASS_PREFIX = 'wz-rtl-theme-';
 const GLOBAL_FONT_STYLE_ID = 'wazuh-farsi-global-font';
 const GLOBAL_FONT_STYLESHEET_ID = 'wazuh-farsi-font-faces';
 const GLOBAL_FONT_FAMILY = '"IRANSansEn", Tahoma, Arial, sans-serif';
+const FAVICON_CACHE_VERSION = '20260714-0628';
 
 const PERSIAN_TEXT_MAP = new Map(
   Object.entries({
@@ -1461,6 +1462,63 @@ function ensureGlobalFont() {
   `;
 }
 
+function ensureFavicon() {
+  const bootstrapScript = Array.from(document.scripts).find(script =>
+    script.src.includes('/farsi-runtime-bootstrap.js'),
+  );
+  const uiPublicUrl = bootstrapScript
+    ? bootstrapScript.src.replace(/\/farsi-runtime-bootstrap\.js(?:\?.*)?$/, '')
+    : `${window.location.origin}/ui`;
+  const faviconUrl = name =>
+    `${uiPublicUrl}/favicons/${name}?v=${FAVICON_CACHE_VERSION}`;
+
+  if (!document.querySelector("link[rel='icon'][sizes='192x192']")) {
+    const primaryIcon = document.createElement('link');
+    primaryIcon.setAttribute('rel', 'icon');
+    primaryIcon.setAttribute('type', 'image/png');
+    primaryIcon.setAttribute('sizes', '192x192');
+    primaryIcon.setAttribute('href', faviconUrl('android-chrome-192x192.png'));
+    document.head.prepend(primaryIcon);
+  }
+
+  document.querySelectorAll("link[rel*='icon']").forEach(link => {
+    const rel = link.getAttribute('rel') || '';
+    const sizes = link.getAttribute('sizes') || '';
+
+    if (rel.includes('apple-touch-icon')) {
+      link.setAttribute('href', faviconUrl('apple-touch-icon.png'));
+      return;
+    }
+    if (rel.includes('mask-icon')) {
+      link.setAttribute('href', faviconUrl('safari-pinned-tab.svg'));
+      return;
+    }
+    if (rel.includes('shortcut')) {
+      link.setAttribute('href', faviconUrl('favicon.ico'));
+      return;
+    }
+    if (sizes === '32x32') {
+      link.setAttribute('href', faviconUrl('favicon-32x32.png'));
+      return;
+    }
+    if (sizes === '16x16') {
+      link.setAttribute('href', faviconUrl('favicon-16x16.png'));
+      return;
+    }
+
+    link.setAttribute('type', 'image/png');
+    link.setAttribute('sizes', '192x192');
+    link.setAttribute('href', faviconUrl('android-chrome-192x192.png'));
+  });
+
+  document
+    .querySelector("link[rel='manifest']")
+    ?.setAttribute('href', faviconUrl('manifest.json'));
+  document
+    .querySelector("meta[name='msapplication-config']")
+    ?.setAttribute('content', faviconUrl('browserconfig.xml'));
+}
+
 function translateKnownText(value) {
   const trimmed = value.trim();
   const normalized = trimmed.replace(/\s+/g, ' ');
@@ -1930,6 +1988,7 @@ function applyDocumentRtl() {
       : `${THEME_CLASS_PREFIX}light`;
 
   document.documentElement.setAttribute('dir', 'rtl');
+  ensureFavicon();
   ensureGlobalFont();
   document.documentElement.classList.add(ROOT_CLASS);
   document.documentElement.classList.remove(

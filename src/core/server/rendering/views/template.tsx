@@ -54,6 +54,7 @@ export const Template: FunctionComponent<Props> = ({
   const logos = getLogos(injectedMetadata.branding, injectedMetadata.serverBasePath);
 
   const favicon = injectedMetadata.branding.faviconUrl;
+  const faviconCacheVersion = '20260714-0628';
   injectedMetadata.branding.applicationTitle = 'Ayyza';
   const applicationTitle = 'Ayyza';
 
@@ -83,45 +84,56 @@ export const Template: FunctionComponent<Props> = ({
 
         <link
           rel="icon"
-          type="image/svg+xml"
-          href={favicon ?? `${uiPublicUrl}/favicons/favicon.svg`}
+          type="image/png"
+          sizes="192x192"
+          href={
+            favicon ?? `${uiPublicUrl}/favicons/android-chrome-192x192.png?v=${faviconCacheVersion}`
+          }
         />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
-          href={favicon ?? `${uiPublicUrl}/favicons/apple-touch-icon.png`}
+          href={favicon ?? `${uiPublicUrl}/favicons/apple-touch-icon.png?v=${faviconCacheVersion}`}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="32x32"
-          href={favicon ?? `${uiPublicUrl}/favicons/favicon-32x32.png`}
+          href={favicon ?? `${uiPublicUrl}/favicons/favicon-32x32.png?v=${faviconCacheVersion}`}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="16x16"
-          href={favicon ?? `${uiPublicUrl}/favicons/favicon-16x16.png`}
+          href={favicon ?? `${uiPublicUrl}/favicons/favicon-16x16.png?v=${faviconCacheVersion}`}
         />
 
-        <link rel="manifest" href={favicon ? `` : `${uiPublicUrl}/favicons/manifest.json`} />
+        <link
+          rel="manifest"
+          href={favicon ? `` : `${uiPublicUrl}/favicons/manifest.json?v=${faviconCacheVersion}`}
+        />
 
         {/* Ignoring all of the above, Safari picks this one */}
         <link
           rel="mask-icon"
           color="#003553"
-          href={favicon ?? `${uiPublicUrl}/favicons/safari-pinned-tab.svg`}
+          href={favicon ?? `${uiPublicUrl}/favicons/safari-pinned-tab.svg?v=${faviconCacheVersion}`}
         />
-        <link rel="shortcut icon" href={favicon ?? `${uiPublicUrl}/favicons/favicon.ico`} />
+        <link
+          rel="shortcut icon"
+          href={favicon ?? `${uiPublicUrl}/favicons/favicon.ico?v=${faviconCacheVersion}`}
+        />
 
         <meta
           name="msapplication-config"
-          content={favicon ? `` : `${uiPublicUrl}/favicons/browserconfig.xml`}
+          content={
+            favicon ? `` : `${uiPublicUrl}/favicons/browserconfig.xml?v=${faviconCacheVersion}`
+          }
         />
 
         <meta name="theme-color" content="#ffffff" />
         <Styles darkMode={darkMode} theme={themeVersion} />
-        <script src={`${uiPublicUrl}/farsi-runtime-bootstrap.js?v=20260714-0619`} defer />
+        <script src={`${uiPublicUrl}/farsi-runtime-bootstrap.js?v=20260714-0636`} defer />
 
         {/* Inject stylesheets into the <head> before scripts so that KP plugins with bundled styles will override them */}
         <meta name="add-styles-here" />
