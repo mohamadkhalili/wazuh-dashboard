@@ -46,7 +46,11 @@ export function CollapsibleNavGroupsLabel(props: CollapsibleNavGroupsLabelProps)
       <EuiFlexItem>{label}</EuiFlexItem>
       {collapsible ? (
         <EuiFlexItem grow={false}>
-          <EuiIcon type={isOpen ? 'minus' : 'plus'} className="leftNavCustomizedAccordionIcon" />
+          <EuiIcon
+            type={isOpen ? 'arrowDown' : 'arrowLeft'}
+            className="leftNavCustomizedAccordionIcon"
+            data-icon-type={isOpen ? 'menuDisclosureOpen' : 'menuDisclosureClosed'}
+          />
         </EuiFlexItem>
       ) : null}
     </EuiFlexGroup>

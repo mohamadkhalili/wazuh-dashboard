@@ -33,6 +33,7 @@ import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { map, shareReplay, takeUntil, distinctUntilChanged, filter } from 'rxjs/operators';
 import { createBrowserHistory, History } from 'history';
 import { RecursiveReadonly } from '@osd/utility-types';
+import { preserveLocaleInUrl } from 'wazuh-farsi/locale';
 
 import { MountPoint } from '../types';
 import { HttpSetup, HttpStart } from '../http';
@@ -286,10 +287,12 @@ export class ApplicationService {
           // If user is inside a workspace and the target app is not available within a workspace
           // refresh the page by doing a hard navigation
           window.location.assign(
-            http.basePath.prepend(getAppUrl(availableMounters, appId, path), {
-              // Set withoutClientBasePath to true remove the workspace path prefix
-              withoutClientBasePath: true,
-            })
+            preserveLocaleInUrl(
+              http.basePath.prepend(getAppUrl(availableMounters, appId, path), {
+                // Set withoutClientBasePath to true remove the workspace path prefix
+                withoutClientBasePath: true,
+              })
+            )
           );
           return;
         }
@@ -300,7 +303,11 @@ export class ApplicationService {
         if (!navigatingToSameApp) {
           this.appInternalStates.delete(this.currentAppId$.value!);
         }
-        this.navigate!(getAppUrl(availableMounters, appId, path), state, replace);
+        this.navigate!(
+          preserveLocaleInUrl(getAppUrl(availableMounters, appId, path)),
+          state,
+          replace
+        );
         this.currentAppId$.next(appId);
       }
     };
@@ -382,15 +389,17 @@ export class ApplicationService {
           withoutClientBasePath:
             targetApp?.workspaceAvailability === WorkspaceAvailability.outsideWorkspace,
         });
-        return absolute ? relativeToAbsolute(relUrl) : relUrl;
+        const localeAwareUrl = preserveLocaleInUrl(relUrl);
+        return absolute ? relativeToAbsolute(localeAwareUrl) : localeAwareUrl;
       },
       navigateToApp,
       navigateToUrl: async (url) => {
-        const appInfo = parseAppUrl(url, http.basePath, this.apps);
+        const localeAwareUrl = preserveLocaleInUrl(url);
+        const appInfo = parseAppUrl(localeAwareUrl, http.basePath, this.apps);
         if (appInfo) {
           return navigateToApp(appInfo.app, { path: appInfo.path });
         } else {
-          return this.redirectTo!(url);
+          return this.redirectTo!(localeAwareUrl);
         }
       },
       getComponent: () => {

@@ -96,6 +96,6 @@
     "translations/es-ES.json",
     "translations/es-419.json",
     "translations/de-DE.json",
-    "translations/fa-IR.json"
+    "../plugins/wazuh-farsi/packs/dashboard/fa-IR.json"
   ]
 }

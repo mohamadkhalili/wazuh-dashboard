@@ -3,7 +3,7 @@
   align-items: center;
 
   .kuiButton + .kuiButton {
-    margin-left: 4px;
+    margin-inline-start: 4px;
   }
 }
 
@@ -27,7 +27,7 @@
   }
 
   .kuiButton + .kuiButton {
-    margin-left: 0;
+    margin-inline-start: 0;
   }
 }
 

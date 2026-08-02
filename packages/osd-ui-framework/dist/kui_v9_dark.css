@@ -22,21 +22,21 @@ main {
   display: flex;
   align-items: center;
   flex: 1 1 auto;
-  margin-left: 25px;
-  margin-right: 25px;
+  margin-inline-start: 25px;
+  margin-inline-end: 25px;
 }
 .kuiBarSection:not(:first-child):not(:last-child):not(:only-child) {
   justify-content: center; }
 .kuiBarSection:first-child {
-  margin-left: 0;
+  margin-inline-start: 0;
 }
 .kuiBarSection:last-child {
-  margin-right: 0;
+  margin-inline-end: 0;
   flex: 0 1 auto;   justify-content: flex-end; }
 .kuiBarSection:only-child {
-  margin-left: auto; }
+  margin-inline-start: auto; }
 .kuiBarSection > * + * {
-  margin-left: 10px; }
+  margin-inline-start: 10px; }
 
 .kuiButton {
   display: inline-block;   appearance: none;
@@ -80,16 +80,16 @@ a.kuiButton:not(.kuiButton-isDisabled):active {   transform: translateY(1px);
 }
 
 .kuiButton--iconText .kuiButton__icon:first-child:not(:only-child) {
-  margin-right: 8px;
+  margin-inline-end: 8px;
 }
 .kuiButton--iconText .kuiButton__icon:last-child:not(:only-child) {
-  margin-left: 8px;
+  margin-inline-start: 8px;
 }
 .kuiButton--iconText.kuiButton--small .kuiButton__icon:first-child:not(:only-child) {
-  margin-right: 4px;
+  margin-inline-end: 4px;
 }
 .kuiButton--iconText.kuiButton--small .kuiButton__icon:last-child:not(:only-child) {
-  margin-left: 4px;
+  margin-inline-start: 4px;
 }
 
 .kuiButton--basic {
@@ -256,7 +256,7 @@ a.kuiButton--secondary:not(.kuiButton-isDisabled):active {   color: #ff8da1 !imp
   align-items: center;
 }
 .kuiButtonGroup .kuiButton + .kuiButton {
-  margin-left: 4px;
+  margin-inline-start: 4px;
 }
 
 .kuiButtonGroup--united > .kuiButton:not(:first-child):not(:last-child) {
@@ -274,7 +274,7 @@ a.kuiButton--secondary:not(.kuiButton-isDisabled):active {   color: #ff8da1 !imp
   border-radius: 4px 4px 4px 4px;
 }
 .kuiButtonGroup--united .kuiButton + .kuiButton {
-  margin-left: 0;
+  margin-inline-start: 0;
 }
 
 .kuiButtonGroup--fullWidth {
@@ -355,7 +355,7 @@ a.kuiButton--secondary:not(.kuiButton-isDisabled):active {   color: #ff8da1 !imp
 
 .kuiCheckBoxLabel__text {
   font-size: 16px;
-  margin-left: 8px;
+  margin-inline-start: 8px;
 }
 
 .kuiLabel {
@@ -572,7 +572,7 @@ a.kuiButton--secondary:not(.kuiButton-isDisabled):active {   color: #ff8da1 !imp
   line-height: 1.5;
 }
 .kuiFieldGroupSection + .kuiFieldGroupSection {
-  margin-left: 10px;
+  margin-inline-start: 10px;
 }
 
 .kuiFieldGroupSection--wide {
@@ -632,7 +632,7 @@ a.kuiButton--secondary:not(.kuiButton-isDisabled):active {   color: #ff8da1 !imp
   align-items: baseline; }
 
 .kuiInfoPanelHeader__icon {
-  margin-right: 10px;
+  margin-inline-end: 10px;
   font-size: 16px;
   line-height: 1.5;
 }
@@ -682,12 +682,12 @@ a.kuiButton--secondary:not(.kuiButton-isDisabled):active {   color: #ff8da1 !imp
   font-weight: normal;
 }
 .kuiLocalBreadcrumb + .kuiLocalBreadcrumb {
-  margin-left: 6px;
+  margin-inline-start: 6px;
 }
 .kuiLocalBreadcrumb + .kuiLocalBreadcrumb::before {
   content: "/";
   user-select: none;
-  margin-right: 4px;
+  margin-inline-end: 4px;
   color: #293847;
 }
 
@@ -825,11 +825,11 @@ a.kuiButton--secondary:not(.kuiButton-isDisabled):active {   color: #ff8da1 !imp
 }
 
 .kuiLocalDropdownPanel--left {
-  margin-right: 30px;
+  margin-inline-end: 30px;
 }
 
 .kuiLocalDropdownPanel--right {
-  margin-left: 30px;
+  margin-inline-start: 30px;
 }
 
 .kuiLocalDropdownTitle {
@@ -869,7 +869,7 @@ a.kuiButton--secondary:not(.kuiButton-isDisabled):active {   color: #ff8da1 !imp
   cursor: pointer;
 }
 .kuiLocalDropdownHeader__action + .kuiLocalDropdownHeader__action {
-  margin-left: 10px;
+  margin-inline-start: 10px;
 }
 .kuiLocalDropdownHeader__action:hover, .kuiLocalDropdownHeader__action:active {
   color: #ff8da1;
@@ -951,7 +951,7 @@ a.kuiButton--secondary:not(.kuiButton-isDisabled):active {   color: #ff8da1 !imp
 }
 
 .kuiLocalMenuItem__icon {
-  margin-right: 5px;
+  margin-inline-end: 5px;
   margin-bottom: -1px;
 }
 
@@ -1106,7 +1106,7 @@ a.kuiButton--secondary:not(.kuiButton-isDisabled):active {   color: #ff8da1 !imp
   opacity: 0.5;
   cursor: default; }
 .kuiLocalTab + .kuiLocalTab {
-  margin-left: 15px;
+  margin-inline-start: 15px;
 }
 
 .kuiLocalTitle {
@@ -1130,7 +1130,7 @@ a.kuiButton--secondary:not(.kuiButton-isDisabled):active {   color: #ff8da1 !imp
   align-items: center;
 }
 .kuiPager > * + * {
-  margin-left: 10px; }
+  margin-inline-start: 10px; }
 
 .kuiPagerText {
   font-size: 16px;
@@ -1209,23 +1209,23 @@ a.kuiPanelHeader .kuiSelect:not(.kuiButton-isDisabled):focus {   outline: none;
   display: flex;
   align-items: center;
   flex: 1 1 auto;
-  margin-left: 25px;
-  margin-right: 25px;
+  margin-inline-start: 25px;
+  margin-inline-end: 25px;
 }
 .kuiPanelHeaderSection:not(:first-child):not(:last-child):not(:only-child) {
   justify-content: center; }
 .kuiPanelHeaderSection:first-child {
-  margin-left: 0;
+  margin-inline-start: 0;
 }
 .kuiPanelHeaderSection:last-child {
-  margin-right: 0;
+  margin-inline-end: 0;
   flex: 0 1 auto;   justify-content: flex-end; }
 .kuiPanelHeaderSection:only-child {
-  margin-left: auto; }
+  margin-inline-start: auto; }
 .kuiPanelHeaderSection > * + * {
-  margin-left: 10px; }
+  margin-inline-start: 10px; }
 .kuiPanelHeaderSection:only-child {
-  margin-left: 0;   margin-right: auto; }
+  margin-inline-start: 0;   margin-inline-end: auto; }
 
 .kuiPanelBody {
   padding: 10px;
@@ -1270,7 +1270,7 @@ a.kuiPanelHeader .kuiSelect:not(.kuiButton-isDisabled):focus {   outline: none;
 }
 
 .kuiStatusText__icon {
-  margin-right: 6px;
+  margin-inline-end: 6px;
   width: 1.15em;   max-height: 1.15em; }
 
 .kuiControlledTable {
@@ -1329,7 +1329,7 @@ a.kuiPanelHeader .kuiSelect:not(.kuiButton-isDisabled):focus {   outline: none;
 .kuiTableSortIcon {
   display: none;
   pointer-events: none;
-  margin-left: 4px;
+  margin-inline-start: 4px;
 }
 .kuiTableHeaderCellButton-isSorted .kuiTableSortIcon {
   display: block;
@@ -1413,7 +1413,7 @@ a.kuiPanelHeader .kuiSelect:not(.kuiButton-isDisabled):focus {   outline: none;
   border-left: none;
 }
 .kuiTab + .kuiTab:focus:not(.kuiTab-isSelected):not(:active) {
-  margin-left: -1px; }
+  margin-inline-start: -1px; }
 .kuiTab:active {
   outline: none !important;   box-shadow: none; }
 .kuiTab:focus {
@@ -1466,24 +1466,24 @@ a.kuiToolBar .kuiSelect:not(.kuiButton-isDisabled):focus {   outline: none;
   display: flex;
   align-items: center;
   flex: 1 1 auto;
-  margin-left: 25px;
-  margin-right: 25px;
+  margin-inline-start: 25px;
+  margin-inline-end: 25px;
 }
 .kuiToolBarSection:not(:first-child):not(:last-child):not(:only-child) {
   justify-content: center; }
 .kuiToolBarSection:first-child {
-  margin-left: 0;
+  margin-inline-start: 0;
 }
 .kuiToolBarSection:last-child {
-  margin-right: 0;
+  margin-inline-end: 0;
   flex: 0 1 auto;   justify-content: flex-end; }
 .kuiToolBarSection:only-child {
-  margin-left: auto; }
+  margin-inline-start: auto; }
 .kuiToolBarSection > * + * {
-  margin-left: 10px; }
+  margin-inline-start: 10px; }
 
 .kuiToolBar--searchOnly .kuiToolBarSearch {
-  margin-left: 0 !important; }
+  margin-inline-start: 0 !important; }
 
 .kuiToolBarFooter {
   display: flex;
@@ -1498,38 +1498,38 @@ a.kuiToolBar .kuiSelect:not(.kuiButton-isDisabled):focus {   outline: none;
   display: flex;
   align-items: center;
   flex: 1 1 auto;
-  margin-left: 25px;
-  margin-right: 25px;
+  margin-inline-start: 25px;
+  margin-inline-end: 25px;
 }
 .kuiToolBarFooterSection:not(:first-child):not(:last-child):not(:only-child) {
   justify-content: center; }
 .kuiToolBarFooterSection:first-child {
-  margin-left: 0;
+  margin-inline-start: 0;
 }
 .kuiToolBarFooterSection:last-child {
-  margin-right: 0;
+  margin-inline-end: 0;
   flex: 0 1 auto;   justify-content: flex-end; }
 .kuiToolBarFooterSection:only-child {
-  margin-left: auto; }
+  margin-inline-start: auto; }
 .kuiToolBarFooterSection > * + * {
-  margin-left: 10px; }
+  margin-inline-start: 10px; }
 
 .kuiToolBarSearch {
   display: flex;
   align-items: center;
-  margin-left: 25px;
-  margin-right: 25px;
+  margin-inline-start: 25px;
+  margin-inline-end: 25px;
   flex: 1 1 auto;
   max-width: 100%;   line-height: 1.5;
 }
 .kuiToolBarSearch:first-child {
-  margin-left: 0;
+  margin-inline-start: 0;
 }
 .kuiToolBarSearch:last-child {
-  margin-right: 0;
+  margin-inline-end: 0;
 }
 .kuiToolBarSearch > * + * {
-  margin-left: 10px; }
+  margin-inline-start: 10px; }
 
 .kuiToolBarSearchBox {
   flex: 1 1 auto;
@@ -1625,8 +1625,8 @@ a.kuiToolBar .kuiSelect:not(.kuiButton-isDisabled):focus {   outline: none;
 .kuiViewContent--constrainedWidth {
   width: 100%;
   max-width: 1100px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
 }
 
 .kuiViewContentItem {

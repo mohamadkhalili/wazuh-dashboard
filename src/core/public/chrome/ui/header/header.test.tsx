@@ -28,7 +28,7 @@
  * under the License.
  */
 
-import { EuiHeaderSectionItemButton } from '@elastic/eui';
+import { EuiHeaderSectionItemButton, EuiIcon } from '@elastic/eui';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { BehaviorSubject } from 'rxjs';
@@ -69,7 +69,6 @@ function mockProps() {
   return {
     http,
     application,
-    opensearchDashboardsVersion: '1.0.0',
     appTitle$: new BehaviorSubject('test'),
     badge$: new BehaviorSubject(undefined),
     breadcrumbs$: new BehaviorSubject([]),
@@ -77,13 +76,10 @@ function mockProps() {
     homeHref: '/',
     isVisible$: new BehaviorSubject(true),
     headerVariant$: new BehaviorSubject(undefined),
-    opensearchDashboardsDocLink: '/docs',
     navLinks$: new BehaviorSubject([]),
     customNavLink$: new BehaviorSubject(undefined),
     recentlyAccessed$: new BehaviorSubject([]),
     forceAppSwitcherNavigation$: new BehaviorSubject(false),
-    helpExtension$: new BehaviorSubject(undefined),
-    helpSupportUrl$: new BehaviorSubject(''),
     navControlsLeft$: new BehaviorSubject([]),
     navControlsCenter$: new BehaviorSubject([]),
     navControlsRight$: new BehaviorSubject([]),
@@ -95,7 +91,6 @@ function mockProps() {
     loadingCount$: new BehaviorSubject(0),
     onIsLockedUpdate: () => {},
     branding: {},
-    survey: '/',
     logos: chromeServiceMock.createStartContract().logos,
     sidecarConfig$: new BehaviorSubject<ISidecarConfig>({
       dockedMode: SIDECAR_DOCKED_MODE.RIGHT,
@@ -160,7 +155,15 @@ describe('Header', () => {
     expect(component.find('HeaderBreadcrumbs').exists()).toBeTruthy();
     expect(component.find('HeaderBadge').exists()).toBeTruthy();
     expect(component.find('HeaderActionMenu').exists()).toBeTruthy();
-    expect(component.find('HeaderHelpMenuUI').exists()).toBeTruthy();
+    expect(component.find('HeaderHelpMenuUI').exists()).toBeFalsy();
+    expect(component.find('[data-test-subj="headerNotificationsButton"]')).toHaveLength(1);
+    expect(component.find('[data-test-subj="headerAppearanceButton"]')).toHaveLength(1);
+    expect(
+      component.find('[data-test-subj="headerNotificationsButton"]').prop('aria-disabled')
+    ).toBeUndefined();
+    expect(
+      component.find('[data-test-subj="headerAppearanceButton"]').prop('aria-disabled')
+    ).toBeUndefined();
 
     expect(component.find('EuiFlyout[aria-label="Primary"]').exists()).toBeFalsy();
 
@@ -195,7 +198,9 @@ describe('Header', () => {
     expect(component.find('HeaderBreadcrumbs').exists()).toBeTruthy();
     expect(component.find('HeaderBadge').exists()).toBeTruthy();
     expect(component.find('HeaderActionMenu').exists()).toBeTruthy();
-    expect(component.find('HeaderHelpMenuUI').exists()).toBeTruthy();
+    expect(component.find('HeaderHelpMenuUI').exists()).toBeFalsy();
+    expect(component.find('[data-test-subj="headerNotificationsButton"]')).toHaveLength(1);
+    expect(component.find('[data-test-subj="headerAppearanceButton"]')).toHaveLength(1);
 
     expect(component).toMatchSnapshot();
   });
@@ -227,6 +232,58 @@ describe('Header', () => {
     expect(component).toMatchSnapshot();
   });
 
+  it('uses the navigation toggle button to close the open menu', () => {
+    const props = {
+      ...mockProps(),
+      branding: {
+        useExpandedHeader: false,
+      },
+    };
+    const component = mountWithIntl(<Header {...props} />);
+    const findNavToggleIcon = () =>
+      component.find('[data-test-subj="toggleNavButton"]').first().find(EuiIcon);
+
+    expect(findNavToggleIcon().prop('type')).toBe('menu');
+    component.find('[data-test-subj="toggleNavButton"]').first().simulate('click');
+    expect(findNavToggleIcon().prop('type')).toBe('cross');
+    expect(
+      component.find('[data-test-subj="toggleNavButton"]').first().hasClass('navToggleIsOpen')
+    ).toBe(true);
+    const legacyCloseToggle = component
+      .find(EuiHeaderSectionItemButton)
+      .filterWhere((button) => button.hasClass('navToggleLegacyClose'));
+    expect(legacyCloseToggle).toHaveLength(1);
+    expect(legacyCloseToggle.find(EuiIcon).prop('type')).toBe('cross');
+
+    legacyCloseToggle.simulate('click');
+    expect(findNavToggleIcon().prop('type')).toBe('menu');
+  });
+
+  it('keeps the updated header toggle visible while the menu is open', () => {
+    const onIsLockedUpdate = jest.fn();
+    const component = mountWithIntl(
+      <Header
+        {...mockProps()}
+        branding={{ useExpandedHeader: false }}
+        isLocked$={new BehaviorSubject(true)}
+        navGroupEnabled
+        onIsLockedUpdate={onIsLockedUpdate}
+        useUpdatedHeader
+      />
+    );
+    const navToggleButtons = component
+      .find(EuiHeaderSectionItemButton)
+      .filterWhere((button) => button.prop('data-test-subj') === 'toggleNavButton');
+
+    expect(navToggleButtons).toHaveLength(2);
+    navToggleButtons.forEach((button) => {
+      expect(button.find(EuiIcon).prop('type')).toBe('cross');
+    });
+
+    navToggleButtons.first().simulate('click');
+    expect(onIsLockedUpdate).toHaveBeenCalledWith(false);
+  });
+
   it('renders page header with application title', () => {
     const branding = {
       useExpandedHeader: false,
@@ -251,6 +308,8 @@ describe('Header', () => {
     expect(component.find('HeaderActionMenu').exists()).toBeFalsy();
     expect(component.find('[data-test-subj="headerDescriptionControl"]').exists()).toBeTruthy();
     expect(component.find('[data-test-subj="headerBottomControl"]').exists()).toBeTruthy();
+    expect(component.find('[data-test-subj="headerNotificationsButton"]')).toHaveLength(1);
+    expect(component.find('[data-test-subj="headerAppearanceButton"]')).toHaveLength(1);
     expect(component).toMatchSnapshot();
   });
 
@@ -274,6 +333,8 @@ describe('Header', () => {
     expect(component.find('HeaderActionMenu').exists()).toBeFalsy();
     expect(component.find('RecentItems').exists()).toBeTruthy();
     expect(component.find('[data-test-subj="headerRightControl"]').exists()).toBeFalsy();
+    expect(component.find('[data-test-subj="headerNotificationsButton"]')).toHaveLength(1);
+    expect(component.find('[data-test-subj="headerAppearanceButton"]')).toHaveLength(1);
     expect(component).toMatchSnapshot();
   });
 

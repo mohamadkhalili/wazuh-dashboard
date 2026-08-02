@@ -35,7 +35,7 @@
 
   .mgtAdvancedSettings__fieldTitle {
     padding-left: $euiSizeS;
-    margin-left: -$euiSizeS;
+    margin-inline-start: -$euiSizeS;
   }
 
   &--unsaved .mgtAdvancedSettings__fieldTitle {
@@ -58,7 +58,7 @@
 }
 
 .mgtAdvancedSettings__fieldTitleUnsavedIcon {
-  margin-left: $euiSizeS;
+  margin-inline-start: $euiSizeS;
 }
 
 .mgtAdvancedSettingsForm__unsavedCount {

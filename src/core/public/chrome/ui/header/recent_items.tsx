@@ -23,6 +23,7 @@ import {
   EuiToolTip,
 } from '@elastic/eui';
 import { i18n } from '@osd/i18n';
+import { translate as translateCommon } from 'wazuh-farsi/packs/common';
 import useObservable from 'react-use/lib/useObservable';
 import { SavedObjectsNamespaceType } from 'src/core/public';
 import { ChromeRecentlyAccessedHistoryItem, SavedObject } from 'opensearch-dashboards/public';
@@ -96,15 +97,15 @@ const bulkGetDetail = (savedObjects: Array<Pick<SavedObject, 'type' | 'id'>>, ht
 const recentsRadios = [
   {
     id: '5',
-    label: '5 pages',
+    label: translateCommon('pages', { count: 5 }),
   },
   {
     id: '10',
-    label: '10 pages',
+    label: translateCommon('pages', { count: 10 }),
   },
   {
     id: '15',
-    label: '15 pages',
+    label: translateCommon('pages', { count: 15 }),
   },
 ];
 
@@ -316,7 +317,7 @@ export const RecentItems = ({
                 label={
                   <>
                     <EuiIcon
-                      style={{ marginRight: widthForRightMargin }}
+                      style={{ marginInlineEnd: widthForRightMargin }}
                       type={item.meta.icon || 'apps'}
                       color="text"
                     />

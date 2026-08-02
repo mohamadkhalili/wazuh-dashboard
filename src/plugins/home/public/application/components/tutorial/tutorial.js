@@ -322,15 +322,13 @@ class TutorialUi extends React.Component {
     let label;
     let url;
     if (_.has(this.state, 'tutorial.artifacts.application')) {
-      label = this.state.tutorial.artifacts.application.label;
-      url = this.props.addBasePath(this.state.tutorial.artifacts.application.path);
-    } else if (_.has(this.state, 'tutorial.artifacts.dashboards')) {
-      const overviewDashboard = this.state.tutorial.artifacts.dashboards.find((dashboard) => {
-        return dashboard.isOverview;
-      });
-      if (overviewDashboard) {
-        label = overviewDashboard.linkLabel;
-        url = this.props.addBasePath(`/app/dashboards#/view/${overviewDashboard.id}`);
+      const application = this.state.tutorial.artifacts.application;
+      const hiddenApplicationPath = /\/app\/(?:dashboards|visualize)(?:[/?#]|$)/.test(
+        application.path
+      );
+      if (!hiddenApplicationPath) {
+        label = application.label;
+        url = this.props.addBasePath(application.path);
       }
     }
 

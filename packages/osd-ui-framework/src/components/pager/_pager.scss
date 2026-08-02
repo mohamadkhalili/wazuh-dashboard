@@ -6,7 +6,7 @@
   align-items: center;
 
   & > * + * {
-    margin-left: 10px; /* 1 */
+    margin-inline-start: 10px; /* 1 */
   }
 }
 

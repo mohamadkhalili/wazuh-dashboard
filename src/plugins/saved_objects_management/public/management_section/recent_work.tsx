@@ -25,6 +25,8 @@ import {
   EuiSmallButton,
 } from '@elastic/eui';
 import { i18n } from '@osd/i18n';
+import { translate as translateCommon } from 'wazuh-farsi/packs/common';
+import { translate as translateDashboard } from 'wazuh-farsi/packs/dashboard';
 import {
   ChromeRecentlyAccessedHistoryItem,
   CoreStart,
@@ -338,7 +340,7 @@ export const RecentWork = (props: { core: CoreStart; workspaceEnabled?: boolean 
                     <EuiFlexGroup justifyContent="flexStart" alignItems="center" gutterSize="none">
                       <EuiFlexItem grow={false}>
                         <EuiIcon
-                          style={{ marginRight: widthForRightMargin }}
+                          style={{ marginInlineEnd: widthForRightMargin }}
                           type={recentAccessItem.meta.icon || 'apps'}
                           color="subdued"
                         />
@@ -407,7 +409,10 @@ export const RecentWork = (props: { core: CoreStart; workspaceEnabled?: boolean 
                             </EuiFlexItem>
                             <EuiFlexItem grow={1} className="eui-textRight">
                               <EuiText size="xs" color="default">
-                                <b>{recentAccessItem.workspaceName || 'N/A'} </b>
+                                <b>
+                                  {recentAccessItem.workspaceName ||
+                                    translateCommon('notAvailable')}{' '}
+                                </b>
                               </EuiText>
                             </EuiFlexItem>
                           </EuiFlexGrid>
@@ -426,7 +431,7 @@ export const RecentWork = (props: { core: CoreStart; workspaceEnabled?: boolean 
       ) : isLoading ? (
         <EuiEmptyPrompt
           icon={<EuiLoadingLogo logo="savedObjectsApp" size="xl" />}
-          title={<h3>Loading Assets</h3>}
+          title={<h3>{translateDashboard('loadingAssets')}</h3>}
         />
       ) : (
         <EuiEmptyPrompt

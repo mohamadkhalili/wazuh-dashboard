@@ -1,0 +1,819 @@
+const { createTranslator, createVariants } = require('../../translator.cjs');
+
+const messages = Object.freeze({
+  "checkingDataSource": {
+    "en": "Checking data source",
+    "fa-IR": "در حال بررسی منبع داده"
+  },
+  "loadingCase": {
+    "en": "Loading case",
+    "fa-IR": "در حال بارگذاری پرونده"
+  },
+  "loadingConfiguration": {
+    "en": "Loading configuration",
+    "fa-IR": "در حال بارگذاری پیکربندی"
+  },
+  "loadingContent": {
+    "en": "Loading content",
+    "fa-IR": "در حال بارگذاری محتوا"
+  },
+  "loadingOriginalFinding": {
+    "en": "Loading original finding",
+    "fa-IR": "در حال بارگذاری یافتهٔ اصلی"
+  },
+  "loadingRequirements": {
+    "en": "Loading requirements",
+    "fa-IR": "در حال بارگذاری الزامات"
+  },
+  "loadingResults": {
+    "en": "Loading results",
+    "fa-IR": "در حال بارگذاری نتایج"
+  },
+  "loadingTactics": {
+    "en": "Loading tactics",
+    "fa-IR": "در حال بارگذاری تاکتیک‌ها"
+  },
+  "loadingTechniques": {
+    "en": "Loading techniques",
+    "fa-IR": "در حال بارگذاری تکنیک‌ها"
+  },
+  "searching": {
+    "en": "Searching",
+    "fa-IR": "در حال جستجو"
+  },
+  "activeResponse.missingSourceDescription": {
+    "en": "The source finding for this active response could not be found. It may have been deleted from its index.",
+    "fa-IR": "یافتهٔ منبع این پاسخ فعال پیدا نشد. ممکن است از ایندکس خود حذف شده باشد."
+  },
+  "activeResponse.missingSourceTitle": {
+    "en": "Missing source finding",
+    "fa-IR": "یافتهٔ منبع موجود نیست"
+  },
+  "agents.backToEndpoints": {
+    "en": "Back to Endpoints",
+    "fa-IR": "بازگشت به پایانه‌ها"
+  },
+  "agents.deployNew": {
+    "en": "Deploy new agent",
+    "fa-IR": "استقرار عامل جدید"
+  },
+  "agents.noneAdded": {
+    "en": "No agents were added to this manager.",
+    "fa-IR": "هیچ عاملی به این مدیریت عامل‌ها اضافه نشده است."
+  },
+  "agents.unpin": {
+    "en": "Unpin agent",
+    "fa-IR": "برداشتن پین عامل"
+  },
+  "api.notReachable": {
+    "en": "API not reachable",
+    "fa-IR": "API در دسترس نیست"
+  },
+  "case.cleanAction": {
+    "en": "Clean",
+    "fa-IR": "پاک‌سازی"
+  },
+  "case.cleanConfirmation": {
+    "en": "This action removes the case data from the finding.",
+    "fa-IR": "این کار داده‌های پرونده را از یافته حذف می‌کند."
+  },
+  "case.cleanTitle": {
+    "en": "Clean case",
+    "fa-IR": "پاک‌سازی پرونده"
+  },
+  "case.commentAriaLabel": {
+    "en": "Case comment",
+    "fa-IR": "یادداشت پرونده"
+  },
+  "case.commentHelp": {
+    "en": "Add a free-text note about this finding.",
+    "fa-IR": "یک یادداشت متنی آزاد دربارهٔ این یافته اضافه کنید."
+  },
+  "case.commentPlaceholder": {
+    "en": "Write a comment…",
+    "fa-IR": "یادداشتی بنویسید…"
+  },
+  "case.create": {
+    "en": "Create case",
+    "fa-IR": "ایجاد پرونده"
+  },
+  "case.emptyDescription": {
+    "en": "No case data yet. Fill in the form to create one.",
+    "fa-IR": "هنوز داده‌ای برای پرونده وجود ندارد. برای ایجاد پرونده، فرم را تکمیل کنید."
+  },
+  "case.management": {
+    "en": "Case management",
+    "fa-IR": "مدیریت پرونده"
+  },
+  "case.status.acknowledged": {
+    "en": "Acknowledged",
+    "fa-IR": "تأییدشده"
+  },
+  "case.status.active": {
+    "en": "Active",
+    "fa-IR": "فعال"
+  },
+  "case.status.audit": {
+    "en": "Audit",
+    "fa-IR": "ممیزی"
+  },
+  "case.status.completed": {
+    "en": "Completed",
+    "fa-IR": "تکمیل‌شده"
+  },
+  "case.status.deleted": {
+    "en": "Deleted",
+    "fa-IR": "حذف‌شده"
+  },
+  "case.statusAriaLabel": {
+    "en": "Case status",
+    "fa-IR": "وضعیت پرونده"
+  },
+  "case.statusHelp": {
+    "en": "Current lifecycle status of this finding.",
+    "fa-IR": "وضعیت فعلی چرخهٔ عمر این یافته."
+  },
+  "case.tagsAriaLabel": {
+    "en": "Case tags",
+    "fa-IR": "برچسب‌های پرونده"
+  },
+  "case.tagsHelp": {
+    "en": "Type a tag name and press Enter to add it.",
+    "fa-IR": "نام برچسب را وارد کنید و برای افزودن آن Enter را فشار دهید."
+  },
+  "case.tagsPlaceholder": {
+    "en": "Add tags…",
+    "fa-IR": "افزودن برچسب‌ها…"
+  },
+  "case.update": {
+    "en": "Update case",
+    "fa-IR": "به‌روزرسانی پرونده"
+  },
+  "compliance.filterRequirements": {
+    "en": "Filter requirements",
+    "fa-IR": "فیلتر الزامات"
+  },
+  "compliance.hideRequirementsWithoutAlerts": {
+    "en": "Hide requirements with no alerts",
+    "fa-IR": "الزام‌های بدون هشدار را پنهان کن"
+  },
+  "compliance.requirement": {
+    "en": "Requirement",
+    "fa-IR": "الزام"
+  },
+  "compliance.requirementDescription": {
+    "en": "Requirement description",
+    "fa-IR": "توضیحات الزام"
+  },
+  "compliance.requirementWithId": {
+    "en": "Requirement {requirementId}",
+    "fa-IR": "الزام {requirementId}"
+  },
+  "compliance.requirements": {
+    "en": "Requirements",
+    "fa-IR": "الزامات"
+  },
+  "compliance.requirementsColumn": {
+    "en": "Requirement(s)",
+    "fa-IR": "الزام‌ها"
+  },
+  "configuration.back": {
+    "en": "Back to configuration",
+    "fa-IR": "بازگشت به پیکربندی"
+  },
+  "configuration.fetchError": {
+    "en": "There was a problem while fetching the configuration for this section. It may be a server problem or the configuration doesn't exist.",
+    "fa-IR": "هنگام دریافت پیکربندی این بخش مشکلی رخ داد. ممکن است مشکل از سرور باشد یا پیکربندی وجود نداشته باشد."
+  },
+  "configuration.helpHintBeforeIcon": {
+    "en": "Click on the",
+    "fa-IR": "برای راهنمایی روی نماد"
+  },
+  "configuration.helpHintAfterIcon": {
+    "en": "icon for help. Check the documentation links to learn more about how to configure it.",
+    "fa-IR": "کلیک کنید. برای آشنایی بیشتر با نحوهٔ پیکربندی، پیوندهای مستندات را ببینید."
+  },
+  "configuration.notAvailable": {
+    "en": "Configuration not available",
+    "fa-IR": "پیکربندی در دسترس نیست"
+  },
+  "configuration.sectionMissing": {
+    "en": "This section is not present on the configuration file.",
+    "fa-IR": "این بخش در فایل پیکربندی وجود ندارد."
+  },
+  "configuration.unsavedConfirmation": {
+    "en": "There are unsaved changes. Are you sure you want to proceed?",
+    "fa-IR": "تغییرات ذخیره‌نشده‌ای وجود دارد. آیا مطمئن هستید که می‌خواهید ادامه دهید؟"
+  },
+  "configuration.unsavedTitle": {
+    "en": "Unsubmitted changes",
+    "fa-IR": "تغییرات ثبت‌نشده"
+  },
+  "daemons.generalStatusAria": {
+    "en": "Daemon status general",
+    "fa-IR": "وضعیت کلی سرویس‌ها"
+  },
+  "daemons.readyRunningStatus": {
+    "en": "ready: {ready}, running: {running}",
+    "fa-IR": "آماده: {ready}، در حال اجرا: {running}"
+  },
+  "daemons.readyStatus": {
+    "en": "ready: {value}",
+    "fa-IR": "آماده: {value}"
+  },
+  "daemons.statusAria": {
+    "en": "Daemon status info",
+    "fa-IR": "اطلاعات وضعیت سرویس"
+  },
+  "daemons.title": {
+    "en": "Daemons",
+    "fa-IR": "سرویس‌ها"
+  },
+  "dashboardRenderer.errorTitle": {
+    "en": "Dashboard Renderer Error",
+    "fa-IR": "خطای نمایش داشبورد"
+  },
+  "dashboardRenderer.failedTitle": {
+    "en": "Failed to render the dashboard",
+    "fa-IR": "نمایش داشبورد ناموفق بود"
+  },
+  "dashboardRenderer.notFoundMessage": {
+    "en": "{errorMessage} Dashboard {dashboardSelection} not found.",
+    "fa-IR": "{errorMessage} داشبورد {dashboardSelection} پیدا نشد."
+  },
+  "dashboardRenderer.notFoundTitle": {
+    "en": "Dashboard Not Found",
+    "fa-IR": "داشبورد پیدا نشد"
+  },
+  "dashboardRenderer.unavailableDescription": {
+    "en": "Ensure the Dashboard plugin is started and supports by-value rendering.",
+    "fa-IR": "اطمینان حاصل کنید افزونهٔ Dashboard راه‌اندازی شده و از نمایش بر اساس مقدار پشتیبانی می‌کند."
+  },
+  "dashboardRenderer.unavailableTitle": {
+    "en": "Dashboard by-value renderer is unavailable",
+    "fa-IR": "نمایشگر بر اساس مقدار داشبورد در دسترس نیست"
+  },
+  "decoders": {
+    "en": "Decoders",
+    "fa-IR": "دیکودرها"
+  },
+  "discover.searchColumns": {
+    "en": "Search columns",
+    "fa-IR": "جستجوی ستون‌ها"
+  },
+  "groups.availableAgents": {
+    "en": "Available agents",
+    "fa-IR": "عامل‌های موجود"
+  },
+  "groups.back": {
+    "en": "Back to groups",
+    "fa-IR": "بازگشت به گروه‌ها"
+  },
+  "groups.changeLimitExceeded": {
+    "en": "Changes cannot be applied with more than 500 additions or removals",
+    "fa-IR": "با بیش از ۵۰۰ مورد افزودن یا حذف، تغییرات قابل اعمال نیستند"
+  },
+  "groups.currentAgentsCount": {
+    "en": "Current agents in the group ({count})",
+    "fa-IR": "عامل‌های فعلی گروه ({count})"
+  },
+  "groups.errorFetchingAvailableAgents": {
+    "en": "Error fetching all available agents",
+    "fa-IR": "خطا در دریافت همهٔ عامل‌های موجود"
+  },
+  "groups.errorFetchingGroupAgents": {
+    "en": "Error fetching group agents",
+    "fa-IR": "خطا در دریافت عامل‌های گروه"
+  },
+  "groups.errorLoadingAgents": {
+    "en": "Error loading agents",
+    "fa-IR": "خطا در بارگذاری عامل‌ها"
+  },
+  "groups.loadMoreAgents": {
+    "en": "Click here to load more agents",
+    "fa-IR": "برای بارگذاری عامل‌های بیشتر اینجا کلیک کنید"
+  },
+  "groups.manageAgents": {
+    "en": "Manage agents of group {groupName}",
+    "fa-IR": "مدیریت عامل‌های گروه {groupName}"
+  },
+  "groups.updated": {
+    "en": "Group has been updated",
+    "fa-IR": "گروه به‌روزرسانی شد"
+  },
+  "indexerManagement": {
+    "en": "Indexer management",
+    "fa-IR": "مدیریت ایندکسر"
+  },
+  "mitre.alertsFetchError": {
+    "en": "Mitre alerts could not be fetched",
+    "fa-IR": "دریافت هشدارهای MITRE ناموفق بود"
+  },
+  "mitre.filterSelectedTacticTechniques": {
+    "en": "Filter techniques of selected tactic/s",
+    "fa-IR": "فیلتر تکنیک‌ها بر اساس تاکتیک‌های انتخاب‌شده"
+  },
+  "mitre.hideTechniquesWithoutAlerts": {
+    "en": "Hide techniques with no alerts",
+    "fa-IR": "تکنیک‌های بدون هشدار پنهان شوند"
+  },
+  "mitre.openDetailsInIntelligence": {
+    "en": "Open {item} details in the Intelligence section",
+    "fa-IR": "باز کردن جزئیات {item} در بخش هوشمندی"
+  },
+  "mitre.tactics": {
+    "en": "Tactics",
+    "fa-IR": "تاکتیک‌ها"
+  },
+  "mitre.tacticsOptions": {
+    "en": "tactics options",
+    "fa-IR": "گزینه‌های تاکتیک‌ها"
+  },
+  "mitre.techniqueDetails": {
+    "en": "Technique details",
+    "fa-IR": "جزئیات تکنیک"
+  },
+  "mitre.techniqueFetchError": {
+    "en": "Error obtaining the requested technique",
+    "fa-IR": "دریافت تکنیک درخواستی ناموفق بود"
+  },
+  "mitre.techniques": {
+    "en": "Techniques",
+    "fa-IR": "تکنیک‌ها"
+  },
+  "mitre.techniquesFetchError": {
+    "en": "Mitre techniques could not be fetched",
+    "fa-IR": "دریافت تکنیک‌های MITRE ناموفق بود"
+  },
+  "mitre.viewTechniqueDetails": {
+    "en": "View technique details",
+    "fa-IR": "مشاهدهٔ جزئیات تکنیک"
+  },
+  "mitreAttack": {
+    "en": "MITRE ATT&CK",
+    "fa-IR": "چارچوب حملهٔ میتر"
+  },
+  "openMitreAttack": {
+    "en": "Open MITRE ATT&CK",
+    "fa-IR": "باز کردن چارچوب حملهٔ میتر"
+  },
+  "ruleTitle": {
+    "en": "Rule title",
+    "fa-IR": "عنوان قاعده"
+  },
+  "security.roleMapping.deleteAction": {
+    "en": "Delete role mapping",
+    "fa-IR": "حذف نگاشت نقش"
+  },
+  "security.roleMapping.deleteConfirmation": {
+    "en": "Do you want to delete the {name} role mapping?",
+    "fa-IR": "آیا می‌خواهید نگاشت نقش {name} را حذف کنید؟"
+  },
+  "security.roleMapping.deleted": {
+    "en": "Role mapping was successfully deleted",
+    "fa-IR": "نگاشت نقش با موفقیت حذف شد"
+  },
+  "security.roleMapping.reservedDeleteDisabled": {
+    "en": "Reserved role mapping can't be deleted",
+    "fa-IR": "نگاشت نقش رزروشده را نمی‌توان حذف کرد"
+  },
+  "security.roleMapping.wuiOwnership": {
+    "en": "wui_ rules belong to wazuh-wui API user",
+    "fa-IR": "قواعد wui_ متعلق به کاربر API با نام wazuh-wui هستند"
+  },
+  "view.dashboard": {
+    "en": "Dashboard",
+    "fa-IR": "داشبورد"
+  },
+  "view.events": {
+    "en": "Events",
+    "fa-IR": "رخدادها"
+  },
+  "vulnerabilities.details": {
+    "en": "Vulnerability details",
+    "fa-IR": "جزئیات آسیب‌پذیری"
+  },
+  "vulnerabilities.inspectDetails": {
+    "en": "Inspect vulnerability details",
+    "fa-IR": "بررسی جزئیات آسیب‌پذیری"
+  }
+});
+const osdMessages = Object.freeze({
+  "wz-app-home-title": "نمای کلی",
+  "wz-app-home-breadcrumbLabel": "نمای کلی",
+  "wz-app-overview-description": "این برنامه نمایی کلی از بخش‌های Ayyza را نشان می‌دهد.",
+  "wz-app-configuration-assessment-title": "ارزیابی پیکربندی",
+  "wz-app-configuration-assessment-breadcrumbLabel": "ارزیابی پیکربندی",
+  "wz-app-configuration-assessment-description": "دارایی‌ها را به عنوان بخشی از ممیزی ارزیابی پیکربندی بررسی کنید.",
+  "wz-app-malware-detection-title": "تشخیص بدافزار",
+  "wz-app-malware-detection-breadcrumbLabel": "تشخیص بدافزار",
+  "wz-app-malware-detection-description": "شاخص‌های آلودگی بدافزاری یا حملات سایبری را بررسی کنید.",
+  "wz-app-file-integrity-monitoring-title": "پایش یکپارچگی فایل",
+  "wz-app-file-integrity-monitoring-breadcrumbLabel": "پایش یکپارچگی فایل",
+  "wz-app-file-integrity-monitoring-description": "هشدارهای مربوط به تغییر فایل، مجوزها، محتوا، مالکیت و ویژگی‌ها.",
+  "wz-app-threat-hunting-title": "شکار تهدید",
+  "wz-app-threat-hunting-breadcrumbLabel": "شکار تهدید",
+  "wz-app-threat-hunting-description": "هشدارهای امنیتی را برای شناسایی رخدادها و تهدیدها مرور کنید.",
+  "wz-app-vulnerability-detection-title": "تشخیص آسیب‌پذیری",
+  "wz-app-vulnerability-detection-breadcrumbLabel": "تشخیص آسیب‌پذیری",
+  "wz-app-vulnerability-detection-description": "برنامه‌هایی را که تحت تأثیر آسیب‌پذیری‌های شناخته‌شده هستند شناسایی کنید.",
+  "wz-app-mitre-attack-title": "MITRE ATT&CK",
+  "wz-app-mitre-attack-breadcrumbLabel": "MITRE ATT&CK",
+  "wz-app-mitre-attack-description": "هشدارهای امنیتی نگاشت‌شده به تاکتیک‌ها و تکنیک‌های مهاجمان را بررسی کنید.",
+  "wz-app-it-hygiene-title": "سلامت فناوری اطلاعات",
+  "wz-app-it-hygiene-breadcrumbLabel": "سلامت فناوری اطلاعات",
+  "wz-app-it-hygiene-description": "سیستم، نرم‌افزار، فرایندها و لایه‌های شبکه را برای کشف پیکربندی نادرست، تغییرات غیرمجاز و ناهنجاری‌ها ارزیابی کنید.",
+  "wz-app-pci-dss-title": "PCI DSS",
+  "wz-app-pci-dss-breadcrumbLabel": "PCI DSS",
+  "wz-app-pci-dss-description": "استاندارد امنیتی جهانی برای سازمان‌هایی که داده‌های کارت پرداخت را پردازش، ذخیره یا منتقل می‌کنند.",
+  "wz-app-gdpr-title": "GDPR",
+  "wz-app-gdpr-breadcrumbLabel": "GDPR",
+  "wz-app-gdpr-description": "مقررات عمومی حفاظت از داده‌ها برای پردازش داده‌های شخصی.",
+  "wz-app-hipaa-title": "HIPAA",
+  "wz-app-hipaa-breadcrumbLabel": "HIPAA",
+  "wz-app-hipaa-description": "استاندارد حفاظت از داده‌های سلامت و اطلاعات پزشکی.",
+  "wz-app-nist-800-53-title": "NIST 800-53",
+  "wz-app-nist-800-53-breadcrumbLabel": "NIST 800-53",
+  "wz-app-nist-800-53-description": "راهنمای NIST برای کنترل‌های امنیتی سامانه‌های اطلاعاتی.",
+  "wz-app-tsc-title": "TSC",
+  "wz-app-tsc-breadcrumbLabel": "TSC",
+  "wz-app-tsc-description": "معیارهای خدمات اعتماد برای امنیت، دسترس‌پذیری، یکپارچگی پردازش، محرمانگی و حریم خصوصی.",
+  "wz-app-docker-title": "داکر",
+  "wz-app-docker-breadcrumbLabel": "داکر",
+  "wz-app-docker-description": "فعالیت containerهای Docker مانند ایجاد، اجرا، شروع، توقف یا pause را پایش و جمع‌آوری کنید.",
+  "wz-app-amazon-web-services-title": "سرویس‌های وب آمازون",
+  "wz-app-amazon-web-services-breadcrumbLabel": "سرویس‌های وب آمازون",
+  "wz-app-amazon-web-services-description": "رخدادهای امنیتی سرویس‌های AWS که مستقیم از طریق AWSرابط‌ سروریجمع‌آوری می‌شوند.",
+  "wz-app-google-cloud-title": "ابر گوگل",
+  "wz-app-google-cloud-breadcrumbLabel": "ابر گوگل",
+  "wz-app-google-cloud-description": "رخدادهای امنیتی سرویس‌های Google Cloud که مستقیم از طریق GCPرابط‌ سروریجمع‌آوری می‌شوند.",
+  "wz-app-github-title": "گیت‌هاب",
+  "wz-app-github-breadcrumbLabel": "گیت‌هاب",
+  "wz-app-github-description": "پایش رخدادهای audit log سازمان‌های GitHub.",
+  "wz-app-office365-title": "آفیس ۳۶۵",
+  "wz-app-office365-breadcrumbLabel": "آفیس ۳۶۵",
+  "wz-app-office365-description": "رخدادهای امنیتی مربوط به سرویس‌های Office 365.",
+  "wz-app-microsoft-graph-api-title": "رابط‌ سرور گراف مایکروسافت",
+  "wz-app-microsoft-graph-api-breadcrumbLabel": "رابط‌ سرور گراف مایکروسافت",
+  "wz-app-microsoft-graph-api-description": "رخدادهای امنیتی سرویس‌های Microsoft Graph که مستقیم از طریق رابط سرور Microsoft Graph جمع‌آوری می‌شوند.",
+  "wz-app-endpoints-summary-title": "خلاصه",
+  "wz-app-endpoints-summary-breadcrumbLabel": "امنیت پایانه",
+  "wz-app-endpoints-summary-description": "خلاصه‌ای از عامل‌ها و وضعیت آن‌ها.",
+  "wz-app-endpoint-groups-title": "گروه‌ها",
+  "wz-app-endpoint-groups-breadcrumbLabel": "گروه‌ها",
+  "wz-app-endpoint-groups-description": "گروه‌های عامل‌ را مدیریت کنید.",
+  "wz-app-rules-title": "قواعد",
+  "wz-app-rules-breadcrumbLabel": "قواعد",
+  "wz-app-rules-description": "قواعد کلاستر را مدیریت کنید.",
+  "wz-app-decoders-title": "دیکودرها",
+  "wz-app-decoders-breadcrumbLabel": "دیکودرها",
+  "wz-app-decoders-description": "دیکودرهای کلاستر را مدیریت کنید.",
+  "wz-app-lists-title": "لیست‌های CDB",
+  "wz-app-cdb-lists-breadcrumbLabel": "لیست‌های CDB",
+  "wz-app-cdb-lists-description": "لیست‌های CDB مربوط به cluster را مدیریت کنید.",
+  "wz-app-status-title": "وضعیت",
+  "wz-app-server-status-breadcrumbLabel": "وضعیت",
+  "wz-app-server-status-description": "وضعیت cluster را مدیریت کنید.",
+  "wz-app-cluster-title": "کلاستر",
+  "wz-app-cluster-breadcrumbLabel": "کلاستر",
+  "wz-app-cluster-description": "کلاستر را مدیریت کنید.",
+  "wz-app-statistics-title": "آمار",
+  "wz-app-statistics-breadcrumbLabel": "آمار",
+  "wz-app-statistics-description": "اطلاعات محیط را مشاهده کنید.",
+  "wz-app-logs-title": "Logها",
+  "wz-app-logs-breadcrumbLabel": "Logها",
+  "wz-app-logs-description": "Logهای cluster را مشاهده کنید.",
+  "wz-app-settings-title": "تنظیمات",
+  "wz-app-settings-breadcrumbLabel": "تنظیمات",
+  "wz-app-settings-description": "پیکربندی cluster را مدیریت کنید.",
+  "wz-app-dev-tools-title": "ابزارهای توسعه",
+  "wz-app-dev-tools-breadcrumbLabel": "ابزارهای توسعه",
+  "wz-app-dev-tools-description": "رابط‌های سرورِ امنیت پایانه را آزمایش کنید.",
+  "wz-app-ruleset-test-title": "آزمون مجموعه قواعد",
+  "wz-app-ruleset-test-breadcrumbLabel": "آزمون مجموعه قواعد",
+  "wz-app-ruleset-test-description": "لاگ‌های آزمون مجموعه قواعد را بررسی کنید.",
+  "wz-app-security-title": "امنیت",
+  "wz-app-security-breadcrumbLabel": "امنیت",
+  "wz-app-security-description": "مجوز دسترسی به منابع سیستم را بر اساس role و policy مدیریت کنید.",
+  "wz-app-sample-data-title": "داده نمونه",
+  "wz-app-sample-data-breadcrumbLabel": "داده نمونه",
+  "wz-app-sample-data-description": "داده نمونه همراه با رخدادها را به moduleها اضافه کنید.",
+  "wz-app-reporting-title": "گزارش‌ها",
+  "wz-app-reporting-breadcrumbLabel": "گزارش‌ها",
+  "wz-app-reporting-description": "گزارش‌های ذخیره‌شده را بررسی کنید.",
+  "wz-app-server-apis-title": "رابط‌های سرور",
+  "wz-app-server-apis-breadcrumbLabel": "رابط‌های سرور",
+  "wz-app-server-apis-description": "ورودی‌هایرابط‌ سروریرا مدیریت و پیکربندی کنید.",
+  "wz-app-about-title": "درباره",
+  "wz-app-about-breadcrumbLabel": "درباره",
+  "wz-app-about-description": "اطلاعات نسخه‌های برنامه و لینک‌های جامعه کاربری را نمایش دهید.",
+  "wz-app-category-home": "خانه",
+  "wz-app-category-endpoint-security": "امنیت پایانه",
+  "wz-app-category-threat-intelligence": "اطلاعات تهدید",
+  "wz-app-category-security-operations": "عملیات امنیتی",
+  "wz-app-category-cloud-security": "امنیت ابری",
+  "wz-app-category-agents-management": "مدیریت عامل‌ها",
+  "wz-app-category-system-inventory": "موجودی سیستم",
+  "wz-app-category-server-management": "مدیریت سرور",
+  "wz-app-category-dashboard-management": "مدیریت داشبورد",
+  "ayyza.moduleTabs.dashboard": "داشبورد",
+  "ayyza.moduleTabs.events": "رخدادها",
+  "ayyza.moduleTabs.inventory": "موجودی",
+  "ayyza.moduleTabs.panel": "پنل",
+  "ayyza.moduleTabs.intelligence": "هوشمندی",
+  "ayyza.moduleTabs.framework": "چارچوب",
+  "ayyza.moduleTabs.controls": "کنترل‌ها",
+  "ayyza.moduleTabs.system": "سیستم",
+  "ayyza.moduleTabs.software": "نرم‌افزار",
+  "ayyza.moduleTabs.processes": "فرایندها",
+  "ayyza.moduleTabs.network": "شبکه",
+  "ayyza.moduleTabs.identity": "هویت",
+  "ayyza.moduleTabs.services": "سرویس‌ها",
+  "ayyza.vulnerabilities.evaluationFilter.evaluated": "ارزیابی‌شده",
+  "ayyza.vulnerabilities.evaluationFilter.underEvaluation": "در حال ارزیابی",
+  "ayyza.vulnerabilities.dashboardPanels.count": "تعداد",
+  "ayyza.vulnerabilities.dashboardPanels.other": "سایر",
+  "ayyza.vulnerabilities.dashboardPanels.missing": "ناموجود",
+  "ayyza.vulnerabilities.dashboardPanels.topVulnerabilitiesTitle": "آسیب‌پذیری‌های برتر",
+  "ayyza.vulnerabilities.dashboardPanels.topVulnerabilitiesLabel": "۵ آسیب‌پذیری برتر",
+  "ayyza.vulnerabilities.dashboardPanels.topOSTitle": "آسیب‌پذیری‌های سیستم‌عامل برتر",
+  "ayyza.vulnerabilities.dashboardPanels.topOSLabel": "۵ سیستم‌عامل برتر",
+  "ayyza.vulnerabilities.dashboardPanels.agentFilter": "فیلتر عامل‌",
+  "ayyza.vulnerabilities.dashboardPanels.topAgentsLabel": "۵ عامل‌ برتر",
+  "ayyza.vulnerabilities.dashboardPanels.topPackagesTitle": "آسیب‌پذیری‌های پکیج‌های برتر",
+  "ayyza.vulnerabilities.dashboardPanels.topPackagesLabel": "۵ پکیج برتر",
+  "ayyza.vulnerabilities.dashboardPanels.severity": "شدت",
+  "ayyza.vulnerabilities.dashboardPanels.critical": "بحرانی",
+  "ayyza.vulnerabilities.dashboardPanels.high": "بالا",
+  "ayyza.vulnerabilities.dashboardPanels.medium": "متوسط",
+  "ayyza.vulnerabilities.dashboardPanels.low": "پایین",
+  "ayyza.vulnerabilities.dashboardPanels.evaluation": "ارزیابی",
+  "ayyza.vulnerabilities.dashboardPanels.pending": "در انتظار",
+  "ayyza.exploreAgent.buttonLabel": "بررسی عامل‌",
+  "ayyza.exploreAgent.modalTitle": "بررسی عامل‌",
+  "ayyza.exploreAgent.selectAgentTooltip": "یک عامل‌ را برای بررسی moduleهای آن انتخاب کنید",
+  "ayyza.exploreAgent.changeSelectedTooltip": "تغییر عامل‌ انتخاب‌شده",
+  "ayyza.exploreAgent.unsupportedForAgentsTooltip": "این module برای عامل‌ها پشتیبانی نمی‌شود.",
+  "ayyza.exploreAgent.unpinTooltip": "برداشتن پین عامل‌",
+  "ayyza.exploreAgent.unpinAriaLabel": "برداشتن پین عامل‌",
+  "ayyza.exploreAgent.table.name": "نام",
+  "ayyza.exploreAgent.table.group": "گروه",
+  "ayyza.exploreAgent.table.version": "نسخه",
+  "ayyza.exploreAgent.table.operatingSystem": "سیستم‌عامل",
+  "ayyza.exploreAgent.table.status": "وضعیت",
+  "ayyza.dataSource.checking": "در حال بررسی منبع داده",
+  "ayyza.fim.selectAgentInventoryPrompt": "برای مشاهدهٔ موجودی پایش یکپارچگی، باید یک عامل‌ انتخاب کنید.",
+  "ayyza.searchBar.advancedFilters": "فیلترهای پیشرفته",
+  "ayyza.mitre.hideTechniquesWithoutAlerts": "تکنیک‌های بدون هشدار پنهان شوند",
+  "ayyza.pci.dashboardPanels.topRequirements": "۱۰ الزام برتر PCI DSS",
+  "ayyza.pci.dashboardPanels.topAgentsByAlerts": "۱۰ عامل‌ برتر بر اساس تعداد هشدار",
+  "ayyza.pci.dashboardPanels.lastAlerts": "آخرین هشدارها",
+  "ayyza.pci.dashboardPanels.requirementsByAgent": "الزامات به تفکیک عامل‌",
+  "ayyza.compliance.requirements.title": "الزامات",
+  "ayyza.compliance.requirements.hideWithoutAlerts": "الزام‌های بدون هشدار پنهان شوند",
+  "ayyza.compliance.requirements.filterPlaceholder": "فیلتر الزامات",
+  "ayyza.compliance.requirements.filterAriaLabel": "فیلتر الزامات انطباق",
+  "ayyza.compliance.requirements.viewDetails": "مشاهده جزئیات الزام {id}",
+  "ayyza.compliance.requirements.showInDashboard": "نمایش الزام {id} در داشبورد",
+  "ayyza.compliance.requirements.inspectInEvents": "بررسی الزام {id} در رخدادها",
+  "ayyza.compliance.requirements.noResults": "نتیجه‌ای پیدا نشد.",
+  "ayyza.checkPluginVersion.fetchErrorLog": "خطا در دریافت نسخه افزونه: {error}",
+  "ayyza.checkPluginVersion.toastTitle": "تعارض نسخه {appName}",
+  "ayyza.checkPluginVersion.toastMessage": "نسخه {appName} در مرورگر با نسخه نصب‌شده در {platformName} یکسان نیست. لطفاً cache مرورگر را پاک کنید. برای اطلاعات بیشتر، جزئیات کامل خطا را ببینید.",
+  "ayyza.checkPluginVersion.details": "نسخه {appName} در مرورگر شما {browserVersion} با نسخه نصب‌شده در {platformName} {installedVersion} یکسان نیست.",
+  "ayyza.checkPluginVersion.clearCachePrompt": "لطفاً cache مرورگر را طبق مراحل زیر پاک کنید.",
+  "ayyza.checkPluginVersion.restartPrompt": "اگر خطا ادامه داشت، {platformName} را نیز راه‌اندازی مجدد کنید.",
+  "ayyza.checkPluginVersion.troubleshootingPrompt": "برای اطلاعات بیشتر، {troubleshootingLink} را ببینید.",
+  "ayyza.checkPluginVersion.troubleshootingLinkLabel": "بخش رفع اشکال",
+  "ayyza.checkPluginVersion.chromeCacheSteps": "مراحل پاک‌کردن cache:\n\n۱- ابزار توسعه مرورگر را با F12 باز کنید.\n۲- وارد زبانه «Network» شوید.\n۳- گزینه «Disable cache» را فعال کنید.\n۴- صفحه را با F5 دوباره بارگذاری کنید.\n\nاین پیام نباید دوباره نمایش داده شود.",
+  "ayyza.checkPluginVersion.safariCacheSteps": "مراحل پاک‌کردن cache در Safari:\n\n۱- منوی Safari را باز کنید و «Preferences» را انتخاب کنید.\n۲- در زبانه «Advanced»، گزینه نمایش منوی Develop را فعال کنید.\n۳- پنجره Preferences را ببندید.\n۴- اگر نوار منو پنهان است، گزینه «Show Menu Bar» را فعال کنید.\n۵- از منوی «Develop»، گزینه «Show Web Inspector» را باز کنید.\n۶- وارد زبانه «Network» شوید.\n۷- گزینه نادیده‌گرفتن cache هنگام بارگذاری منابع را فعال کنید.\n۸- صفحه را دوباره بارگذاری کنید.\n\nاین پیام نباید دوباره نمایش داده شود.",
+  "ayyza.checkPluginVersion.clearingCacheLog": "در حال پاک‌کردن cache مرورگر",
+  "ayyza.toastNotifications.unexpectedErrorTitle": "خطای غیرمنتظره",
+  "ayyza.toastNotifications.seeFullError": "مشاهده جزئیات کامل خطا",
+  "ayyza.healthCheck.api.noApiAvailable": "هیچ رابط‌ سروری برای اتصال در دسترس نیست",
+  "ayyza.healthCheck.api.noApiAvailableVersionMismatch": "هیچ رابط‌ سروری برای اتصال در دسترس نیست. ممکن است نسخه سرور و {appName} با یکدیگر سازگار نباشند. لطفاً نسخه‌ها را بررسی و دوباره تلاش کنید. برای اطلاعات بیشتر، راهنمای رفع اشکال را ببینید: {troubleshootingLink}.",
+  "ayyza.authentication.authorizationTokenErrorTitle": "خطا در دریافت توکن مجوز",
+  "ayyza.authentication.requestFailedWithStatusCode": "درخواست با کد وضعیت {statusCode} ناموفق بود",
+  "ayyza.errors.errorName": "خطا",
+  "ayyza.apiErrors.networkError": "خطای شبکه",
+  "ayyza.apiErrors.notReachable": "رابط‌ سروری در دسترس نیست",
+  "ayyza.apiErrors.notReachableCheckAddress": "رابط‌ سروری در دسترس نیست. نشانی URL و درگاه را بررسی کنید.",
+  "ayyza.apiErrors.serverNotReady": "سرور هنوز آماده نیست",
+  "ayyza.apiErrors.unauthorized": "احراز هویت ناموفق است",
+  "ayyza.apiErrors.runAsUserNotAllowed": "میزبان رابط‌ سروری با شناسه [{hostId}] به‌درستی پیکربندی نشده است. کاربر پیکربندی‌شده رابط‌ سروری اجازه استفاده از [run_as] را ندارد. این مجوز را در پیکربندی کاربر رابط‌ سروری فعال کنید یا مقدار تنظیم [run_as] میزبان را [false] قرار دهید.",
+  "ayyza.apiErrors.runAsCapabilityCheckFailed": "امکان بررسی قابلیت [run_as] برای میزبانرابط‌ سروریبا شناسه [{hostId}] وجود ندارد. از در دسترس بودن میزبان و داشتن حداقل مجوزهای لازم توسط کاربر داخلی اطمینان حاصل کنید.",
+  "ayyza.apiErrors.runAsUnexpectedRegistryValue": "برای میزبانرابط‌ سروریبا شناسه [{hostId}] مقدار غیرمنتظره [{value}] در registry ذخیره شده است. ممکن است خواندن یا ذخیره داده‌های registry با مشکل روبه‌رو شده باشد.",
+  "ayyza.apiErrors.hostNotFoundInRegistry": "میزبانرابط‌ سروریبا شناسه [{hostId}] در registry یافت نشد. ممکن است داده‌های registry درست خوانده یا ذخیره نشده باشند یا میزبانرابط‌ سروریحذف شده باشد.",
+  "ayyza.apiErrors.permissionDeniedForResource": "دسترسی رد شد؛ نقش فعلی اجازه خواندن منبع [{resourceType}] را ندارد.",
+  "ayyza.apiErrors.badRequestPrefix": "درخواسترابط‌ سرورینامعتبر است: ",
+  "ayyza.moduleConfiguration.unavailableTitle": "ماژول در دسترس نیست",
+  "ayyza.moduleConfiguration.subtitle": "پیکربندی ماژول",
+  "ayyza.moduleConfiguration.fetchErrorTitle": "دریافت پیکربندی ماژول ناموفق بود",
+  "ayyza.moduleConfiguration.configurationUnavailable": "پیکربندی ماژول در دسترس نیست",
+  "ayyza.healthCheck.api.checkingCurrentApi": "در حال بررسی شناسهرابط‌ سروریفعلی [{id}]...",
+  "ayyza.healthCheck.api.checkingHost": "در حال بررسی شناسه میزبانرابط‌ سروری[{id}]...",
+  "ayyza.healthCheck.api.clusterInfoStored": "اطلاعات cluster در cookie ذخیره شد",
+  "ayyza.healthCheck.api.connectionError": "خطا در اتصال به رابط‌ سرور: {error}",
+  "ayyza.healthCheck.api.connectionErrorWithDetails": "خطا در اتصال به رابط‌ سرور: {error}",
+  "ayyza.healthCheck.api.couldNotConnectToHost": "اتصال بهرابط‌ سروریبا شناسه [{id}] ممکن نشد: {error}",
+  "ayyza.healthCheck.api.currentApi": "شناسهرابط‌ سروریفعلی [{id}]",
+  "ayyza.healthCheck.api.currentApiProblem": "رابط‌ سرور فعلی با شناسه [{id}] مشکل دارد: {error}",
+  "ayyza.healthCheck.api.currentApiStored": "رابط‌ سرور فعلی در cookie ذخیره شد: شناسه [{id}]، نام [{name}]",
+  "ayyza.healthCheck.api.gettingHosts": "در حال دریافت میزبان‌های رابط‌ سرور...",
+  "ayyza.healthCheck.api.hostAvailable": "میزبانرابط‌ سروریبا شناسه [{id}] در دسترس است",
+  "ayyza.healthCheck.api.hostsFound": "تعداد میزبان‌هایرابط‌ سرورییافت‌شده: {count}",
+  "ayyza.healthCheck.api.isDown": "رابط‌ سرور از دسترس خارج است",
+  "ayyza.healthCheck.api.navigationCookieRemoved": "cookie مربوط به [navigate] حذف شد",
+  "ayyza.healthCheck.api.noConfigurationFound": "هیچ پیکربندیرابط‌ سرورییافت نشد",
+  "ayyza.healthCheck.api.noCurrentApiSelected": "هیچرابط‌ سروریفعلی انتخاب نشده است",
+  "ayyza.healthCheck.api.selectedApiUpdated": "رابط‌ سرور انتخاب‌شده به‌روزرسانی شد",
+  "ayyza.healthCheck.closeDetails": "بستن جزئیات",
+  "ayyza.healthCheck.openDetails": "باز کردن جزئیات",
+  "ayyza.healthCheck.retry": "تلاش دوباره",
+  "ayyza.healthCheck.status.checking": "در حال بررسی...",
+  "ayyza.healthCheck.status.disabled": "غیرفعال",
+  "ayyza.healthCheck.status.error": "خطا",
+  "ayyza.healthCheck.status.onHold": "در انتظار...",
+  "ayyza.healthCheck.status.ready": "آماده",
+  "ayyza.healthCheck.status.warning": "هشدار",
+  "ayyza.settings.api.addConnection": "افزودن اتصال رابط‌ سرور",
+  "ayyza.settings.api.availableUpdates": "به‌روزرسانی‌های موجود",
+  "ayyza.settings.api.checkConnection": "بررسی اتصال",
+  "ayyza.settings.api.checkHostsConnection": "بررسی اتصال میزبان‌های رابط‌ سرور",
+  "ayyza.settings.api.checkServerServiceStatus": "بررسی وضعیت سرویس سرور رابط‌ سرور",
+  "ayyza.settings.api.checkUpdates": "بررسی به‌روزرسانی‌ها",
+  "ayyza.settings.api.checking": "در حال بررسی",
+  "ayyza.settings.api.clickCheckUpdates": "برای دریافت اطلاعات، روی دکمه «بررسی به‌روزرسانی‌ها» کلیک کنید.",
+  "ayyza.settings.api.columns.actions": "عملیات",
+  "ayyza.settings.api.columns.cluster": "کلاستر",
+  "ayyza.settings.api.columns.host": "میزبان",
+  "ayyza.settings.api.columns.id": "شناسه",
+  "ayyza.settings.api.columns.manager": "مدیر",
+  "ayyza.settings.api.columns.port": "درگاه",
+  "ayyza.settings.api.columns.runAs": "اجرا به‌عنوان",
+  "ayyza.settings.api.columns.status": "وضعیت",
+  "ayyza.settings.api.columns.updatesStatus": "وضعیت به‌روزرسانی‌ها",
+  "ayyza.settings.api.columns.username": "نام کاربری",
+  "ayyza.settings.api.columns.version": "نسخه",
+  "ayyza.settings.api.connectionSuccess": "اتصال با موفقیت برقرار شد",
+  "ayyza.settings.api.connectionsTitle": "اتصال‌های رابط‌ سرور",
+  "ayyza.settings.api.connectionsUnavailable": "ممکن است اتصال‌هایرابط‌ سروریقطع یا غیرقابل‌دسترسی باشند",
+  "ayyza.settings.api.copyCommand": "کپی فرمان",
+  "ayyza.settings.api.copyToClipboard": "کپی در کلیپ‌بورد",
+  "ayyza.settings.api.copyUuid": "کپی UUID",
+  "ayyza.settings.api.couldNotCopyText": "کپی متن ممکن نشد",
+  "ayyza.settings.api.errorCheckingAvailableUpdates": "خطا در بررسی به‌روزرسانی‌های موجود: {error}",
+  "ayyza.settings.api.errorCheckingManagerConnection": "خطا در بررسی اتصال مدیر: {error}",
+  "ayyza.settings.api.errorCheckingUpdates": "خطا در بررسی به‌روزرسانی‌ها",
+  "ayyza.settings.api.errorInformation": "اطلاعات خطا",
+  "ayyza.settings.api.forSystemd": "برای systemd",
+  "ayyza.settings.api.forSysvInit": "برای SysV init",
+  "ayyza.settings.api.lastDashboardCheck": "آخرین بررسی داشبورد",
+  "ayyza.settings.api.neverChecked": "هرگز بررسی نشده",
+  "ayyza.settings.api.noConnections": "هیچ اتصالرابط‌ سروریوجود ندارد. یک اتصال جدید اضافه کنید.",
+  "ayyza.settings.api.offline": "آفلاین",
+  "ayyza.settings.api.online": "آنلاین",
+  "ayyza.settings.api.refresh": "تازه‌سازی",
+  "ayyza.settings.api.reviewHostsConfiguration": "بازبینی پیکربندی میزبان‌های رابط‌ سرور",
+  "ayyza.settings.api.runAs.doesNotUseAuthenticationContext": "کاربر پیکربندی‌شدهرابط‌ سروریاز زمینه احراز هویت استفاده نمی‌کند.",
+  "ayyza.settings.api.runAs.notAllowed": "کاربر پیکربندی‌شدهرابط‌ سروریاجازه استفاده از run_as را ندارد. مجوز لازم را بدهید یا مقدار run_as را در پیکربندی میزبان false تنظیم کنید.",
+  "ayyza.settings.api.runAs.usesAuthenticationContext": "کاربر پیکربندی‌شدهرابط‌ سروریاز زمینه احراز هویت استفاده می‌کند.",
+  "ayyza.settings.api.setAsDefault": "تنظیم به‌عنوان پیش‌فرض",
+  "ayyza.settings.api.setAsDefaultSuccess": "رابط‌ سرور با شناسه {id} به‌عنوان پیش‌فرض تنظیم شد",
+  "ayyza.settings.api.settingsTitle": "تنظیمات",
+  "ayyza.settings.api.showUuidInformation": "نمایش اطلاعات UUID",
+  "ayyza.settings.api.textCopied": "متن در کلیپ‌بورد کپی شد",
+  "ayyza.settings.api.troubleshooting": "رفع اشکال",
+  "ayyza.settings.api.upToDate": "به‌روز",
+  "ayyza.settings.api.updateChecksDisabled": "بررسی به‌روزرسانی‌ها غیرفعال است",
+  "ayyza.settings.api.viewAvailableUpdates": "مشاهده به‌روزرسانی‌های موجود",
+  "ayyza.settings.api.warning": "هشدار",
+  "ayyza.settingsWizard.defaultApiUpdated": "رابط‌ سرور پیش‌فرض به‌روزرسانی شد.",
+  "ayyza.settingsWizard.setupApiCredentials": "لطفاً اطلاعات اتصالرابط‌ سروریرا تنظیم کنید.",
+  "ayyza.permissions.noPermissions.title": "شما مجوز دسترسی ندارید",
+  "ayyza.permissions.noPermissions.requiredPermissions": "این بخش به مجوزهای زیر نیاز دارد:",
+  "ayyza.permissions.noPermissions.administratorRequired": "این بخش به دسترسی مدیر نیاز دارد:",
+  "ayyza.permissions.noPermissions.oneOf": "یکی از موارد زیر:",
+  "ayyza.errorBoundary.somethingWentWrong": "مشکلی رخ داد.",
+  "ayyza.errorBoundary.details": "جزئیات",
+  "ayyza.apiErrors.fetchResourceNetworkError": "هنگام دریافت اطلاعات از شبکه خطایی رخ داد.",
+  "ayyza.blankScreen.goToOverview": "رفتن به {title}",
+  "ayyza.loadAppConfig.configurationFallbackTitle": "دریافت پیکربندی ناموفق بود؛ مقادیر پیش‌فرض استفاده می‌شوند.",
+  "ayyza.sca.dashboard.policyColumn": "سیاست",
+  "ayyza.sca.dashboard.noScans": "هیچ اسکنی در دسترس نیست",
+  "ayyza.sca.dashboard.refresh": "تازه‌سازی",
+  "ayyza.sca.dashboard.help": "راهنما",
+  "ayyza.sca.dashboard.showPolicyChecksum": "نمایش checksum سیاست",
+  "ayyza.sca.dashboard.policyDescription": "توضیحات سیاست",
+  "ayyza.sca.dashboard.policyChecksum": "checksum سیاست",
+  "ayyza.sca.dashboard.score": "امتیاز",
+  "ayyza.sca.dashboard.endScan": "پایان اسکن",
+  "ayyza.sca.dashboard.noResults": "نتیجه‌ای پیدا نشد",
+  "ayyza.sca.dashboard.noResultsMessage": "هیچ نتیجه‌ای پیدا نشد.",
+  "ayyza.sca.result.passed": "موفق",
+  "ayyza.sca.result.failed": "ناموفق",
+  "ayyza.sca.result.notApplicable": "نامرتبط",
+  "ayyza.sca.checks.title": "بررسی‌ها",
+  "ayyza.sca.checks.columns.id": "شناسه",
+  "ayyza.sca.checks.columns.title": "عنوان",
+  "ayyza.sca.checks.columns.target": "هدف",
+  "ayyza.sca.checks.columns.result": "نتیجه",
+  "ayyza.sca.checks.target.file": "فایل",
+  "ayyza.sca.checks.target.directory": "پوشه",
+  "ayyza.sca.checks.target.process": "فرایند",
+  "ayyza.sca.checks.target.command": "فرمان",
+  "ayyza.sca.checks.target.registry": "رجیستری",
+  "ayyza.sca.checks.rule": "بررسی",
+  "ayyza.sca.checks.rules": "بررسی‌ها",
+  "ayyza.sca.checks.condition": "شرط",
+  "ayyza.sca.checks.notApplicableReason": "دلیل نامرتبط بودن بررسی",
+  "ayyza.sca.checks.rationale": "منطق بررسی",
+  "ayyza.sca.checks.remediation": "راهکار اصلاح",
+  "ayyza.sca.checks.description": "توضیحات",
+  "ayyza.sca.checks.path": "مسیر",
+  "ayyza.sca.checks.paths": "مسیرها",
+  "ayyza.sca.checks.compliance": "انطباق",
+  "ayyza.menu.indexPatternLabel": "الگوی ایندکس",
+  "discover.docViews.table.unindexedFieldsCanNotBeSearchedTooltip": "فیلدهای ایندکس‌نشده قابل جستجو نیستند"
+});
+const formats = Object.freeze({
+  "number": {
+    "currency": {
+      "style": "currency"
+    },
+    "percent": {
+      "style": "percent"
+    }
+  },
+  "date": {
+    "short": {
+      "month": "numeric",
+      "day": "numeric",
+      "year": "2-digit"
+    },
+    "medium": {
+      "month": "short",
+      "day": "numeric",
+      "year": "numeric"
+    },
+    "long": {
+      "month": "long",
+      "day": "numeric",
+      "year": "numeric"
+    },
+    "full": {
+      "weekday": "long",
+      "month": "long",
+      "day": "numeric",
+      "year": "numeric"
+    }
+  },
+  "time": {
+    "short": {
+      "hour": "numeric",
+      "minute": "numeric"
+    },
+    "medium": {
+      "hour": "numeric",
+      "minute": "numeric",
+      "second": "numeric"
+    },
+    "long": {
+      "hour": "numeric",
+      "minute": "numeric",
+      "second": "numeric",
+      "timeZoneName": "short"
+    },
+    "full": {
+      "hour": "numeric",
+      "minute": "numeric",
+      "second": "numeric",
+      "timeZoneName": "short"
+    }
+  },
+  "relative": {
+    "years": {
+      "units": "year"
+    },
+    "months": {
+      "units": "month"
+    },
+    "days": {
+      "units": "day"
+    },
+    "hours": {
+      "units": "hour"
+    },
+    "minutes": {
+      "units": "minute"
+    },
+    "seconds": {
+      "units": "second"
+    }
+  }
+});
+const translate = createTranslator(messages);
+const variants = createVariants(messages);
+const packId = "wazuh";
+
+module.exports = { messages, osdMessages, formats, translate, variants, packId };

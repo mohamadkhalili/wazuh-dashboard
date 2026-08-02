@@ -663,7 +663,7 @@ exports[`WorkspaceInitial render workspace initial page normally when user is OS
                     <span
                       color="primary"
                       data-euiicon-type="dashboardApp"
-                      style="margin-left: 16px;"
+                      style="margin-inline-start: 16px;"
                     />
                      
                     <a
@@ -1259,7 +1259,7 @@ exports[`WorkspaceInitial render workspace initial page normally when user is no
                     <span
                       color="primary"
                       data-euiicon-type="dashboardApp"
-                      style="margin-left: 16px;"
+                      style="margin-inline-start: 16px;"
                     />
                      
                     <a

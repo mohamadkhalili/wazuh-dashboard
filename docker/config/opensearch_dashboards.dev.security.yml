@@ -1,6 +1,9 @@
 server.host: "0.0.0.0"
+server.ssl.enabled: true
+server.ssl.key: "/workspace/certs/wazuh.dashboard-key.pem"
+server.ssl.certificate: "/workspace/certs/wazuh.dashboard.pem"
 
-opensearch.hosts: ["https://indexer:9200"]
+opensearch.hosts: ["https://wazuh.indexer:9200"]
 opensearch.ssl.verificationMode: none
 opensearch.username: "kibanaserver"
 opensearch.password: "kibanaserver"
@@ -14,4 +17,6 @@ opensearch_security.session.ttl: 900000
 opensearch_security.session.keepalive: true
 
 # Use this setting if you are running opensearch-dashboards without https
-opensearch_security.cookie.secure: false
+opensearch_security.cookie.secure: true
+i18n.locale: "fa-IR"
+uiSettings.overrides.defaultRoute: /app/wz-home

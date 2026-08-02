@@ -73,6 +73,7 @@ let service: ApplicationService;
 
 describe('#setup()', () => {
   beforeEach(() => {
+    window.history.replaceState({}, '', '/');
     const http = httpServiceMock.createSetupContract({ basePath: '/base-path' });
     setupDeps = {
       http,
@@ -560,6 +561,19 @@ describe('#start()', () => {
       );
     });
 
+    it('preserves the explicit English locale before hash routes', async () => {
+      window.history.replaceState({}, '', '/?locale=en');
+      service.setup(setupDeps);
+      const { getUrlForApp } = await service.start(startDeps);
+
+      expect(getUrlForApp('app1', { path: '#/hash/router/path' })).toBe(
+        '/base-path/app/app1?locale=en#/hash/router/path'
+      );
+      expect(getUrlForApp('app1', { absolute: true })).toBe(
+        'http://localhost/base-path/app/app1?locale=en'
+      );
+    });
+
     it('creates URL when the app is not accessible in a workspace', async () => {
       const httpMock = httpServiceMock.createSetupContract({
         basePath: '/base-path',
@@ -588,6 +602,19 @@ describe('#start()', () => {
   });
 
   describe('navigateToApp', () => {
+    it('preserves locale=en during application navigation', async () => {
+      window.history.replaceState({}, '', '/?locale=en');
+      service.setup(setupDeps);
+      const { navigateToApp } = await service.start(startDeps);
+
+      await navigateToApp('myTestApp', { path: '#/hash/router/path' });
+
+      expect(MockHistory.push).toHaveBeenCalledWith(
+        '/app/myTestApp?locale=en#/hash/router/path',
+        undefined
+      );
+    });
+
     it('changes the browser history to /app/:appId', async () => {
       service.setup(setupDeps);
 
@@ -917,6 +944,17 @@ describe('#start()', () => {
   });
 
   describe('navigateToUrl', () => {
+    it('preserves locale=en for redirect URLs', async () => {
+      window.history.replaceState({}, '', '/?locale=en');
+      parseAppUrlMock.mockReturnValue(undefined);
+      service.setup(setupDeps);
+      const { navigateToUrl } = await service.start(startDeps);
+
+      await navigateToUrl('/not-an-app-path');
+
+      expect(setupDeps.redirectTo).toHaveBeenCalledWith('/not-an-app-path?locale=en');
+    });
+
     it('calls `redirectTo` when the url is not parseable', async () => {
       parseAppUrlMock.mockReturnValue(undefined);
       service.setup(setupDeps);

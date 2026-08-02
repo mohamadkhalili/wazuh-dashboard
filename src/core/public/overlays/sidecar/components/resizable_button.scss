@@ -26,8 +26,8 @@
   &.resizableButton--horizontal {
     cursor: col-resize;
     width: $euiSize;
-    margin-left: calc(-1 * $euiSize / 2);
-    margin-right: calc(-1 * $euiSize / 2);
+    margin-inline-start: calc(-1 * $euiSize / 2);
+    margin-inline-end: calc(-1 * $euiSize / 2);
 
     &::before,
     &::after {

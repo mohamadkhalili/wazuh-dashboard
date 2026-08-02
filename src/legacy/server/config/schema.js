@@ -221,7 +221,7 @@ export default () =>
     }).default(),
 
     i18n: Joi.object({
-      locale: Joi.string().default('en'),
+      locale: Joi.string().default('fa-IR'),
     }).default(),
 
     // temporarily moved here from the (now deleted) opensearch-dashboards legacy plugin

@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { i18n } from '@osd/i18n';
+import { translate as translateDashboard } from 'wazuh-farsi/packs/dashboard';
 import { EuiCallOut, EuiText } from '@elastic/eui';
 import { WorkspaceFormErrors, WorkspaceFormError, WorkspaceFormErrorCode } from './types';
 
@@ -51,9 +52,13 @@ export interface WorkspaceFormErrorCalloutProps {
 
 export const WorkspaceFormErrorCallout = ({ errors }: WorkspaceFormErrorCalloutProps) => {
   return (
-    <EuiCallOut title="Address the following error(s) in the form" color="danger" iconType="alert">
+    <EuiCallOut
+      title={translateDashboard('workspaceFormErrorsTitle')}
+      color="danger"
+      iconType="alert"
+    >
       <EuiText size="s">
-        <ul style={{ listStyle: 'inside', margin: 0, marginLeft: 6 }}>
+        <ul style={{ listStyle: 'inside', margin: 0, marginInlineStart: 6 }}>
           {errors.name && (
             <WorkspaceFormErrorCalloutItem
               errorKey={i18n.translate('workspace.form.errorCallout.nameKey', {

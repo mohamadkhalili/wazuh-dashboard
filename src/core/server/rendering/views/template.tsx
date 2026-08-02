@@ -29,6 +29,8 @@
  */
 
 import React, { FunctionComponent, createElement } from 'react';
+import { getDirection, resolveLocale } from 'wazuh-farsi/locale';
+import { translate as translateDashboard } from 'wazuh-farsi/packs/dashboard';
 
 import { RenderingMetadata } from '../types';
 import { Fonts } from './fonts';
@@ -46,20 +48,31 @@ export const Template: FunctionComponent<Props> = ({
     darkMode,
     themeVersion,
     injectedMetadata,
-    i18n,
     bootstrapScriptUrl,
     strictCsp,
   },
 }) => {
+  const documentLocale = resolveLocale({ locale });
   const logos = getLogos(injectedMetadata.branding, injectedMetadata.serverBasePath);
 
   const favicon = injectedMetadata.branding.faviconUrl;
   const faviconCacheVersion = '20260714-0628';
   injectedMetadata.branding.applicationTitle = 'Ayyza';
-  const applicationTitle = 'Ayyza';
+  const applicationTitle =
+    injectedMetadata.branding.applicationTitle ||
+    translateDashboard('productName', undefined, documentLocale);
+  const applicationLogo = translateDashboard(
+    'applicationLogo',
+    { applicationTitle },
+    documentLocale
+  );
 
   return (
-    <html lang="fa-IR" dir="rtl" className="wazuh-rtl">
+    <html
+      lang={documentLocale}
+      dir={getDirection(documentLocale)}
+      className={documentLocale === 'fa-IR' ? 'wazuh-rtl' : undefined}
+    >
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -133,7 +146,9 @@ export const Template: FunctionComponent<Props> = ({
 
         <meta name="theme-color" content="#ffffff" />
         <Styles darkMode={darkMode} theme={themeVersion} />
-        <script src={`${uiPublicUrl}/farsi-runtime-bootstrap.js?v=20260714-0652`} defer />
+        {documentLocale === 'fa-IR' && (
+          <script src={`${uiPublicUrl}/farsi-runtime-bootstrap.js?v=f7afe3e73f2e`} defer />
+        )}
 
         {/* Inject stylesheets into the <head> before scripts so that KP plugins with bundled styles will override them */}
         <meta name="add-styles-here" />
@@ -158,7 +173,7 @@ export const Template: FunctionComponent<Props> = ({
               <img
                 className="loadingLogo"
                 src={logos.AnimatedMark.url}
-                alt={`${applicationTitle} logo`}
+                alt={applicationLogo}
                 data-test-subj={`${logos.AnimatedMark.type}Logo`}
                 data-test-image-url={logos.AnimatedMark.url}
                 loading="eager"
@@ -166,15 +181,13 @@ export const Template: FunctionComponent<Props> = ({
             </div>
             <div
               className="osdWelcomeText"
-              data-error-message={i18n('core.ui.welcomeErrorMessage', {
-                defaultMessage:
-                  '{applicationTitle} did not load properly. Check the server output for more information.',
-                values: { applicationTitle },
-              })}
+              data-error-message={translateDashboard(
+                'welcomeError',
+                { applicationTitle },
+                documentLocale
+              )}
             >
-              {i18n('core.ui.welcomeMessage', {
-                defaultMessage: 'در حال بارگذاری ...',
-              })}
+              {translateDashboard('welcomeLoading', undefined, documentLocale)}
             </div>
             {/* Show a progress bar if a static custom branded logo is used */}
             {logos.AnimatedMark.type === ImageType.ALTERNATIVE && <div className="osdProgress" />}
@@ -186,20 +199,15 @@ export const Template: FunctionComponent<Props> = ({
             data-test-subj={logos.Mark.type + ' logo'}
             data-test-image-url={logos.Mark.url}
             src={logos.Mark.url}
-            alt={`${applicationTitle} logo`}
+            alt={applicationLogo}
             className="legacyBrowserErrorLogo"
           />
 
           <h2 className="osdWelcomeTitle">
-            {i18n('core.ui.legacyBrowserTitle', {
-              defaultMessage: 'Please upgrade your browser',
-            })}
+            {translateDashboard('legacyBrowserTitle', undefined, documentLocale)}
           </h2>
           <div className="osdWelcomeText">
-            {i18n('core.ui.legacyBrowserMessage', {
-              defaultMessage:
-                'This OpenSearch installation has strict security requirements enabled that your current browser does not meet.',
-            })}
+            {translateDashboard('legacyBrowserMessage', undefined, documentLocale)}
           </div>
         </div>
 

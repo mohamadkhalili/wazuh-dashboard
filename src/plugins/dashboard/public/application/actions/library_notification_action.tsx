@@ -63,7 +63,7 @@ export class LibraryNotificationAction implements ActionByType<typeof ACTION_LIB
       data-test-subj={`embeddablePanelNotification-${this.id}`}
       iconType={this.icon}
       key={this.id}
-      style={{ marginTop: '2px', marginRight: '4px' }}
+      style={{ marginTop: '2px', marginInlineEnd: '4px' }}
       color="hollow"
     >
       {this.displayName}

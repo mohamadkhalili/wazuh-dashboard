@@ -120,7 +120,7 @@
   align-items: center;
 
   .visEditorSidebar__autoApplyButton {
-    margin-left: $euiSizeM;
+    margin-inline-start: $euiSizeM;
     min-width: 0;
 
     .euiButton__content {

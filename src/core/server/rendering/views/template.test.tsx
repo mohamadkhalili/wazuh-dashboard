@@ -4,6 +4,8 @@
  */
 
 import React from 'react';
+import { load } from 'cheerio';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { injectedMetadataServiceMock } from '../../../public/mocks';
 import { httpServiceMock } from '../../http/http_service.mock';
 import { Template } from './template';
@@ -12,13 +14,12 @@ import { renderWithIntl } from 'test_utils/enzyme_helpers';
 const http = httpServiceMock.createStartContract();
 const injectedMetadata = injectedMetadataServiceMock.createSetupContract();
 
-function mockProps() {
+function mockProps(locale = 'fa-IR') {
   return {
     uiPublicUrl: `${http.basePath}/ui`,
-    locale: '',
+    locale,
     darkMode: true,
     themeVersion: 'v7',
-    i18n: () => '',
     bootstrapScriptUrl: `${http.basePath}/bootstrap.js`,
     strictCsp: true,
     injectedMetadata: {
@@ -61,6 +62,38 @@ function mockProps() {
 }
 
 describe('Loading page ', () => {
+  beforeEach(() => {
+    injectedMetadata.getBranding.mockReturnValue({});
+  });
+
+  describe('locale', () => {
+    it('renders Persian and RTL by default with the Persian runtime', () => {
+      const dom = load(renderToStaticMarkup(<Template metadata={mockProps()} />));
+
+      expect(dom('html').attr('lang')).toBe('fa-IR');
+      expect(dom('html').attr('dir')).toBe('rtl');
+      expect(dom('script[src*="farsi-runtime-bootstrap.js"]')).toHaveLength(1);
+      expect(dom('#osd_loading_message .osdWelcomeText').text()).toBe('در حال بارگذاری ...');
+    });
+
+    it('renders English and LTR only for exact locale=en', () => {
+      const dom = load(renderToStaticMarkup(<Template metadata={mockProps('en')} />));
+
+      expect(dom('html').attr('lang')).toBe('en');
+      expect(dom('html').attr('dir')).toBe('ltr');
+      expect(dom('script[src*="farsi-runtime-bootstrap.js"]')).toHaveLength(0);
+      expect(dom('#osd_loading_message .osdWelcomeText').text()).toBe('Loading ...');
+    });
+
+    it('falls back to Persian for invalid locale values', () => {
+      const dom = load(renderToStaticMarkup(<Template metadata={mockProps('EN')} />));
+
+      expect(dom('html').attr('lang')).toBe('fa-IR');
+      expect(dom('html').attr('dir')).toBe('rtl');
+      expect(dom('script[src*="farsi-runtime-bootstrap.js"]')).toHaveLength(1);
+    });
+  });
+
   describe('logo in default mode ', () => {
     it('rendered using loading logo default mode URL', () => {
       const branding = {

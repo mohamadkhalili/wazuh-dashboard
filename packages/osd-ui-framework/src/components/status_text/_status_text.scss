@@ -24,7 +24,7 @@
  * 2. We need to cap the height too, in case the icon was designed thin and tall.
  */
 .kuiStatusText__icon {
-  margin-right: 6px;
+  margin-inline-end: 6px;
   width: $statusTextIconSize; /* 1 */
   max-height: $statusTextIconSize; /* 2 */
 }

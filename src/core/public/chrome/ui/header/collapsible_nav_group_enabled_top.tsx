@@ -7,7 +7,6 @@ import React, { useCallback, useMemo } from 'react';
 import { Logos } from 'opensearch-dashboards/public';
 import {
   EuiButtonEmpty,
-  EuiButtonIcon,
   EuiFlexGroup,
   EuiFlexItem,
   EuiText,
@@ -15,6 +14,7 @@ import {
   EuiPanel,
   EuiSpacer,
 } from '@elastic/eui';
+import { translate as translateDashboard } from 'wazuh-farsi/packs/dashboard';
 import { InternalApplicationStart } from 'src/core/public/application';
 import { createEuiListItem } from './nav_link';
 import { NavGroupItemInMap } from '../../nav_group';
@@ -25,8 +25,6 @@ export interface CollapsibleNavTopProps {
   currentNavGroup?: NavGroupItemInMap;
   navigateToApp: InternalApplicationStart['navigateToApp'];
   logos: Logos;
-  onClickShrink?: () => void;
-  shouldShrinkNavigation: boolean;
 }
 
 export const CollapsibleNavTop = ({
@@ -34,8 +32,6 @@ export const CollapsibleNavTop = ({
   currentNavGroup,
   navigateToApp,
   logos,
-  onClickShrink,
-  shouldShrinkNavigation,
   homeLink,
 }: CollapsibleNavTopProps) => {
   const homeIcon = logos.Mark.url;
@@ -73,33 +69,22 @@ export const CollapsibleNavTop = ({
     >
       {/* The spacer here is used for align with the page header */}
       <EuiSpacer size="xs" />
-      <EuiFlexGroup responsive={false} justifyContent="spaceBetween">
-        {!shouldShrinkNavigation ? (
-          <EuiFlexItem grow={false}>
-            <EuiButtonEmpty
-              flush="both"
-              {...homeLinkProps}
-              onClick={onIconClick}
-              className="navGroupEnabledHomeIcon"
-            >
-              <EuiIcon
-                type={homeIcon}
-                size="xl"
-                data-test-subj={`collapsibleNavIcon-${homeIcon}`}
-              />
-            </EuiButtonEmpty>
-          </EuiFlexItem>
-        ) : null}
+      <EuiFlexGroup responsive={false}>
         <EuiFlexItem grow={false}>
-          <EuiButtonIcon
-            onClick={onClickShrink}
-            iconType={shouldShrinkNavigation ? 'menu' : 'menuLeft'}
-            color="subdued"
-            display="empty"
-            aria-label="shrink-button"
-            data-test-subj="collapsibleNavShrinkButton"
-            size="xs"
-          />
+          <EuiButtonEmpty
+            flush="both"
+            {...homeLinkProps}
+            onClick={onIconClick}
+            className="navGroupEnabledHomeIcon"
+            aria-label={translateDashboard('goToHome')}
+          >
+            <EuiIcon
+              type="menu"
+              size="xl"
+              data-icon-type="navTreeLine"
+              data-test-subj={`collapsibleNavIcon-${homeIcon}`}
+            />
+          </EuiButtonEmpty>
         </EuiFlexItem>
       </EuiFlexGroup>
       {

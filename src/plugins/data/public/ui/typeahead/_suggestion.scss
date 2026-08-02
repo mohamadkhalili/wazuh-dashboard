@@ -155,11 +155,11 @@ $osdTypeaheadTypes: (
   color: $euiColorDarkShade;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-left: $euiSizeXL;
+  margin-inline-start: $euiSizeXL;
 
   &:empty {
     flex-grow: 0;
-    margin-left: 0;
+    margin-inline-start: 0;
   }
 }
 

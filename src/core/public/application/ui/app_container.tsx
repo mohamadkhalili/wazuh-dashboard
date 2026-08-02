@@ -36,7 +36,8 @@ import React, {
   useState,
   MutableRefObject,
 } from 'react';
-import { EuiLoadingSpinner } from '@elastic/eui';
+import { ThinkingOrb } from 'thinking-orbs';
+import { translate as translateDashboard } from 'wazuh-farsi/packs/dashboard';
 
 import type { MountPoint } from '../../types';
 import { AppLeaveHandler, AppStatus, AppUnmount, Mounter } from '../types';
@@ -156,7 +157,13 @@ export const AppContainer: FunctionComponent<Props> = ({
       {appNotFound && <AppNotFound />}
       {showSpinner && (
         <div className="appContainer__loading">
-          <EuiLoadingSpinner aria-label="Loading application" size="xl" />
+          <ThinkingOrb
+            state="composing"
+            size={64}
+            speed={0.8}
+            aria-label={translateDashboard('loadingApplication')}
+            data-test-subj="appContainerLoadingOrb"
+          />
         </div>
       )}
       <div key={appId} ref={elementRef} />

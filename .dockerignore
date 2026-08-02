@@ -1,4 +1,9 @@
 .git
 Dockerfile
-node_modules
-packages/
+.node_binaries
+build
+target
+graphify-out
+packages/*/target
+src/core/target
+src/plugins/*/target

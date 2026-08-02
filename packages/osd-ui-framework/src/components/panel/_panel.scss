@@ -61,8 +61,8 @@
   @include barSection;
 
   &:only-child {
-    margin-left: 0; /* 1 */
-    margin-right: auto; /* 1 */
+    margin-inline-start: 0; /* 1 */
+    margin-inline-end: auto; /* 1 */
   }
 }
 

@@ -18,12 +18,12 @@
   font-weight: normal;
 
   & + & {
-    margin-left: 6px;
+    margin-inline-start: 6px;
 
     &::before {
       content: "/";
       user-select: none;
-      margin-right: 4px;
+      margin-inline-end: 4px;
       color: $localNavBreadcrumbDelimiterColor;
     }
   }

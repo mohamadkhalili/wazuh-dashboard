@@ -64,8 +64,8 @@
   min-width: 0;
 
   .visWrapper__chart {
-    margin-left: 0;
-    margin-right: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
   }
 }
 
@@ -269,12 +269,12 @@
   // Needs to come after .y-axis-div
   .visWrapper__chart--first {
     margin-top: 0;
-    margin-left: 0;
+    margin-inline-start: 0;
   }
 
   .visWrapper__chart--last {
     margin-bottom: 0;
-    margin-right: 0;
+    margin-inline-end: 0;
   }
 
   .axis {

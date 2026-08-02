@@ -1,0 +1,60 @@
+{
+  "name": "wazuh-farsi",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Generated locale helpers and scoped bilingual Wazuh translation packs.",
+  "typesVersions": {
+    "*": {
+      "locale": [
+        "locale.d.ts"
+      ],
+      "packs/*": [
+        "packs/*/index.d.ts"
+      ]
+    }
+  },
+  "exports": {
+    "./locale": {
+      "types": "./locale.d.ts",
+      "import": "./locale.js",
+      "require": "./locale.cjs"
+    },
+    "./packs/common": {
+      "types": "./packs/common/index.d.ts",
+      "import": "./packs/common/index.js",
+      "require": "./packs/common/index.cjs"
+    },
+    "./packs/common/messages.json": "./packs/common/messages.json",
+    "./packs/common/fa-IR.json": "./packs/common/fa-IR.json",
+    "./packs/dashboard": {
+      "types": "./packs/dashboard/index.d.ts",
+      "import": "./packs/dashboard/index.js",
+      "require": "./packs/dashboard/index.cjs"
+    },
+    "./packs/dashboard/messages.json": "./packs/dashboard/messages.json",
+    "./packs/dashboard/fa-IR.json": "./packs/dashboard/fa-IR.json",
+    "./packs/rtl": {
+      "types": "./packs/rtl/index.d.ts",
+      "import": "./packs/rtl/index.js",
+      "require": "./packs/rtl/index.cjs"
+    },
+    "./packs/rtl/messages.json": "./packs/rtl/messages.json",
+    "./packs/rtl/fa-IR.json": "./packs/rtl/fa-IR.json",
+    "./packs/security": {
+      "types": "./packs/security/index.d.ts",
+      "import": "./packs/security/index.js",
+      "require": "./packs/security/index.cjs"
+    },
+    "./packs/security/messages.json": "./packs/security/messages.json",
+    "./packs/security/fa-IR.json": "./packs/security/fa-IR.json",
+    "./packs/wazuh": {
+      "types": "./packs/wazuh/index.d.ts",
+      "import": "./packs/wazuh/index.js",
+      "require": "./packs/wazuh/index.cjs"
+    },
+    "./packs/wazuh/messages.json": "./packs/wazuh/messages.json",
+    "./packs/wazuh/fa-IR.json": "./packs/wazuh/fa-IR.json"
+  },
+  "sideEffects": false
+}

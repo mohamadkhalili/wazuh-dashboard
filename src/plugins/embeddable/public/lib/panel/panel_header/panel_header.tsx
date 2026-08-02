@@ -86,7 +86,7 @@ function renderNotifications(
       <EuiNotificationBadge
         data-test-subj={`embeddablePanelNotification-${notification.id}`}
         key={notification.id}
-        style={{ marginTop: '4px', marginRight: '4px' }}
+        style={{ marginTop: '4px', marginInlineEnd: '4px' }}
         onClick={() => notification.execute({ ...context, trigger: panelNotificationTrigger })}
       >
         {notification.getDisplayName({ ...context, trigger: panelNotificationTrigger })}

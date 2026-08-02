@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 142.06 132.93" role="img" aria-label="Wazuh A mark">
+  <defs>
+    <linearGradient id="purple-gradient" x1="98.89" y1="51.17" x2="79.76" y2="104.92" gradientUnits="userSpaceOnUse">
+      <stop offset=".07" stop-color="#4f54a4"/>
+      <stop offset=".76" stop-color="#8154a2"/>
+    </linearGradient>
+    <linearGradient id="orange-gradient" x1="48.65" y1="45" x2="24.34" y2="113.31" gradientUnits="userSpaceOnUse">
+      <stop offset=".07" stop-color="#ef4033"/>
+      <stop offset=".76" stop-color="#f68c25"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#purple-gradient)" d="M126.03,131.31c-12.85,4.85-27.2-1.58-32.09-14.43L50.78,3.9c5.02-2.36,10.78-3.9,17.33-3.9,25.13,0,40.47,17.33,41.42,18.41l.04.04,30.85,80.77c4.89,12.81-1.53,27.2-14.39,32.09Z"/>
+  <path fill="url(#orange-gradient)" d="M90.78,4.89l-42.66,111.62c-4.89,12.85-19.24,19.28-32.09,14.43C3.17,126.04-3.25,111.66,1.64,98.85L32.03,19.24C37.79,12.02,50.11,0,68.31,0c8.75,0,16.29,2.07,22.47,4.89Z"/>
+</svg>

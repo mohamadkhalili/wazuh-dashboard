@@ -34,6 +34,12 @@ import { BehaviorSubject } from 'rxjs';
 
 import { LoadingIndicator } from './loading_indicator';
 
+jest.mock('thinking-orbs', () => ({
+  ThinkingOrb: function ThinkingOrb() {
+    return null;
+  },
+}));
+
 describe('osdLoadingIndicator', () => {
   it('is hidden by default', () => {
     const wrapper = shallow(<LoadingIndicator loadingCount$={new BehaviorSubject(0)} />);

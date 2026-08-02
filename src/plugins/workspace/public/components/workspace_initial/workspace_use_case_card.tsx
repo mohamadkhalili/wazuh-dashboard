@@ -100,7 +100,7 @@ export const WorkspaceUseCaseCard = ({
             {workspace.name}
           </EuiText>
           <EuiText size="xs" color="subdued">
-            <small style={{ marginLeft: 'auto', color: 'subdued' }}>
+            <small style={{ marginInlineStart: 'auto', color: 'subdued' }}>
               {workspace.visitedMessage}
             </small>
           </EuiText>

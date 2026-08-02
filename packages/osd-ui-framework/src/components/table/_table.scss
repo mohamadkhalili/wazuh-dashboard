@@ -81,7 +81,7 @@
 .kuiTableSortIcon {
   display: none;
   pointer-events: none;
-  margin-left: 4px;
+  margin-inline-start: 4px;
 
   .kuiTableHeaderCellButton-isSorted & {
     display: block;

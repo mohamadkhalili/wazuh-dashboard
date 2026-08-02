@@ -6,19 +6,19 @@
 .kuiToolBarSearch {
   display: flex;
   align-items: center;
-  margin-left: $toolBarSectionSpacing * 0.5;
-  margin-right: $toolBarSectionSpacing * 0.5;
+  margin-inline-start: $toolBarSectionSpacing * 0.5;
+  margin-inline-end: $toolBarSectionSpacing * 0.5;
 
   &:first-child {
-    margin-left: 0;
+    margin-inline-start: 0;
   }
 
   &:last-child {
-    margin-right: 0;
+    margin-inline-end: 0;
   }
 
   & > * + * {
-    margin-left: $toolBarItemSpacing; /* 1 */
+    margin-inline-start: $toolBarItemSpacing; /* 1 */
   }
 
   flex: 1 1 auto;

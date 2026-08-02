@@ -25,7 +25,7 @@
     border-left: none;
 
     &:focus:not(.kuiTab-isSelected):not(:active) {
-      margin-left: -1px; /* 2 */
+      margin-inline-start: -1px; /* 2 */
     }
   }
 

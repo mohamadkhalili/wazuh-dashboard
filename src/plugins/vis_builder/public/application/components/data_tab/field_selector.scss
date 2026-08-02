@@ -11,9 +11,9 @@
 
   &__fieldGroups {
     overflow-y: auto;
-    margin-right: -$euiSizeS;
+    margin-inline-end: -$euiSizeS;
     padding-right: $euiSizeS;
-    margin-left: -$euiSizeS;
+    margin-inline-start: -$euiSizeS;
     padding-left: $euiSizeS;
     margin-top: $euiSizeS;
   }

@@ -30,7 +30,6 @@ describe('<CollapsibleNavTop />', () => {
       homeLink: getMockedNavLink({ id: 'home', title: 'Home', href: '/' }),
       navigateToApp: jest.fn(),
       logos: getLogos({}, mockBasePath.serverBasePath),
-      shouldShrinkNavigation: false,
       visibleUseCases: [],
       navGroupsMap: {},
       navLinks: [],
@@ -40,17 +39,15 @@ describe('<CollapsibleNavTop />', () => {
   };
 
   it('should render home icon when not in a workspace', async () => {
+    window.history.replaceState({}, '', '/');
     const props = getMockedProps();
-    const { findByTestId, getByTestId } = render(<CollapsibleNavTop {...props} />);
+    const { findByTestId, getByRole, getByTestId, queryByTestId } = render(
+      <CollapsibleNavTop {...props} />
+    );
     await findByTestId('collapsibleNavHome');
+    expect(getByRole('button', { name: 'رفتن به صفحهٔ خانه' })).toBeInTheDocument();
     fireEvent.click(getByTestId('collapsibleNavHome'));
     expect(props.navigateToApp).toBeCalledWith('home');
-  });
-
-  it('should render expand icon when collapsed', async () => {
-    const { findByTestId } = render(
-      <CollapsibleNavTop {...getMockedProps()} shouldShrinkNavigation />
-    );
-    await findByTestId('collapsibleNavShrinkButton');
+    expect(queryByTestId('collapsibleNavShrinkButton')).not.toBeInTheDocument();
   });
 });

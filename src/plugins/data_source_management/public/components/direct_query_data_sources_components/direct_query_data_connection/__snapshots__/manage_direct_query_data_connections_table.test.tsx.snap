@@ -1282,7 +1282,7 @@ exports[`ManageDirectQueryDataConnectionsTable fetch security lake and cloudwatc
                                               key=".0"
                                               style={
                                                 Object {
-                                                  "marginLeft": "20px",
+                                                  "marginInlineStart": "20px",
                                                 }
                                               }
                                             >
@@ -1513,7 +1513,7 @@ exports[`ManageDirectQueryDataConnectionsTable fetch security lake and cloudwatc
                                               key=".0"
                                               style={
                                                 Object {
-                                                  "marginLeft": "20px",
+                                                  "marginInlineStart": "20px",
                                                 }
                                               }
                                             >
@@ -3286,7 +3286,7 @@ exports[`ManageDirectQueryDataConnectionsTable fetch security lake and cloudwatc
                                               key=".0"
                                               style={
                                                 Object {
-                                                  "marginLeft": "20px",
+                                                  "marginInlineStart": "20px",
                                                 }
                                               }
                                             >
@@ -3517,7 +3517,7 @@ exports[`ManageDirectQueryDataConnectionsTable fetch security lake and cloudwatc
                                               key=".0"
                                               style={
                                                 Object {
-                                                  "marginLeft": "20px",
+                                                  "marginInlineStart": "20px",
                                                 }
                                               }
                                             >
@@ -6442,7 +6442,7 @@ exports[`ManageDirectQueryDataConnectionsTable should get direct query connectio
                                               size="xs"
                                               style={
                                                 Object {
-                                                  "marginLeft": "20px",
+                                                  "marginInlineStart": "20px",
                                                 }
                                               }
                                             >
@@ -6452,7 +6452,7 @@ exports[`ManageDirectQueryDataConnectionsTable should get direct query connectio
                                                 rel="noreferrer"
                                                 style={
                                                   Object {
-                                                    "marginLeft": "20px",
+                                                    "marginInlineStart": "20px",
                                                   }
                                                 }
                                               >

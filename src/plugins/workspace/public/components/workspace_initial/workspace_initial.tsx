@@ -210,7 +210,7 @@ export const WorkspaceInitial = ({ registeredUseCases$ }: WorkspaceInitialProps)
                 type="dashboardApp"
                 size="s"
                 color="primary"
-                style={{ marginLeft: '16px' }}
+                style={{ marginInlineStart: '16px' }}
               />
               &nbsp;
               <EuiLink

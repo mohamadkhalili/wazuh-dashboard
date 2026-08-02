@@ -30,7 +30,6 @@
 
 import React, { Component } from 'react';
 import {
-  EuiLoadingSpinner,
   EuiText,
   EuiTitle,
   EuiPage,
@@ -41,6 +40,8 @@ import {
   EuiFlexItem,
 } from '@elastic/eui';
 import { FormattedMessage } from '@osd/i18n/react';
+import { ThinkingOrb } from 'thinking-orbs';
+import { translate as translateDashboard } from 'wazuh-farsi/packs/dashboard';
 import { HttpSetup } from '../../http';
 import { NotificationsSetup } from '../../notifications';
 import { loadStatus, ProcessedServerResponse } from './lib';
@@ -94,7 +95,19 @@ export class StatusApp extends Component<StatusAppProps, StatusAppState> {
 
     // If we're still loading, return early with a spinner
     if (loading) {
-      return <EuiLoadingSpinner size="l" />;
+      return (
+        <EuiFlexGroup alignItems="center" justifyContent="center" style={{ minHeight: '50vh' }}>
+          <EuiFlexItem grow={false}>
+            <ThinkingOrb
+              state="composing"
+              size={64}
+              speed={0.8}
+              aria-label={translateDashboard('loadingStatus')}
+              data-test-subj="statusPageLoadingOrb"
+            />
+          </EuiFlexItem>
+        </EuiFlexGroup>
+      );
     }
 
     if (fetchError) {

@@ -28,11 +28,12 @@
  * under the License.
  */
 
-import { EuiLoadingSpinner, EuiProgress } from '@elastic/eui';
+import { EuiProgress } from '@elastic/eui';
 import { i18n } from '@osd/i18n';
 import React from 'react';
 import classNames from 'classnames';
 import { Subscription } from 'rxjs';
+import { ThinkingOrb } from 'thinking-orbs';
 
 import { HttpStart } from '../../http';
 
@@ -79,7 +80,11 @@ export class LoadingIndicator extends React.Component<LoadingIndicatorProps, { v
     });
 
     return !this.props.showAsBar ? (
-      <EuiLoadingSpinner
+      <ThinkingOrb
+        state="composing"
+        size={20}
+        speed={0.8}
+        paused={!this.state.visible}
         className={className}
         data-test-subj={testSubj}
         aria-hidden={ariaHidden}

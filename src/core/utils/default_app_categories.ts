@@ -39,7 +39,7 @@ export const DEFAULT_APP_CATEGORIES: Record<string, AppCategory> = Object.freeze
       defaultMessage: 'Explore',
     }),
     order: 100,
-    euiIconType: 'search',
+    euiIconType: 'compass',
   },
   opensearchDashboards: {
     id: 'opensearchDashboards',

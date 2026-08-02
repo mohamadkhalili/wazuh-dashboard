@@ -80,6 +80,7 @@ describe('uiRenderMixin', () => {
     let h;
 
     beforeEach(() => {
+      i18n.getLocale.mockReturnValue('fa-IR');
       uiRenderMixin(osdServer, server, config);
       handler = routes.find((route) => route.path === '/translations/{locale}.json').handler;
       h = {
@@ -90,11 +91,9 @@ describe('uiRenderMixin', () => {
     });
 
     it('should handle default locale', async () => {
-      const defaultLocale = 'en';
-      const defaultTranslations = { hello: 'Hello' };
-      i18n.getLocale.mockReturnValue(defaultLocale);
+      const defaultLocale = 'fa-IR';
+      const defaultTranslations = { hello: 'سلام' };
       i18n.getTranslation.mockReturnValue(defaultTranslations);
-      i18nLoader.getRegisteredLocales.mockReturnValue([defaultLocale]);
 
       const request = { params: { locale: defaultLocale } };
       await handler(request, h);
@@ -109,41 +108,41 @@ describe('uiRenderMixin', () => {
       expect(h.etag).toHaveBeenCalled();
     });
 
-    it('should handle non-default registered locale', async () => {
-      const defaultLocale = 'en';
+    it('falls back to Persian for a non-English registered locale', async () => {
+      const defaultLocale = 'fa-IR';
       const requestedLocale = 'fr';
-      const frTranslations = { hello: 'Bonjour' };
-      i18n.getLocale.mockReturnValue(defaultLocale);
+      const defaultTranslations = { hello: 'سلام' };
+      i18n.getTranslation.mockReturnValue(defaultTranslations);
       i18nLoader.getRegisteredLocales.mockReturnValue([defaultLocale, requestedLocale]);
-      i18nLoader.getTranslationsByLocale.mockResolvedValue(frTranslations);
 
       const request = { params: { locale: requestedLocale } };
       await handler(request, h);
 
-      expect(i18nLoader.getTranslationsByLocale).toHaveBeenCalledWith(requestedLocale);
+      expect(i18nLoader.getTranslationsByLocale).not.toHaveBeenCalled();
       expect(h.response).toHaveBeenCalledWith({
-        translations: frTranslations,
-        warning: null,
+        translations: defaultTranslations,
+        warning: {
+          title: 'Unsupported Locale',
+          text: `The requested locale "${requestedLocale}" is not supported. Falling back to ${defaultLocale}.`,
+        },
       });
     });
 
-    it('should fallback to English translations for unknown locale', async () => {
-      const defaultLocale = 'en';
+    it('falls back to Persian translations for an unknown locale', async () => {
+      const defaultLocale = 'fa-IR';
       const unknownLocale = 'xx';
-      const englishTranslations = { hello: 'Hello' };
-      i18n.getLocale.mockReturnValue(defaultLocale);
-      i18nLoader.getRegisteredLocales.mockReturnValue([defaultLocale]);
-      i18nLoader.getTranslationsByLocale.mockResolvedValue(englishTranslations);
+      const defaultTranslations = { hello: 'سلام' };
+      i18n.getTranslation.mockReturnValue(defaultTranslations);
 
       const request = { params: { locale: unknownLocale } };
       await handler(request, h);
 
-      expect(i18nLoader.getTranslationsByLocale).toHaveBeenCalledWith('en');
+      expect(i18nLoader.getTranslationsByLocale).not.toHaveBeenCalled();
       expect(h.response).toHaveBeenCalledWith({
-        translations: englishTranslations,
+        translations: defaultTranslations,
         warning: {
           title: 'Unsupported Locale',
-          text: `The requested locale "${unknownLocale}" is not supported. Falling back to English.`,
+          text: `The requested locale "${unknownLocale}" is not supported. Falling back to ${defaultLocale}.`,
         },
       });
       expect(h.header).toHaveBeenCalledWith('cache-control', 'must-revalidate');
@@ -151,12 +150,47 @@ describe('uiRenderMixin', () => {
       expect(h.etag).toHaveBeenCalled();
     });
 
-    it('should cache translations', async () => {
-      const defaultLocale = 'en';
-      const defaultTranslations = { hello: 'Hello' };
-      i18n.getLocale.mockReturnValue(defaultLocale);
+    it('serves exact built-in English without requiring a registered locale', async () => {
+      const englishTranslations = { messages: {} };
+      i18n.getLocale.mockReturnValue('fa-IR');
+      i18nLoader.getRegisteredLocales.mockReturnValue(['fa-IR']);
+      i18nLoader.getTranslationsByLocale.mockResolvedValue(englishTranslations);
+
+      uiRenderMixin(osdServer, server, config);
+      const englishHandler = routes
+        .filter((route) => route.path === '/translations/{locale}.json')
+        .slice(-1)[0].handler;
+
+      await englishHandler({ params: { locale: 'en' } }, h);
+
+      expect(i18nLoader.getTranslationsByLocale).toHaveBeenCalledWith('en');
+      expect(h.response).toHaveBeenCalledWith({
+        translations: { messages: {}, locale: 'en' },
+        warning: null,
+      });
+    });
+
+    it('does not treat a normalized English variant as the exact en opt-in', async () => {
+      const defaultTranslations = { hello: 'سلام' };
+      i18n.normalizeLocale.mockReturnValue('en');
       i18n.getTranslation.mockReturnValue(defaultTranslations);
-      i18nLoader.getRegisteredLocales.mockReturnValue([defaultLocale]);
+
+      await handler({ params: { locale: 'EN' } }, h);
+
+      expect(i18nLoader.getTranslationsByLocale).not.toHaveBeenCalled();
+      expect(h.response).toHaveBeenCalledWith({
+        translations: defaultTranslations,
+        warning: {
+          title: 'Unsupported Locale',
+          text: 'The requested locale "EN" is not supported. Falling back to fa-IR.',
+        },
+      });
+    });
+
+    it('should cache translations', async () => {
+      const defaultLocale = 'fa-IR';
+      const defaultTranslations = { hello: 'سلام' };
+      i18n.getTranslation.mockReturnValue(defaultTranslations);
 
       const request = { params: { locale: defaultLocale } };
       await handler(request, h);
@@ -166,8 +200,7 @@ describe('uiRenderMixin', () => {
     });
 
     it('should handle errors gracefully', async () => {
-      const defaultLocale = 'en';
-      i18n.getLocale.mockReturnValue(defaultLocale);
+      const defaultLocale = 'fa-IR';
       i18n.getTranslation.mockImplementation(() => {
         throw new Error('Translation error');
       });

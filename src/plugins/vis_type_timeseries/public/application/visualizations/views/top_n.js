@@ -88,7 +88,7 @@ export class TopN extends Component {
   static calcInnerBarStyles = (renderMode, isPositive) => {
     if (renderMode === RENDER_MODES.MIXED) {
       return {
-        [isPositive ? 'marginLeft' : 'marginRight']: '50%',
+        [isPositive ? 'marginInlineStart' : 'marginInlineEnd']: '50%',
       };
     }
     return {};

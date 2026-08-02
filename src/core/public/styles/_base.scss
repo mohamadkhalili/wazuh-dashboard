@@ -56,7 +56,7 @@ $euiCollapsibleNavWidth: $euiSize * 20;
 }
 
 .euiBody--collapsibleNavIsDocked .euiBottomBar {
-  margin-left: $euiCollapsibleNavWidth;
+  margin-inline-start: $euiCollapsibleNavWidth;
 }
 
 .euiButtonIcon.euiButtonIcon--auto {

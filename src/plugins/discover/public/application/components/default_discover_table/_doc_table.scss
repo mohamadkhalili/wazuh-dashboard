@@ -69,7 +69,7 @@ doc-table {
       background-color: transparentize(shade($euiColorPrimary, 20%), 0.9);
       color: $euiTextColor;
       padding: calc($euiSizeXS / 2) $euiSizeXS;
-      margin-right: $euiSizeXS;
+      margin-inline-end: $euiSizeXS;
       word-break: normal;
       border-radius: $euiBorderRadius;
     }

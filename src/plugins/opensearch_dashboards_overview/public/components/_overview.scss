@@ -125,7 +125,7 @@
 
 // Accounting for no `flush="both"` prop on EuiSmallButtonEmpty
 .osdOverviewDataAdd__actionButton {
-  margin-right: 0;
+  margin-inline-end: 0;
 }
 
 .osdOverviewDataManage__item:not(:only-child) {

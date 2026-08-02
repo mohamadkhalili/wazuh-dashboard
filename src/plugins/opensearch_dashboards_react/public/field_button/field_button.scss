@@ -46,7 +46,7 @@
 .osdFieldButton__fieldIcon {
   flex-shrink: 0;
   line-height: 0;
-  margin-right: $euiSizeS;
+  margin-inline-end: $euiSizeS;
 }
 
 .osdFieldButton__name {
@@ -56,11 +56,11 @@
 
 .osdFieldButton__infoIcon {
   flex-shrink: 0;
-  margin-left: $euiSizeXS;
+  margin-inline-start: $euiSizeXS;
 }
 
 .osdFieldButton__fieldAction {
-  margin-right: $euiSizeS;
+  margin-inline-end: $euiSizeS;
 }
 
 // Reduce text size and spacing for the small size
@@ -73,6 +73,6 @@
 
   .osdFieldButton__fieldIcon,
   .osdFieldButton__fieldAction {
-    margin-right: $euiSizeXS;
+    margin-inline-end: $euiSizeXS;
   }
 }

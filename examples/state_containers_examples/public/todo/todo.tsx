@@ -138,7 +138,7 @@ const TodoApp: React.FC<TodoAppProps> = ({ filter }) => {
               data-test-subj={`todoCheckbox-${todo.id}`}
             />
             <EuiButton
-              style={{ marginLeft: '8px' }}
+              style={{ marginInlineStart: '8px' }}
               size={'s'}
               onClick={() => {
                 deleteTodo(todo.id);

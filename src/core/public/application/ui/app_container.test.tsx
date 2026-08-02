@@ -38,6 +38,12 @@ import { Mounter, AppMountParameters, AppStatus } from '../types';
 import { createMemoryHistory } from 'history';
 import { ScopedHistory } from '../scoped_history';
 
+jest.mock('thinking-orbs', () => ({
+  ThinkingOrb: function ThinkingOrb() {
+    return null;
+  },
+}));
+
 describe('AppContainer', () => {
   const appId = 'someApp';
   const setAppLeaveHandler = jest.fn();

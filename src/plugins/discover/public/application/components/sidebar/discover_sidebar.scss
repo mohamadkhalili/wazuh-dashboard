@@ -57,5 +57,5 @@
 .dscSidebar__item:focus {
   background-color: $euiColorLightestShade;
   padding-left: $euiSizeXS;
-  margin-left: -$euiSizeXS;
+  margin-inline-start: -$euiSizeXS;
 }

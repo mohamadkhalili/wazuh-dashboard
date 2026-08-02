@@ -213,8 +213,6 @@ export function CollapsibleNavGroupEnabled({
               navigateToApp={navigateToApp}
               logos={logos}
               currentNavGroup={currentNavGroupId ? navGroupsMap[currentNavGroupId] : undefined}
-              shouldShrinkNavigation={!isNavOpen}
-              onClickShrink={closeNav}
             />
           </EuiPanel>
         )}
