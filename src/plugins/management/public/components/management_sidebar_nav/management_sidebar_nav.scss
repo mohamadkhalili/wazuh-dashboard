@@ -1,0 +1,15 @@
+.mgtSideBarNav {
+  width: 220px;
+  margin-inline-end: $euiSize;
+}
+
+@include euiBreakpoint("xs","s") {
+  .mgtSideBarNav {
+    width: auto;
+    margin-bottom: $euiSize;
+  }
+}
+
+.mgtSideBarNavItemExperimentalBadge {
+  margin-inline-start: 10px;
+}

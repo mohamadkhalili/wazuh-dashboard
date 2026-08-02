@@ -1,0 +1,137 @@
+/*
+ * Copyright Wazuh
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* stylelint-disable @osd/stylelint/no_restricted_values, @osd/stylelint/no_modifying_global_selectors */
+
+$wazuhIconPurple: #7c3aed;
+
+// Replace the green/blue icon accents without changing warning and danger
+// colors, which still communicate meaningful status to the user.
+.euiIcon--primary,
+.euiIcon--secondary,
+.euiIcon--success,
+.ouiIcon--primary,
+.ouiIcon--secondary,
+.ouiIcon--success,
+.kuiIcon--primary,
+.kuiIcon--success,
+.fa-success {
+  color: $wazuhIconPurple !important;
+}
+
+.euiIcon--app[data-wazuh-icon-theme="font-awesome"],
+.ouiIcon--app[data-wazuh-icon-theme="font-awesome"],
+[data-wazuh-original-icon^="nav"] {
+  color: $wazuhIconPurple !important;
+}
+
+// Color navigation category icons themselves. Disclosure arrows are separate
+// accordion controls and intentionally keep their normal text color.
+[data-test-subj^="collapsibleNavGroup-"] {
+  .euiCollapsibleNavGroup__heading .euiIcon:not(.euiAccordion__icon):not(.leftNavCustomizedAccordionIcon),
+  .ouiCollapsibleNavGroup__heading .ouiIcon:not(.ouiAccordion__icon):not(.leftNavCustomizedAccordionIcon) {
+    color: $wazuhIconPurple !important;
+  }
+}
+
+.euiIcon--app .euiIcon__fillSecondary,
+.ouiIcon--app .ouiIcon__fillSecondary {
+  fill: $wazuhIconPurple !important;
+}
+
+// Legacy Font Awesome views are also given alternate, semantically equivalent
+// glyphs so the icon refresh is not limited to React/EUI screens.
+.fa-sort::before {
+  content: "\f160" !important;
+}
+
+.fa-sort-up::before,
+.fa-sort-asc::before {
+  content: "\f176" !important;
+}
+
+.fa-sort-down::before,
+.fa-sort-desc::before {
+  content: "\f175" !important;
+}
+
+.fa-exclamation-triangle::before {
+  content: "\f06a" !important;
+}
+
+.fa-exclamation-circle::before {
+  content: "\f071" !important;
+}
+
+.fa-tag::before {
+  content: "\f02c" !important;
+}
+
+.fa-comment::before {
+  content: "\f0e6" !important;
+}
+
+.fa-bell::before {
+  content: "\f0a2" !important;
+}
+
+.fa-asterisk::before {
+  content: "\f0a3" !important;
+}
+
+.fa-star::before {
+  content: "\f006" !important;
+}
+
+.fa-remove::before,
+.fa-close::before,
+.fa-times::before {
+  content: "\f05c" !important;
+}
+
+.fa-map-pin::before,
+.fa-map-marker::before {
+  content: "\f124" !important;
+}
+
+.fa-heart::before {
+  content: "\f08a" !important;
+}
+
+.fa-flag::before {
+  content: "\f11d" !important;
+}
+
+.fa-fire::before,
+.fa-bolt::before {
+  content: "\f21e" !important;
+}
+
+.fa-bug::before,
+.fa-bomb::before {
+  content: "\f132" !important;
+}
+
+.fa-angle-double-left::before {
+  content: "\f177" !important;
+}
+
+.fa-angle-double-right::before {
+  content: "\f178" !important;
+}
+
+.fa-info-circle::before {
+  content: "\f129" !important;
+}
+
+.fa-ellipsis-h::before {
+  content: "\f0c9" !important;
+}
+
+.fa-crop::before {
+  content: "\f247" !important;
+}
+
+/* stylelint-enable @osd/stylelint/no_restricted_values, @osd/stylelint/no_modifying_global_selectors */

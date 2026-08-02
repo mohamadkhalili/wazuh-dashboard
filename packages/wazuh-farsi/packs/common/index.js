@@ -1,0 +1,473 @@
+import { createTranslator, createVariants } from '../../translator.js';
+
+export const messages = Object.freeze({
+  "action": {
+    "en": "Action",
+    "fa-IR": "عملیات"
+  },
+  "allItems": {
+    "en": "All items",
+    "fa-IR": "همهٔ موارد"
+  },
+  "appearance": {
+    "en": "Light or dark appearance",
+    "fa-IR": "حالت روشن یا تیره"
+  },
+  "back": {
+    "en": "Back",
+    "fa-IR": "بازگشت"
+  },
+  "cancel": {
+    "en": "Cancel",
+    "fa-IR": "انصراف"
+  },
+  "close": {
+    "en": "Close",
+    "fa-IR": "بستن"
+  },
+  "closeModal": {
+    "en": "Close modal",
+    "fa-IR": "بستن پنجره"
+  },
+  "collapse": {
+    "en": "Collapse",
+    "fa-IR": "جمع‌کردن"
+  },
+  "colorLabel": {
+    "en": "Color:",
+    "fa-IR": "رنگ:"
+  },
+  "column": {
+    "en": "Column",
+    "fa-IR": "ستون"
+  },
+  "confirm": {
+    "en": "Confirm",
+    "fa-IR": "تأیید"
+  },
+  "copyValue": {
+    "en": "Copy value",
+    "fa-IR": "کپی مقدار"
+  },
+  "createWorkspace": {
+    "en": "Create Workspace",
+    "fa-IR": "ایجاد فضای کاری"
+  },
+  "delete": {
+    "en": "Delete",
+    "fa-IR": "حذف"
+  },
+  "description": {
+    "en": "Description",
+    "fa-IR": "توضیحات"
+  },
+  "development": {
+    "en": "Under development",
+    "fa-IR": "در حال توسعه"
+  },
+  "dismiss": {
+    "en": "Dismiss",
+    "fa-IR": "بستن"
+  },
+  "error": {
+    "en": "Error",
+    "fa-IR": "خطا"
+  },
+  "errorDetails": {
+    "en": "Error details",
+    "fa-IR": "جزئیات خطا"
+  },
+  "expand": {
+    "en": "Expand",
+    "fa-IR": "گسترش"
+  },
+  "filter": {
+    "en": "Filter...",
+    "fa-IR": "فیلتر..."
+  },
+  "filterForValue": {
+    "en": "Filter for value",
+    "fa-IR": "فیلتر بر اساس این مقدار"
+  },
+  "filterOutValue": {
+    "en": "Filter out value",
+    "fa-IR": "حذف این مقدار از نتایج"
+  },
+  "global": {
+    "en": "Global",
+    "fa-IR": "سراسری"
+  },
+  "home": {
+    "en": "Home",
+    "fa-IR": "خانه"
+  },
+  "info": {
+    "en": "Info",
+    "fa-IR": "اطلاعات"
+  },
+  "inputTokens": {
+    "en": "Input tokens",
+    "fa-IR": "توکن‌های ورودی"
+  },
+  "learnMore": {
+    "en": "Learn more",
+    "fa-IR": "بیشتر بدانید"
+  },
+  "loading": {
+    "en": "Loading",
+    "fa-IR": "در حال بارگذاری"
+  },
+  "loadingContent": {
+    "en": "Loading content",
+    "fa-IR": "در حال بارگذاری محتوا"
+  },
+  "manage": {
+    "en": "Manage",
+    "fa-IR": "مدیریت"
+  },
+  "nameLabel": {
+    "en": "Name:",
+    "fa-IR": "نام:"
+  },
+  "navigation": {
+    "en": "Navigation",
+    "fa-IR": "پیمایش"
+  },
+  "notAvailable": {
+    "en": "N/A",
+    "fa-IR": "در دسترس نیست"
+  },
+  "noResults": {
+    "en": "There are no results.",
+    "fa-IR": "نتیجه‌ای وجود ندارد."
+  },
+  "notifications": {
+    "en": "Notifications",
+    "fa-IR": "اعلان‌ها"
+  },
+  "outputTokens": {
+    "en": "Output tokens",
+    "fa-IR": "توکن‌های خروجی"
+  },
+  "pages": {
+    "en": "{count} pages",
+    "fa-IR": "{count} صفحه"
+  },
+  "private": {
+    "en": "Private",
+    "fa-IR": "خصوصی"
+  },
+  "recentlyViewed": {
+    "en": "Recently viewed",
+    "fa-IR": "اخیراً مشاهده‌شده"
+  },
+  "reserved": {
+    "en": "Reserved",
+    "fa-IR": "رزروشده"
+  },
+  "response": {
+    "en": "Response",
+    "fa-IR": "پاسخ"
+  },
+  "search": {
+    "en": "Search",
+    "fa-IR": "جستجو"
+  },
+  "searchPlaceholder": {
+    "en": "Search...",
+    "fa-IR": "جستجو…"
+  },
+  "success": {
+    "en": "Success",
+    "fa-IR": "موفق"
+  },
+  "tokens": {
+    "en": "Tokens",
+    "fa-IR": "توکن‌ها"
+  },
+  "type": {
+    "en": "Type",
+    "fa-IR": "نوع"
+  },
+  "unknownError": {
+    "en": "Unknown error",
+    "fa-IR": "خطای ناشناخته"
+  },
+  "useCaseLabel": {
+    "en": "Use case:",
+    "fa-IR": "مورد استفاده:"
+  },
+  "viewAll": {
+    "en": "View all",
+    "fa-IR": "مشاهدهٔ همه"
+  },
+  "actions": {
+    "en": "Actions",
+    "fa-IR": "عملیات"
+  },
+  "addAllItems": {
+    "en": "Add all items",
+    "fa-IR": "افزودن همهٔ موارد"
+  },
+  "addSelectedItems": {
+    "en": "Add selected items",
+    "fa-IR": "افزودن موارد انتخاب‌شده"
+  },
+  "addedCount": {
+    "en": "Added: {count}",
+    "fa-IR": "افزوده‌شده: {count}"
+  },
+  "agent": {
+    "en": "Agent",
+    "fa-IR": "عامل"
+  },
+  "agentName": {
+    "en": "Agent name",
+    "fa-IR": "نام عامل"
+  },
+  "agents": {
+    "en": "Agents",
+    "fa-IR": "عامل‌ها"
+  },
+  "applications": {
+    "en": "Applications",
+    "fa-IR": "برنامه‌ها"
+  },
+  "applyChanges": {
+    "en": "Apply changes",
+    "fa-IR": "اعمال تغییرات"
+  },
+  "comment": {
+    "en": "Comment",
+    "fa-IR": "یادداشت"
+  },
+  "configuration": {
+    "en": "Configuration",
+    "fa-IR": "پیکربندی"
+  },
+  "createdAt": {
+    "en": "Created at",
+    "fa-IR": "ایجادشده در"
+  },
+  "details": {
+    "en": "Details",
+    "fa-IR": "جزئیات"
+  },
+  "edit": {
+    "en": "Edit",
+    "fa-IR": "ویرایش"
+  },
+  "errorDownloadingCsvReport": {
+    "en": "Error downloading csv report",
+    "fa-IR": "خطا در بارگیری گزارش CSV"
+  },
+  "errorFetchingData": {
+    "en": "Error fetching data",
+    "fa-IR": "خطا در دریافت داده‌ها"
+  },
+  "exportFormatted": {
+    "en": "Export Formatted",
+    "fa-IR": "خروجی قالب‌بندی‌شده"
+  },
+  "files": {
+    "en": "Files",
+    "fa-IR": "فایل‌ها"
+  },
+  "filterAction": {
+    "en": "Filter",
+    "fa-IR": "فیلتر"
+  },
+  "filterByField": {
+    "en": "filter by {field}",
+    "fa-IR": "فیلتر بر اساس {field}"
+  },
+  "goals": {
+    "en": "Goals",
+    "fa-IR": "اهداف"
+  },
+  "group": {
+    "en": "Group",
+    "fa-IR": "گروه"
+  },
+  "icon": {
+    "en": "Icon",
+    "fa-IR": "نماد"
+  },
+  "id": {
+    "en": "ID",
+    "fa-IR": "شناسه"
+  },
+  "inspectItemInApp": {
+    "en": "Inspect {item} in {app}",
+    "fa-IR": "بررسی {item} در {app}"
+  },
+  "inspectDetails": {
+    "en": "Inspect details",
+    "fa-IR": "بررسی جزئیات"
+  },
+  "inspectDocumentDetails": {
+    "en": "Inspect document details",
+    "fa-IR": "بررسی جزئیات سند"
+  },
+  "integration": {
+    "en": "Integration",
+    "fa-IR": "یکپارچه‌سازی"
+  },
+  "loadingEllipsis": {
+    "en": "Loading...",
+    "fa-IR": "در حال بارگذاری..."
+  },
+  "moreItems": {
+    "en": "more",
+    "fa-IR": "مورد دیگر"
+  },
+  "more": {
+    "en": "More...",
+    "fa-IR": "بیشتر..."
+  },
+  "name": {
+    "en": "Name",
+    "fa-IR": "نام"
+  },
+  "no": {
+    "en": "no",
+    "fa-IR": "خیر"
+  },
+  "noDoNotProceed": {
+    "en": "No, don't do it",
+    "fa-IR": "نه، انجام نده"
+  },
+  "notReady": {
+    "en": "not ready",
+    "fa-IR": "آماده نیست"
+  },
+  "operatingSystem": {
+    "en": "Operating system",
+    "fa-IR": "سیستم‌عامل"
+  },
+  "operatingSystemName": {
+    "en": "Operating system name",
+    "fa-IR": "نام سیستم‌عامل"
+  },
+  "operatingSystemVersion": {
+    "en": "Operating system version",
+    "fa-IR": "نسخهٔ سیستم‌عامل"
+  },
+  "options": {
+    "en": "Options",
+    "fa-IR": "گزینه‌ها"
+  },
+  "queryLimitFirstHits": {
+    "en": "The query results has exceeded the limit of {limit} hits. To provide a better experience the table only shows the first {limit} hits.",
+    "fa-IR": "نتایج پرس‌وجو از حد {limit} نتیجه فراتر رفته‌اند. برای تجربهٔ بهتر، جدول فقط {limit} نتیجهٔ نخست را نشان می‌دهد."
+  },
+  "queryLimitRefineSearch": {
+    "en": "The query results exceeded the limit of {limit} hits. Please refine your search.",
+    "fa-IR": "نتایج پرس‌وجو از حد {limit} نتیجه فراتر رفتند. لطفاً جستجوی خود را دقیق‌تر کنید."
+  },
+  "ready": {
+    "en": "ready",
+    "fa-IR": "آماده"
+  },
+  "recentEvents": {
+    "en": "Recent events",
+    "fa-IR": "رخدادهای اخیر"
+  },
+  "refresh": {
+    "en": "Refresh",
+    "fa-IR": "تازه‌سازی"
+  },
+  "reload": {
+    "en": "Reload",
+    "fa-IR": "بارگذاری مجدد"
+  },
+  "removeAllItems": {
+    "en": "Remove all items",
+    "fa-IR": "حذف همهٔ موارد"
+  },
+  "removeSelectedItems": {
+    "en": "Remove selected items",
+    "fa-IR": "حذف موارد انتخاب‌شده"
+  },
+  "removedCount": {
+    "en": "Removed: {count}",
+    "fa-IR": "حذف‌شده: {count}"
+  },
+  "reset": {
+    "en": "Reset",
+    "fa-IR": "بازنشانی"
+  },
+  "retry": {
+    "en": "Retry",
+    "fa-IR": "تلاش دوباره"
+  },
+  "roles": {
+    "en": "Roles",
+    "fa-IR": "نقش‌ها"
+  },
+  "selectAll": {
+    "en": "Select all",
+    "fa-IR": "انتخاب همه"
+  },
+  "showItemInApp": {
+    "en": "Show {item} in {app}",
+    "fa-IR": "نمایش {item} در {app}"
+  },
+  "stats": {
+    "en": "Stats",
+    "fa-IR": "آمار"
+  },
+  "status": {
+    "en": "Status",
+    "fa-IR": "وضعیت"
+  },
+  "tags": {
+    "en": "Tags",
+    "fa-IR": "برچسب‌ها"
+  },
+  "time": {
+    "en": "Time",
+    "fa-IR": "زمان"
+  },
+  "timestamp": {
+    "en": "Timestamp",
+    "fa-IR": "زمان ثبت"
+  },
+  "unexpectedError": {
+    "en": "An unexpected error occurred.",
+    "fa-IR": "خطایی غیرمنتظره رخ داد."
+  },
+  "unselectAll": {
+    "en": "Unselect all",
+    "fa-IR": "لغو انتخاب همه"
+  },
+  "updatedAt": {
+    "en": "Updated at",
+    "fa-IR": "به‌روزشده در"
+  },
+  "user": {
+    "en": "User",
+    "fa-IR": "کاربر"
+  },
+  "version": {
+    "en": "Version",
+    "fa-IR": "نسخه"
+  },
+  "viewDetailsOfItem": {
+    "en": "View details of {item}",
+    "fa-IR": "مشاهدهٔ جزئیات {item}"
+  },
+  "yes": {
+    "en": "yes",
+    "fa-IR": "بله"
+  },
+  "yesProceed": {
+    "en": "Yes, do it",
+    "fa-IR": "بله، انجام بده"
+  }
+});
+export const osdMessages = Object.freeze({});
+export const formats = Object.freeze({});
+export const translate = createTranslator(messages);
+export const variants = createVariants(messages);
+export const packId = "common";
