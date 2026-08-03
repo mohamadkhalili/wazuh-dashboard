@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-import { access, lstat, readFile, readdir, stat } from "node:fs/promises";
+import { access, lstat, readFile, readdir, realpath, stat } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { createRequire } from "node:module";
 import path from "node:path";
 
@@ -14,6 +15,13 @@ const expected = {
 const errors = [];
 const dashboardRoot = path.join(workspaceRoot, "wazuh-dashboard");
 const requireFromDashboard = createRequire(path.join(dashboardRoot, "package.json"));
+const ignoredSourceDirectories = new Set([
+  ".git",
+  "build",
+  "graphify-out",
+  "node_modules",
+  "target",
+]);
 
 const readJson = async (relativePath) =>
   JSON.parse(await readFile(path.join(workspaceRoot, relativePath), "utf8"));
@@ -21,6 +29,29 @@ const expect = (actual, wanted, label) => {
   if (actual !== wanted) {
     errors.push(`${label} is ${actual || "unknown"}; expected ${wanted}`);
   }
+};
+
+const treeDigest = async (root) => {
+  const digest = createHash("sha256");
+  const visit = async (directory, prefix = "") => {
+    const entries = await readdir(directory, { withFileTypes: true });
+    entries.sort((left, right) => left.name.localeCompare(right.name));
+    for (const entry of entries) {
+      if (!prefix && ignoredSourceDirectories.has(entry.name)) continue;
+      const relativePath = path.posix.join(prefix, entry.name);
+      const absolutePath = path.join(directory, entry.name);
+      if (entry.isDirectory()) {
+        await visit(absolutePath, relativePath);
+      } else if (entry.isFile()) {
+        digest.update(relativePath);
+        digest.update("\0");
+        digest.update(await readFile(absolutePath));
+        digest.update("\0");
+      }
+    }
+  };
+  await visit(root);
+  return digest.digest("hex");
 };
 
 const workspacePackageLinks = async () => {
@@ -44,6 +75,9 @@ const workspacePackageLinks = async () => {
 for (const packagePath of await workspacePackageLinks()) {
   if (!(await lstat(packagePath)).isSymbolicLink()) continue;
 
+  const sourcePath = path.relative(dashboardRoot, await realpath(packagePath));
+  if (sourcePath.split(path.sep)[0] === "test") continue;
+
   const packageJsonPath = path.join(packagePath, "package.json");
   let packageJson;
   try {
@@ -66,7 +100,7 @@ for (const packagePath of await workspacePackageLinks()) {
   }
 }
 
-for (const [label, targetPath, sourcePath] of [
+const pluginSources = [
   [
     "Wazuh main plugin",
     "wazuh-dashboard/plugins/main",
@@ -92,27 +126,52 @@ for (const [label, targetPath, sourcePath] of [
     "wazuh-dashboard/plugins/wazuh-security-dashboards-plugin",
     "wazuh-security-dashboards-plugin",
   ],
-]) {
+];
+
+for (const [label, targetPath, sourcePath] of pluginSources) {
   try {
-    const target = await stat(path.join(workspaceRoot, targetPath));
-    const source = await stat(path.join(sourceRoot, sourcePath));
-    expect(
-      `${target.dev}:${target.ino}`,
-      `${source.dev}:${source.ino}`,
-      `${label} source binding`
-    );
+    const target = path.join(workspaceRoot, targetPath);
+    const source = path.join(sourceRoot, sourcePath);
+    if (sourceRoot === workspaceRoot) {
+      const targetStat = await stat(target);
+      const sourceStat = await stat(source);
+      expect(
+        `${targetStat.dev}:${targetStat.ino}`,
+        `${sourceStat.dev}:${sourceStat.ino}`,
+        `${label} source binding`
+      );
+    } else {
+      expect(
+        await treeDigest(target),
+        await treeDigest(source),
+        `${label} source snapshot`
+      );
+    }
   } catch (error) {
-    errors.push(`${label} source binding is missing: ${error.message}`);
+    errors.push(`${label} source is missing: ${error.message}`);
   }
 }
 
 if (sourceRoot !== workspaceRoot) {
+  try {
+    const targetPath = path.join(
+      workspaceRoot,
+      "wazuh-dashboard/plugins/wazuh-farsi"
+    );
+    const sourcePath = path.join(
+      sourceRoot,
+      "wazuh-farsi/dist/fa-IR-rtl/plugins/wazuh-farsi"
+    );
+    expect(
+      await treeDigest(targetPath),
+      await treeDigest(sourcePath),
+      "Wazuh Farsi plugin source snapshot"
+    );
+  } catch (error) {
+    errors.push(`Wazuh Farsi plugin source snapshot is missing: ${error.message}`);
+  }
+
   for (const [label, targetPath, sourcePath] of [
-    [
-      "Wazuh Farsi plugin",
-      "wazuh-dashboard/plugins/wazuh-farsi",
-      "wazuh-farsi/dist/fa-IR-rtl/plugins/wazuh-farsi",
-    ],
     [
       "Wazuh Farsi package",
       "wazuh-dashboard/packages/wazuh-farsi",

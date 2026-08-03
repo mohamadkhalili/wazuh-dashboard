@@ -209,7 +209,7 @@ export function getWebpackConfig(bundle: Bundle, bundleRefs: BundleRefs, worker:
           ],
         },
         {
-          test: /\.(woff|woff2|ttf|eot|svg|ico|png|jpg|gif|jpeg)(\?|$)/,
+          test: /\.(woff|woff2|ttf|eot|svg|ico|png|jpg|gif|jpeg|webp)(\?|$)/,
           loader: 'url-loader',
           options: {
             limit: 8192,
@@ -221,7 +221,7 @@ export function getWebpackConfig(bundle: Bundle, bundleRefs: BundleRefs, worker:
             /* vega-lite and some of its dependencies don't have es5 builds
              * so we need to build from source and transpile for webpack v4
              */
-            /[\/\\]node_modules[\/\\](?!(vega[\/\\]|vega-(lite-next|lite|label|functions|scenegraph|canvas)[\/\\]))/,
+            /[\/\\]node_modules[\/\\](?!(thinking-orbs[\/\\]|wazuh-farsi[\/\\]|vega[\/\\]|vega-(lite-next|lite|label|functions|scenegraph|canvas)[\/\\]))/,
 
             // Don't attempt to look into release artifacts of the plugins
             /[\/\\]plugins[\/\\][^\/\\]+[\/\\]build[\/\\]/,

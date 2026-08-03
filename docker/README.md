@@ -70,72 +70,51 @@ even for the security plugin, if the security flag is provided.
 
 ### Wazuh 4.14.6 source profile
 
-Use the `wazuh` profile for the complete local Wazuh stack:
+From this `docker` directory, use the `wazuh` profile for the complete local
+Wazuh stack:
 
 ```bash
-./docker/mount-wazuh-sources.sh
-./docker/dev.sh up wazuh
-./docker/dev.sh logs wazuh
+./mount-wazuh-sources.sh
+./dev.sh up wazuh
+./dev.sh logs wazuh
 ```
 
-Run `mount-wazuh-sources.sh` before Compose. It creates and validates relative
-source bindings for the Wazuh main, core, updates, RTL, and Security plugins in
-`wazuh-dashboard/plugins`, plus the `wazuh-farsi` package resolver used by core
-Dashboard imports. It is idempotent and refuses to overwrite an unexpected
-link or real directory.
+`mount-wazuh-sources.sh` validates the host-side source links and Farsi package
+resolver. Compose independently bind-mounts the complete Dashboard, Wazuh
+plugins, Farsi, RTL, and Security repositories read-only below `/source`.
+Startup copies these current sources into the writable container-only Dashboard
+workspace and excludes host `build`, `target`, caches, and `node_modules`.
+Installed dependency trees are mounted read-only, so they are not duplicated.
 
-Compose then bind-mounts those five repository source directories directly on
-their `/workspace/wazuh-dashboard/plugins/*` paths. They are excluded from the
-tar snapshot so the bind targets cannot be replaced by symlinks. This keeps
-Node module resolution rooted at `wazuh-dashboard`, allowing source plugins to
-use the Dashboard dependency tree exactly as installed plugins do. The legacy
-`.wazuh-rtl-build-stage` directory is also excluded so only the repository RTL
-source registers the `wazuhRtl` plugin id.
+Before the server starts, the builder recreates `@osd/ui-shared-deps` and uses
+the official OpenSearch Dashboards optimizer to freshly build Core plus all six
+source plugin bundles: `core`, `wazuh`, `wazuhCore`, `wazuhCheckUpdates`,
+`securityDashboards`, `wazuhRtl`, and `wazuhFarsi`. Core and shared dependencies
+use dedicated named volumes, so the Dashboard container receives exactly the
+artifacts produced by the builder instead of ignored host targets from another
+checkout. Startup validates their hashes and rejects incompatible React or
+`@osd/monaco` APIs before serving the application.
 
-Existing `src/core/target` and `src/plugins/*/target` browser bundles are kept
-in the snapshot; removing them makes the server return `404` for otherwise
-valid core assets. The canonical Farsi plugin and package are bind-mounted from
-the `wazuh-farsi` repository. Before the server starts, only the `wazuhFarsi`
-browser bundle is freshly built with one optimizer worker; the full Dashboard
-bundle set is not rebuilt.
+This is required because `--no-optimizer` serves files from `target/public`;
+mounting current source while retaining a stale Core or plugin target can make
+the login page blank or hide source changes. Startup fails if any requested
+bundle is missing, does not report compiler success, does not write its browser
+file, or differs from the source-build manifest.
 
-OpenSearch Dashboards 2.19.5 can discover the filtered Farsi bundle but fail to
-dispatch the initial optimizer batch. `build-wazuh-farsi-bundle.js` uses the
-same official `OptimizerConfig` and optimizer worker directly, requires exactly
-one `wazuhFarsi` bundle, and fails startup unless the browser output is written.
-It bypasses the repository-wide cache-key scan, which is unnecessary for this
-single fresh output and can remain pending against a copied workspace. An
-explicit Node lifecycle handle remains active until the worker Observable
-settles.
-The server then starts with `--no-optimizer`: starting its broken integrated
-optimizer would invalidate and remove the freshly built filtered bundle before
-serving it, while still failing to dispatch a replacement worker. Existing core
-and plugin targets plus the freshly built Farsi target are served unchanged.
-
-The canonical Farsi package is also mounted over the stale package copies in
-the main and Security plugin dependency trees. Those copies contain an
-`opensearch_dashboards.json` plugin manifest and otherwise make the optimizer
-discover three bundles with the same `wazuhFarsi` id. The canonical package
-keeps bare imports working without registering duplicate browser plugins.
-
-TLS source certificates remain read-only. Startup copies only the Dashboard
-certificate and key into the temporary workspace, assigns them to the container
-`node` user, and keeps the private key at mode `0600`; deployment certificate
-permissions are never changed.
-
-Dashboard Git metadata is mounted read-only at the copied workspace root. The
-development optimizer requires `git ls-files` for its cache key and change
-detection; source and Git metadata remain immutable from the container.
+Only the temporary container workspace receives the fresh targets. The source
+repositories on the host remain read-only and unchanged. The optimizer runtime
+itself is rebuilt from the Dashboard 2.19.5 source in that workspace first, so
+a stale host optimizer target cannot introduce an incompatible dependency.
+The server then starts directly with `--no-optimizer`, avoiding the development
+cluster wrapper that removes freshly built targets during startup.
 
 This profile is locked to Wazuh `4.14.6`, OpenSearch Dashboards `2.19.5`, and
-Node 18. It mounts all five repositories read-only, copies filtered snapshots
-to the Dashboard container filesystem, and starts the Dashboard automatically.
-The container never writes `build` or `target` output into the host repositories.
-Existing `packages/*/target` output is copied because the linked OpenSearch
-Dashboards workspace packages load those entrypoints at runtime. After changing
-one of those packages, build that package normally and run `up wazuh` again to
-recreate the source snapshot. Dashboard and plugin application source is
-compiled by the development server from the fresh snapshot.
+Node 18. The Dashboard container is pinned to logical CPUs 0-1, capped at two
+CPUs, and started at nice level 10, while the complete bundle build uses exactly
+one optimizer worker; Manager and Indexer are each
+capped at one CPU. Re-running `./dev.sh up wazuh` force-recreates the containers,
+copies the latest source, and rebuilds every Wazuh bundle without consuming all
+host CPU cores.
 
 The startup script replaces the host development configuration inside the
 temporary workspace with the Docker configuration. The Dashboard therefore
@@ -143,17 +122,12 @@ listens on container port `5601` with HTTPS while the Indexer and Manager are
 reached by their Compose service names; host port `30300` remains the only UI
 entrypoint.
 
-Installed dependency trees are mounted read-only instead of being copied, so
-startup does not spend minutes duplicating `node_modules`. The `up wazuh`
-command waits up to six minutes for HTTPS readiness; if the Dashboard exits or
-times out, it prints Compose status and the last 200 Dashboard log lines. A
-preflight checks every linked workspace package entrypoint before startup, and
-the development Dashboard is not automatically restarted after an error, so a
-missing build artifact cannot create a copy/crash restart loop.
-
-The Dashboard container is capped at half of one CPU and one optimizer worker;
-Manager and Indexer are each capped at one CPU. The registered development UI
-is available at `https://127.0.0.1:30300`.
+TLS source certificates remain read-only; startup copies only the Dashboard
+certificate and key into the temporary workspace and restricts the private key
+to mode `0600`. The `up wazuh` command waits up to six minutes for HTTPS
+readiness and prints status and logs on failure. The Dashboard is not
+automatically restarted after an error, preventing a copy/build/crash loop.
+The registered development UI is available at `https://127.0.0.1:30300`.
 
 [docker-desktop]: https://docs.docker.com/get-docker
 [docker-variant]: https://docs.docker.com/desktop/install/linux-install/#differences-between-docker-desktop-for-linux-and-docker-engine

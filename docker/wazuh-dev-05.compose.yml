@@ -1,5 +1,39 @@
 name: wazuh-03
 
+x-wazuh-dashboard-environment: &wazuh-dashboard-environment
+  NODE_OPTIONS: --max-old-space-size=4096
+  OSD_OPTIMIZER_MAX_WORKERS: "1"
+  JOBS: "1"
+  npm_config_jobs: "1"
+  MAKEFLAGS: -j1
+
+x-wazuh-dashboard-volumes: &wazuh-dashboard-volumes
+  - ${REPO_PATH}:/source/wazuh-dashboard:ro
+  - ${REPO_PATH}/.git:/workspace/wazuh-dashboard/.git:ro
+  - ${REPO_PATH}/node_modules:/workspace/wazuh-dashboard/node_modules:ro
+  - ${WAZUH_DASHBOARD_PLUGINS_REPO_PATH}:/source/wazuh-dashboard-plugins:ro
+  - ${WAZUH_DASHBOARD_PLUGINS_REPO_PATH}/plugins/main/node_modules:/workspace/wazuh-dashboard-plugins/plugins/main/node_modules:ro
+  - ${WAZUH_DASHBOARD_PLUGINS_REPO_PATH}/plugins/main/node_modules:/workspace/wazuh-dashboard/plugins/main/node_modules:ro
+  - ${WAZUH_DASHBOARD_PLUGINS_REPO_PATH}/plugins/wazuh-core/node_modules:/workspace/wazuh-dashboard/plugins/wazuh-core/node_modules:ro
+  - ${WAZUH_DASHBOARD_PLUGINS_REPO_PATH}/plugins/wazuh-check-updates/node_modules:/workspace/wazuh-dashboard/plugins/wazuh-check-updates/node_modules:ro
+  - ${WAZUH_FARSI_REPO_PATH}:/source/wazuh-farsi:ro
+  - ${WAZUH_FARSI_REPO_PATH}/package:/workspace/wazuh-dashboard/packages/wazuh-farsi:ro
+  - ${WAZUH_FARSI_REPO_PATH}/package:/workspace/wazuh-dashboard/plugins/main/node_modules/wazuh-farsi:ro
+  - ${WAZUH_RTL_REPO_PATH}:/source/wazuh-rtl:ro
+  - ${SECURITY_PLUGIN_REPO_PATH}:/source/wazuh-security-dashboards-plugin:ro
+  - ${SECURITY_PLUGIN_REPO_PATH}/node_modules:/workspace/wazuh-dashboard/plugins/wazuh-security-dashboards-plugin/node_modules:ro
+  - ${WAZUH_FARSI_REPO_PATH}/package:/workspace/wazuh-dashboard/plugins/wazuh-security-dashboards-plugin/node_modules/wazuh-farsi:ro
+  - ${SECURITY_PLUGIN_REPO_PATH}/node_modules:/workspace/wazuh-security-dashboards-plugin/node_modules:ro
+  - ${WAZUH_DEPLOYMENT_CONFIG_PATH}/wazuh_indexer_ssl_certs:/certs-source:ro
+  - wazuh-core-browser-target:/workspace/wazuh-dashboard/src/core/target
+  - wazuh-ui-shared-deps-target:/workspace/wazuh-dashboard/packages/osd-ui-shared-deps/target
+  - wazuh-main-target:/workspace/wazuh-dashboard/plugins/main/target
+  - wazuh-core-target:/workspace/wazuh-dashboard/plugins/wazuh-core/target
+  - wazuh-updates-target:/workspace/wazuh-dashboard/plugins/wazuh-check-updates/target
+  - wazuh-rtl-target:/workspace/wazuh-dashboard/plugins/wazuh-rtl/target
+  - wazuh-security-target:/workspace/wazuh-dashboard/plugins/wazuh-security-dashboards-plugin/target
+  - wazuh-farsi-target:/workspace/wazuh-dashboard/plugins/wazuh-farsi/target
+
 services:
   wazuh.manager:
     image: wazuh/wazuh-manager:${WAZUH_VERSION:-4.14.6}
@@ -77,45 +111,44 @@ services:
     networks:
       - wazuh-03
 
+  wazuh.bundle-builder:
+    image: node:${NODE_VERSION:-18.19.0}
+    hostname: wazuh.bundle-builder
+    restart: "no"
+    init: true
+    cpus: 8.0
+    cpuset: "0-7"
+    working_dir: /workspace/wazuh-dashboard
+    environment:
+      <<: *wazuh-dashboard-environment
+      WAZUH_BUNDLE_ONLY: "1"
+    volumes: *wazuh-dashboard-volumes
+    command: ["nice", "-n", "10", "/source/wazuh-dashboard/docker/start-wazuh-source.sh"]
+    networks:
+      - wazuh-03
+
   wazuh.dashboard:
     image: node:${NODE_VERSION:-18.19.0}
     hostname: wazuh.dashboard
     restart: "no"
     init: true
     cpus: 0.5
+    cpuset: "0"
     working_dir: /workspace/wazuh-dashboard
     ports:
       - "127.0.0.1:30300:5601"
     environment:
-      - NODE_OPTIONS=--max-old-space-size=4096
-      - OSD_OPTIMIZER_MAX_WORKERS=1
-      - JOBS=1
-      - npm_config_jobs=1
-      - MAKEFLAGS=-j1
-    volumes:
-      - ${REPO_PATH}:/source/wazuh-dashboard:ro
-      - ${REPO_PATH}/.git:/workspace/wazuh-dashboard/.git:ro
-      - ${REPO_PATH}/node_modules:/workspace/wazuh-dashboard/node_modules:ro
-      - ${WAZUH_DASHBOARD_PLUGINS_REPO_PATH}:/source/wazuh-dashboard-plugins:ro
-      - ${WAZUH_DASHBOARD_PLUGINS_REPO_PATH}/plugins/main:/workspace/wazuh-dashboard/plugins/main:ro
-      - ${WAZUH_DASHBOARD_PLUGINS_REPO_PATH}/plugins/wazuh-check-updates:/workspace/wazuh-dashboard/plugins/wazuh-check-updates:ro
-      - ${WAZUH_DASHBOARD_PLUGINS_REPO_PATH}/plugins/wazuh-core:/workspace/wazuh-dashboard/plugins/wazuh-core:ro
-      - ${WAZUH_DASHBOARD_PLUGINS_REPO_PATH}/plugins/main/node_modules:/workspace/wazuh-dashboard-plugins/plugins/main/node_modules:ro
-      - ${WAZUH_FARSI_REPO_PATH}:/source/wazuh-farsi:ro
-      - ${WAZUH_FARSI_REPO_PATH}/dist/fa-IR-rtl/plugins/wazuh-farsi:/workspace/wazuh-dashboard/plugins/wazuh-farsi
-      - ${WAZUH_FARSI_REPO_PATH}/package:/workspace/wazuh-dashboard/packages/wazuh-farsi:ro
-      - ${WAZUH_FARSI_REPO_PATH}/package:/workspace/wazuh-dashboard/plugins/main/node_modules/wazuh-farsi:ro
-      - ${WAZUH_RTL_REPO_PATH}:/source/wazuh-rtl:ro
-      - ${WAZUH_RTL_REPO_PATH}/plugins/wazuh-rtl:/workspace/wazuh-dashboard/plugins/wazuh-rtl:ro
-      - ${SECURITY_PLUGIN_REPO_PATH}:/source/wazuh-security-dashboards-plugin:ro
-      - ${SECURITY_PLUGIN_REPO_PATH}:/workspace/wazuh-dashboard/plugins/wazuh-security-dashboards-plugin:ro
-      - ${WAZUH_FARSI_REPO_PATH}/package:/workspace/wazuh-dashboard/plugins/wazuh-security-dashboards-plugin/node_modules/wazuh-farsi:ro
-      - ${SECURITY_PLUGIN_REPO_PATH}/node_modules:/workspace/wazuh-security-dashboards-plugin/node_modules:ro
-      - ${WAZUH_DEPLOYMENT_CONFIG_PATH}/wazuh_indexer_ssl_certs:/certs-source:ro
-    command: ["/source/wazuh-dashboard/docker/start-wazuh-source.sh"]
+      <<: *wazuh-dashboard-environment
+      WAZUH_SKIP_BUNDLE_BUILD: "1"
+    volumes: *wazuh-dashboard-volumes
+    command: ["nice", "-n", "10", "/source/wazuh-dashboard/docker/start-wazuh-source.sh"]
     depends_on:
-      - wazuh.indexer
-      - wazuh.manager
+      wazuh.bundle-builder:
+        condition: service_completed_successfully
+      wazuh.indexer:
+        condition: service_started
+      wazuh.manager:
+        condition: service_started
     networks:
       - wazuh-03
 
@@ -141,3 +174,11 @@ volumes:
   filebeat_etc:
   filebeat_var:
   wazuh-indexer-data:
+  wazuh-core-browser-target:
+  wazuh-ui-shared-deps-target:
+  wazuh-main-target:
+  wazuh-core-target:
+  wazuh-updates-target:
+  wazuh-rtl-target:
+  wazuh-security-target:
+  wazuh-farsi-target:

@@ -73,7 +73,7 @@ case "${ACTION}" in
       dashboard_url="${WAZUH_DASHBOARD_URL:-https://127.0.0.1:30300}"
       printf '[wazuh-docker] Waiting for %s ...\n' "${dashboard_url}"
       ready=0
-      for _ in {1..180}; do
+      for _ in {1..60}; do
         if curl --fail --insecure --silent --output /dev/null "${dashboard_url}"; then
           ready=1
           break

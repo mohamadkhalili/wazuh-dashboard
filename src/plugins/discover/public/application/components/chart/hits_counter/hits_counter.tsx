@@ -65,7 +65,7 @@ export function HitsCounter({ hits, showResetButton, onResetQuery }: HitsCounter
             <strong data-test-subj="discoverQueryHits">{formatNumWithCommas(hits)}</strong>{' '}
             <FormattedMessage
               id="discover.hitsPluralTitle"
-              defaultMessage="{hits, plural, one {hit} other {hits}}"
+              defaultMessage="{hits, plural, one {نتیجه} other {نتیجه}}"
               values={{
                 hits,
               }}
@@ -80,12 +80,12 @@ export function HitsCounter({ hits, showResetButton, onResetQuery }: HitsCounter
               onClick={onResetQuery}
               size="s"
               aria-label={i18n.translate('discover.reloadSavedSearchButton', {
-                defaultMessage: 'Reset search',
+                defaultMessage: 'بازنشانی جستجو',
               })}
             >
               <FormattedMessage
                 id="discover.reloadSavedSearchButton"
-                defaultMessage="Reset search"
+                defaultMessage="بازنشانی جستجو"
               />
             </EuiButtonEmpty>
           </EuiFlexItem>
